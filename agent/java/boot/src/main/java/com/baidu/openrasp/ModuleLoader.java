@@ -45,6 +45,13 @@ public class ModuleLoader {
 
     // ModuleLoader is loaded by the classloader, and the JAR path cannot be obtained through the getProtectionDomain() method
     static {
+        // juli
+        try {
+            Class clazz = Class.forName("java.nio.file.FileSystems");
+            clazz.getMethod("getDefault", new Class[0]).invoke(null);
+        } catch (Throwable t) {
+            // ignore
+        }
         Class clazz = ModuleLoader.class;
         // Examples of path values：　file:/opt/apache-tomcat-xxx/rasp/rasp.jar!/com/fuxi/javaagent/Agent.class
         String path = clazz.getResource("/" + clazz.getName().replace(".", "/") + ".class").getPath();

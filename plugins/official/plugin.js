@@ -1,4 +1,4 @@
-const plugin_version = '2020-0605-1240'
+const plugin_version = '2020-0901-1300'
 const plugin_name    = 'official'
 const plugin_desc    = '官方插件'
 
@@ -45,6 +45,9 @@ var algorithmConfig = {
 
         // 若 is_dev 开启，表示为线下环境，将开启更多消耗性能的检测算法
         is_dev:  false,
+
+        // 若 log_event 开启，将打印应用行为信息到 plugin.log
+        log_event: false,
 
         // schema 版本
         schema_version: 1
@@ -233,7 +236,8 @@ var algorithmConfig = {
             '.burpcollaborator.net',
             '.tu4.org',
             '.2xss.cc',
-            '.bxss.me'
+            '.bxss.me',
+            '.godns.vip'
         ]
     },
     // SSRF - 是否允许访问混淆后的IP地址
@@ -335,6 +339,11 @@ var algorithmConfig = {
     // copy_webshell: {
     //     action: 'block'
     // },
+
+    link_webshell: {
+        name:   '算法1 - 通过链接方式获取 WebShell',
+        action: 'block'
+    },
 
     // 文件管理器 - 用户输入匹配，仅当直接读取绝对路径时才检测
     directory_userinput: {
@@ -463,7 +472,8 @@ var algorithmConfig = {
     command_userinput: {
         name:       '算法2 - 用户输入匹配算法，包括命令注入检测',
         action:     'block',
-        min_length: 2
+        min_length: 2,
+        java_unexploitable_filter: true,
     },
     // 命令注入 - 常见命令
     command_common: {
@@ -483,7 +493,7 @@ var algorithmConfig = {
         sensitive_cmd: ["curl", "bash", "cat", "sh"],
 
         alarm_token_enable: true,
-        alarm_token: ["$IFS", "${IFS}", "'"]
+        alarm_token: ["$IFS", "${IFS}"]
     },
     // 命令执行 - 是否拦截所有命令执行？如果没有执行命令的需求，可以改为 block，最大程度的保证服务器安全
     command_other: {
@@ -628,7 +638,7 @@ var forcefulBrowsing = {
 	    '/etc/issue',
         '/etc/shadow',
         '/etc/passwd',
-        '/etc/hosts',
+        // '/etc/hosts',
         '/etc/apache2/apache2.conf',
         '/root/.bash_history',
         '/root/.bash_profile',
@@ -646,6 +656,9 @@ var scriptFileRegex = /\.(aspx?|jspx?|php[345]?|phtml|sh|py|pl|rb)\.?$/i
 // 正常文件
 var cleanFileRegex  = /\.(jpg|jpeg|png|gif|bmp|txt|rar|zip)$/i
 
+// 文件读取扩展名白名单，包含 压缩文件 office文件 图片文件
+var readFileWhiteExt = new RegExp(/\.(do[c|t][x|m|]?|xl[s|t][x|m|b]?|pp[t|s|a][x|m]?|pot[x|m]|7z|tar|gz|bz2|xz|rar|zip|jpg|jpeg|png|gif|bmp|txt|)$/, 'i')
+
 // 匹配 HTML/JS 等可以用于钓鱼、domain-fronting 的文件
 var htmlFileRegex   = /\.(htm|html|js)$/i
 
@@ -655,8 +668,8 @@ var exeFileRegex    = /\.(exe|dll|scr|vbs|cmd|bat)$/i
 // 其他的 stream 都没啥用
 var ntfsRegex       = /::\$(DATA|INDEX)$/
 
-// 已知用户输入匹配算法误报: 传入 1,2,3,4 -> IN(1,2,3,4)
-var commaNumRegex   = /^[0-9, ]+$/
+// 已知用户输入匹配算法误报: 传入 1,2,3,4 -> IN(1,2,3,4) 和 传入 column_name, column_pass -> select column_name, column_pass from xxx
+var commaSeparatedRegex   = /^(, *)?(([a-zA-Z_]\w*|[0-9+\-x\.]+) *, *)+([a-zA-Z_]\w*|[0-9+\-x\.]+)$/
 
 // 匹配内网地址
 var internalRegex   = /^(0\.0\.0|127|10|192\.168|172\.(1[6-9]|2[0-9]|3[01]))\./
@@ -676,6 +689,8 @@ var sqliPrefilter2  = new RegExp(algorithmConfig.sql_policy.pre_filter, 'i')
 // SQL注入算法 - 管理器白名单
 var sqliWhiteManager  = new RegExp(/phpmyadmin/, 'i')
 
+// java 匹配可能可利用的命令注入
+var cmdJavaExploitable = new RegExp(/^[^ ]*sh.{1,12}-c/, 'i')
 
 // 命令执行探针 - 常用渗透命令
 var cmdPostPattern  = new RegExp(algorithmConfig.command_common.pattern, 'i')
@@ -709,7 +724,7 @@ if (! RASP.is_unittest)
         algorithmConfig.sql_userinput.pre_enable = false
 
         // 关闭 1,2,3 误报过滤
-        commaNumRegex = /^$/
+        commaSeparatedRegex = /^$/
 
         // 关闭 xss_echo 非攻击过滤
         algorithmConfig.xss_echo.filter_regex = ""
@@ -861,7 +876,6 @@ function validate_stack_java(stacks) {
         'org.springframework.expression.spel.support.ReflectiveMethodExecutor.execute': "Using SpEL expressions",
         'freemarker.template.utility.Execute.exec':                                     "Using FreeMarker template",
         'org.jboss.el.util.ReflectionUtil.invokeMethod':                                "Using JBoss EL method",
-        'net.rebeyond.behinder.payload.java.Cmd.RunCMD':                                "Using BeHinder defineClass webshell",
         'org.codehaus.groovy.runtime.ProcessGroovyMethods.execute':                     "Using Groovy library",
         'bsh.Reflect.invokeMethod':                                                     "Using BeanShell library",
         'jdk.scripting.nashorn/jdk.nashorn.internal.runtime.ScriptFunction.invoke':     "Using Nashorn engine"
@@ -903,6 +917,11 @@ function validate_stack_java(stacks) {
             break
         }
 
+        if (method.startsWith('net.rebeyond.behinder')) {
+            message = "Using BeHinder defineClass webshell"
+            break
+        }
+
         if (method.startsWith('com.fasterxml.jackson.databind.')) {
             message = "Using Jackson deserialze method"
             break
@@ -929,20 +948,28 @@ function validate_stack_java(stacks) {
 
 function validate_stack_php(stacks) {
     var verdict = false
+    var eval_count = 0
 
     for (var i = 0; i < stacks.length; i ++) {
         var stack = stacks[i]
 
         // 来自 eval/assert/create_function/...
-        if (stack.indexOf('eval()\'d code') != -1
-            || stack.indexOf('runtime-created function') != -1
-            || stack.indexOf('assert code@') != -1
+        if (stack.indexOf('runtime-created function') != -1
             || stack.indexOf('regexp code@') != -1) {
             verdict = true
             break
         }
+        // eval/assert 出现两次以上才认为是webshell
+        if (stack.indexOf('eval()\'d code') != -1
+            || stack.indexOf('assert code@') != -1) {
+            eval_count++
+            if (eval_count > 1) {
+                verdict = true
+                break
+            }
+        }
 
-        // call_user_func/call_user_func_array 两个函数调用很频繁
+            // call_user_func/call_user_func_array 两个函数调用很频繁
         // 必须是 call_user_func 直接调用 system/exec 等函数才拦截，否则会有很多误报
         if (stack.indexOf('@call_user_func') != -1) {
             if (i <= 1) {
@@ -1361,6 +1388,24 @@ function check_internal_hostname(hostname, origin_hostname) {
     }
 }
 
+function check_internal(params, context, is_redirect) {
+    var ret
+    var all_parameter = get_all_parameter(context)
+    if (is_redirect) {
+        ret = check_internal_ip(params.ip, params.origin_ip)
+        if (ret && !whiteHostName.test(params.hostname)) {return ret}
+        ret = check_internal_hostname(params.hostname, params.origin_hostname)
+        if (ret) {return ret}
+    }
+    else if (is_from_userinput(all_parameter, params.url)) {
+        // 非重定向，判定用户输入
+        ret = check_internal_ip(params.ip, undefined)
+        if (ret && !whiteHostName.test(params.hostname)) {return ret}
+        ret = check_internal_hostname(params.hostname, undefined)
+        if (ret) {return ret}
+    }
+}
+
 function check_ssrf(params, context, is_redirect) {
     var hostname  = params.hostname
     var url       = params.url
@@ -1371,19 +1416,11 @@ function check_ssrf(params, context, is_redirect) {
     if (algorithmConfig.ssrf_userinput.action != 'ignore')
     {
         var ret
-        var all_parameter = get_all_parameter(context)
-        if (is_redirect) {
-            ret = check_internal_ip(ip, params.origin_ip)
-            if (ret && !whiteHostName.test(hostname)) {return ret}
-            ret = check_internal_hostname(hostname, params.origin_hostname)
-            if (ret) {return ret}
-        }
-        else if (is_from_userinput(all_parameter, url)) {
-            // 非重定向，判定用户输入
-            ret = check_internal_ip(ip, undefined)
-            if (ret && !whiteHostName.test(hostname)) {return ret}
-            ret = check_internal_hostname(hostname, undefined)
-            if (ret) {return ret}
+        ret = check_internal(params, context, is_redirect)
+        // 过滤非HTTP请求（dubbo)
+        var header = context.header || {}
+        if (ret && Object.keys(header).length != 0) {
+            return ret
         }
     }
 
@@ -1485,6 +1522,76 @@ function _(message, args)
 
 // 开始
 
+// 如果开启记录日志，先打印日志，再执行后续逻辑
+if (algorithmConfig.meta.log_event) {
+
+    plugin.register('directory', function (params, context) {
+        plugin.log('Listing directory content: ' + params.realpath, params.stack)
+        return clean
+    })
+
+    plugin.register('fileUpload', function (params, context) {
+        plugin.log('File upload: ' + params.filename)
+        return clean
+    })
+
+    plugin.register('rename', function (params, context) {
+        plugin.log('Rename file - From ' + params.source + ' to ' + params.dest)  
+        return clean
+    })
+
+    plugin.register('ssrf', function (params, context) {
+        plugin.log('SSRF requesting ' + params.url + ' (IP: ' + params.ip + ')')
+        return clean
+    })
+
+    plugin.register('command', function (params, context) {
+        plugin.log('Execute command: ' + params.command, params.stack)
+        return clean
+    })
+
+    plugin.register('ognl', function (params, context) {
+        plugin.log('Evaluating OGNL expression: ' + params.expression)
+        return clean
+    })
+
+    plugin.register('xxe', function (params, context) {
+        plugin.log('Loading XML entity: ' + params.entity)
+        return clean
+    })
+
+    plugin.register('eval', function (params, context) {
+        plugin.log('Evaluating code: ' + params.code)
+        return clean
+    })
+
+    plugin.register('loadLibrary', function (params, context) {
+        plugin.log('Loading library: ' + params.path)
+        return clean
+    })
+
+    plugin.register('include', function (params, context) {
+        plugin.log('Include file: ' + params.url)
+        return clean
+    })
+
+    plugin.register('readFile', function (params, context) {
+        plugin.log('Read file: ' + params.realpath)
+        return clean
+    })
+
+    plugin.register('writeFile', function (params, context) {
+        plugin.log('Write file: ' + params.realpath)
+        return clean
+    })
+
+    plugin.register('sql', function (params, context) {
+        plugin.log('SQL query: ' + params.query)
+        return clean
+    })
+}
+
+
 // 若开启「研发模式」，将只使用JS插件
 if (! algorithmConfig.meta.is_dev && RASP.get_jsengine() !== 'v8') {
     // v1.1 之前的版本，SQL/SSRF 使用 java 原生实现，需要将插件配置传递给 java
@@ -1535,6 +1642,11 @@ if (! algorithmConfig.meta.is_dev && RASP.get_jsengine() !== 'v8') {
                 // 检查用户输入是否存在于SQL中
                 for(var i = 0, len = check_value.length; i < len; i++) {
                     value = check_value[i]
+
+                    // 过滤超短参数
+                    if (value.length < 3) {
+                        continue
+                    }
                 
                     var userinput_idx = params.query.indexOf(value)
                     if (userinput_idx == -1) {
@@ -1548,8 +1660,8 @@ if (! algorithmConfig.meta.is_dev && RASP.get_jsengine() !== 'v8') {
                     }
 
                     // 过滤已知误报
-                    // 1,2,3,4,5 -> IN(1,2,3,4,5)
-                    if (commaNumRegex.test(value)) {
+                    // 1,2,3,4,5 和 user_id, user_name, user_pass
+                    if (commaSeparatedRegex.test(value)) {
                         return false
                     }
 
@@ -1672,28 +1784,50 @@ if (! algorithmConfig.meta.is_dev && RASP.get_jsengine() !== 'v8') {
                 return v.text.substr(0, 50).toLowerCase()
             })
 
+            // 是否在union select 语句中
+            var union_state = false
+
             for (var i = 1; i < tokens_lc.length; i ++)
             {
-                if (features['union_null'] && tokens_lc[i] === 'select')
+                if (features['union_null']) 
                 {
-                    var null_count = 0
+                    if (tokens_lc[i] === 'union')
+                    {
+                        union_state = true
+                    }
+                    else if (tokens_lc[i] === 'from')
+                    {
+                        union_state = false
+                    }
+                    else if (tokens_lc[i] === 'select' && union_state)
+                    {
+                        var null_count = 0
+                        var num_count = 0
 
-                    // 寻找连续的逗号、NULL或者数字
-                    for (var j = i + 1; j < tokens_lc.length && j < i + 6; j ++) {
-                        if (tokens_lc[j] === ',' || tokens_lc[j] == 'null' || ! isNaN(parseInt(tokens_lc[j]))) {
-                            null_count ++
-                        } else {
+                        // 寻找连续的逗号、NULL或者数字
+                        for (var j = i + 1; j < tokens_lc.length && j < i + 6; j ++) {
+                            if ((tokens_lc[j] === ',' || tokens_lc[j] == 'null') && tokens_lc[j] != tokens_lc[j+1]) {
+                                null_count ++
+                            } else {
+                                break
+                            }
+                        }
+                        for (var j = i + 1; j < tokens_lc.length && j < i + 6; j ++) {
+                            if ((tokens_lc[j] === ',' || ! isNaN(parseInt(tokens_lc[j]))) && tokens_lc[j] != tokens_lc[j+1]) {
+                                num_count++
+                            } else {
+                                break
+                            }
+                        }
+
+                        // NULL,NULL,NULL == 5个token
+                        // 1,2,3          == 5个token
+                        if (null_count >= 5 || num_count >= 5) {
+                            reason = _("SQLi - Detected UNION-NULL phrase in sql query")
                             break
                         }
+                        continue
                     }
-
-                    // NULL,NULL,NULL == 5个token
-                    // 1,2,3          == 5个token
-                    if (null_count >= 5) {
-                        reason = _("SQLi - Detected UNION-NULL phrase in sql query")
-                        break
-                    }
-                    continue
                 }
 
                 if (features['stacked_query'] && tokens_lc[i] == ';' && i != tokens_lc.length - 1)
@@ -1818,7 +1952,8 @@ if (! algorithmConfig.meta.is_dev && RASP.get_jsengine() !== 'v8') {
             hostname: params.hostname2,
             ip: params.ip2,
             port: params.port2,
-            function: params.function
+            function: params.function,
+            stack: params.stack
         }
         var ret2 = check_ssrf(params2, context, true)
         if (ret2 !== false) {
@@ -1836,6 +1971,10 @@ plugin.register('sql_exception', function(params, context) {
     // mysql error 1367 detected: XXX
     var error_code = parseInt(params.error_code)
     var message    = _("%1% error %2% detected: %3%", [params.server, params.error_code, params.error_msg])
+    // 过滤phpmyadmin
+    if (sqliWhiteManager.test(params.stack[0])) {
+        return clean
+    }
     if (params.server == "mysql") {
         // 1062 Duplicated key 错误会有大量误报问题，仅当语句里包含 rand 字样报警
         if (error_code == 1062) {
@@ -1874,12 +2013,20 @@ plugin.register('directory', function (params, context) {
     // 算法2 - 检查PHP菜刀等后门
     if (algorithmConfig.directory_reflect.action != 'ignore')
     {
-        // 目前，只有 PHP 支持通过堆栈方式，拦截列目录功能
         if (language == 'php' && validate_stack_php(params.stack))
         {
             return {
                 action:     algorithmConfig.directory_reflect.action,
                 message:    _("WebShell activity - Using file manager function with China Chopper WebShell"),
+                confidence: 90,
+                algorithm:  'directory_reflect'
+            }
+        }
+        else if (language == 'java' && validate_stack_java(params.stack))
+        {
+            return {
+                action:     algorithmConfig.directory_reflect.action,
+                message:    _("WebShell activity - Using file manager function with Java WebShell"),
                 confidence: 90,
                 algorithm:  'directory_reflect'
             }
@@ -1954,6 +2101,7 @@ plugin.register('readFile', function (params, context) {
         // ?path=/etc/./hosts
         // ?path=../../../etc/passwd
         if ( (proto == "" || proto == "file" ) && 
+             !readFileWhiteExt.test(params.realpath) &&
              is_path_endswith_userinput(all_parameter, params.path, params.realpath, is_win, algorithmConfig.readFile_userinput.lcs_search)
            )
         {
@@ -2143,7 +2291,7 @@ plugin.register('writeFile', function (params, context) {
     }
 
     if (algorithmConfig.writeFile_reflect.action != 'ignore') {
-        if (context.server.language == 'java') {
+        if (context.server.language == 'java' && params.realpath.endsWith(".jsp")) {
             var message = validate_stack_java(params.stack)
             if (message) {
                 return {
@@ -2282,6 +2430,30 @@ if (algorithmConfig.rename_webshell.action != 'ignore')
 }
 
 
+if (algorithmConfig.link_webshell.action != 'ignore')
+{
+    plugin.register('link', function (params, context) {
+        // 目标文件在webroot内才认为是写后门
+        if (!is_outside_webroot(context.appBasePath, params.dest, null)) {
+            // 源文件是干净的文件，目标文件是脚本文件，判定为重命名方式写后门
+            if (cleanFileRegex.test(params.source) && scriptFileRegex.test(params.dest))
+            {
+                return {
+                    action:    algorithmConfig.link_webshell.action,
+                    message:   _("File upload - Linking a non-script file to server-side script file, source file is %1%, link type", [
+                        params.source,
+                        params.type
+                    ]),
+                    confidence: 90,
+                    algorithm:  'link_webshell'
+                }
+            }
+        }
+
+        return clean
+    })
+}
+
 plugin.register('command', function (params, context) {
     var cmd        = params.command
     var server     = context.server
@@ -2297,7 +2469,7 @@ plugin.register('command', function (params, context) {
         if (server.language == 'java') {
             message = validate_stack_java(params.stack)
             if (message) {
-                message = _("Reflected command execution - %1%", message)
+                message = _("Reflected command execution - %1%", [message])
             }
         }
 
@@ -2330,6 +2502,7 @@ plugin.register('command', function (params, context) {
         var min_length = algorithmConfig.command_userinput.min_length
         var parameters = context.parameter || {}
         var json_parameters = context.json || {}
+        var unexploitable_filter = algorithmConfig.command_userinput.java_unexploitable_filter
 
         // 检查命令逻辑是否被用户参数所修改
         function _run(values, name)
@@ -2340,7 +2513,7 @@ plugin.register('command', function (params, context) {
                 if (value.length <= min_length) {
                     return false
                 }
-
+                
                 // 检查用户输入是否存在于命令中
                 var userinput_idx = cmd.indexOf(value)
                 if (userinput_idx == -1) {
@@ -2366,62 +2539,65 @@ plugin.register('command', function (params, context) {
             return reason
         }
 
-        // 匹配 GET/POST/multipart 参数
-        Object.keys(parameters).some(function (name) {
-            // 覆盖场景，后者仅PHP支持
-            // ?id=XXXX
-            // ?data[key1][key2]=XXX
-            var value_list = []
-            Object.values(parameters[name]).forEach(function (value){
-                if (typeof value == 'string') {
-                    value_list.push(value)
-                } else {
-                    value_list = value_list.concat(Object.values(value))
+        // 过滤java无法利用的命令注入
+        if (server.language != 'java' || !unexploitable_filter || cmdJavaExploitable.test(cmd)) {
+            // 匹配 GET/POST/multipart 参数
+            Object.keys(parameters).some(function (name) {
+                // 覆盖场景，后者仅PHP支持
+                // ?id=XXXX
+                // ?data[key1][key2]=XXX
+                var value_list = []
+                Object.values(parameters[name]).forEach(function (value){
+                    if (typeof value == 'string') {
+                        value_list.push(value)
+                    } else {
+                        value_list = value_list.concat(Object.values(value))
+                    }
+                })
+                reason = _run(value_list, name)
+                if (reason) {
+                    return true
                 }
             })
-            reason = _run(value_list, name)
-            if (reason) {
-                return true
-            }
-        })
-        // 匹配 header 参数
-        if (reason == false && context.header != null) {
-            Object.keys(context.header).some(function (name) {
-                if ( name.toLowerCase() == "cookie") {
-                    var cookies = get_cookies(context.header.cookie)
-                    for (name in cookies) {
-                        reason = _run([cookies[name]], "cookie:" + name)
+            // 匹配 header 参数
+            if (reason == false && context.header != null) {
+                Object.keys(context.header).some(function (name) {
+                    if ( name.toLowerCase() == "cookie") {
+                        var cookies = get_cookies(context.header.cookie)
+                        for (name in cookies) {
+                            reason = _run([cookies[name]], "cookie:" + name)
+                            if (reason) {
+                                return true
+                            }
+                        }
+                    }
+                    else if ( headerInjection.indexOf(name.toLowerCase()) != -1) {
+                        reason = _run([context.header[name]], "header:" + name)
                         if (reason) {
                             return true
                         }
                     }
-                }
-                else if ( headerInjection.indexOf(name.toLowerCase()) != -1) {
-                    reason = _run([context.header[name]], "header:" + name)
-                    if (reason) {
-                        return true
-                    }
-                }
-                
-            })
-        }
+                    
+                })
+            }
 
-        // 匹配json参数
-        if (reason == false && Object.keys(json_parameters).length > 0) {
-            var jsons = [ [json_parameters, "input_json"] ]
-            while (jsons.length > 0 && reason === false) {
-                var json_arr = jsons.pop()
-                var crt_json_key = json_arr[1]
-                var json_obj = json_arr[0]
-                for (item in json_obj) {
-                    if (typeof json_obj[item] == "string") {
-                        reason = _run([json_obj[item]], crt_json_key + "->" + item)
-                        if(reason !== false) {
-                            break;
+            // 匹配json参数
+            if (reason == false && Object.keys(json_parameters).length > 0) {
+                var jsons = [ [json_parameters, "input_json"] ]
+                while (jsons.length > 0 && reason === false) {
+                    var json_arr = jsons.pop()
+                    var crt_json_key = json_arr[1]
+                    var json_obj = json_arr[0]
+                    for (item in json_obj) {
+                        if (typeof json_obj[item] == "string") {
+                            reason = _run([json_obj[item]], crt_json_key + "->" + item)
+                            if(reason !== false) {
+                                break;
+                            }
                         }
-                    }
-                    else if (typeof json_obj[item] == "object") {
-                        jsons.push([json_obj[item], crt_json_key + "->" + item])
+                        else if (typeof json_obj[item] == "object") {
+                            jsons.push([json_obj[item], crt_json_key + "->" + item])
+                        }
                     }
                 }
             }
@@ -2467,7 +2643,7 @@ plugin.register('command', function (params, context) {
         for (var i=0; i<raw_tokens.length; i++) {
             // 敏感token检测
             if (algorithmConfig.command_error.alarm_token_enable) {
-                if (alarm_token.indexOf(raw_tokens[i].text) != -1) {
+                if (alarm_token == raw_tokens[i].text) {
                     if ( !(i > 0 && i < raw_tokens.length-1 && raw_tokens[i-1].text == '"' && raw_tokens[i+1].text == '"')) {
                         return {
                             action:     algorithmConfig.command_error.action,
@@ -2487,7 +2663,7 @@ plugin.register('command', function (params, context) {
                     return {
                         action:     algorithmConfig.command_error.action,
                         confidence: 70,
-                        message:    _("Command execution - Sensitive command concat detect: %1% %2%", [raw_tokens[i].text], raw_tokens[i+1].text),
+                        message:    _("Command execution - Sensitive command concat detect: %1% %2%", [raw_tokens[i].text, raw_tokens[i+1].text]),
                         algorithm:  'command_error'
                     }
                 }
@@ -2498,6 +2674,16 @@ plugin.register('command', function (params, context) {
             }
             else if (raw_tokens[i].text == "`") {
                 ticks ++
+            }
+            else if (raw_tokens[i].text == "'" && algorithmConfig.command_error.unbalanced_quote_enable) {
+                if ( !(i > 0 && i < raw_tokens.length-1 && raw_tokens[i-1].text == '"' && raw_tokens[i+1].text == '"')) {
+                    return {
+                        action:     algorithmConfig.command_error.action,
+                        confidence: 70,
+                        message:    _("Command execution - Detected unbalanced single quote!"),
+                        algorithm:  'command_error'
+                    }
+                }
             }
         }
 
@@ -2869,7 +3055,6 @@ if (algorithmConfig.response_dataLeak.action != 'ignore') {
             }
         }
     })
-
 }
 
 plugin.log('OpenRASP official plugin: Initialized, version', plugin_version)
