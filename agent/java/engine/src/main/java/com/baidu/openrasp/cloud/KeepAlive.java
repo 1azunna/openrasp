@@ -37,7 +37,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * @description: 创建rasp与云控的心跳线程并初始化rasp的config
+ * @description: Create the heartbeat thread of rasp and cloud control and initialize the config of rasp
  * @author: anyang
  * @create: 2018/09/17 16:55
  */
@@ -72,7 +72,7 @@ public class KeepAlive extends CloudTimerTask {
     }
 
     private void handleRaspNotFound() {
-        // 暂停心跳和所有 hook 点，并且开始重新注册
+        // Pause heartbeat and all hook points, and start to register again
         suspend();
         HookHandler.enableHook.getAndSet(false);
         new Register(new Register.RegisterCallback() {
@@ -140,27 +140,27 @@ public class KeepAlive extends CloudTimerTask {
                     CloudCacheModel.getInstance().setConfigTime(deliveryTime);
                 }
                 if (configMap.get("log.maxburst") != null) {
-                    //更新http appender
+                    //Update http appender
                     DynamicConfigAppender.fileAppenderAddBurstFilter();
                     DynamicConfigAppender.httpAppenderAddBurstFilter();
                 }
-                //云控下发配置时动态添加或者删除syslog
+                //Dynamically add or delete syslog when cloud control sends configuration
                 Object syslogSwitch = configMap.get("syslog.enable");
                 if (syslogSwitch != null) {
                     LogConfig.syslogManager();
                 }
-                //云控下发配置时动态更新syslog.tag
+                //Dynamically update syslog.tag when cloud control sends configuration
                 Object syslogTag = configMap.get("syslog.tag");
                 if (syslogTag != null) {
                     DynamicConfigAppender.updateSyslogTag();
                 }
-                //是否开启log4j的debug功能
+                //Whether to enable the debug function of log4j
                 DynamicConfigAppender.enableDebug();
-                //更新log4j日志的最大备份时间
+                //Update log4j log maximum backup time
                 if (configMap.get("log.maxbackup") != null) {
                     DynamicConfigAppender.setLogMaxBackup();
                 }
-                //更新log4j appender 打印日志的路径
+                //Update log4j appender print log path
                 if (configMap.get("log.path") != null) {
                     String log4jPath = (String) configMap.get("log.path");
                     DynamicConfigAppender.updateLog4jPath(true, log4jPath);
@@ -186,7 +186,7 @@ public class KeepAlive extends CloudTimerTask {
         long newConfigTime = CloudCacheModel.getInstance().getConfigTime();
         String newPluginMd5 = CloudCacheModel.getInstance().getPluginMD5();
         if (oldConfigTime != newConfigTime || !newPluginMd5.equals(oldPluginMd5)) {
-            //更新成功之后立刻发送一次心跳
+            //Send a heartbeat immediately after the update is successful
             String content = new Gson().toJson(generateParameters());
             String url = CloudRequestUrl.CLOUD_HEART_BEAT_URL;
             new CloudHttp().commonRequest(url, content);

@@ -2,73 +2,73 @@
     <div>
         <div v-if="data.policy_id == '3001'">
             <div class="h6">
-                配置文件路径
+                Configuration file path
             </div>
             <p>
                 {{ data.policy_params.config_file }}
             </p>
             
             <div class="h6">
-                问题描述
+                Problem Description
             </div>
             <p>
-                JSESSIONID 未开启 httpOnly，若开启可提升服务器对XSS的防范效果。
-                <a href="https://rasp.baidu.com/doc/usage/security_policy.html#3001" target="_blank">点击这里</a>了解更多。
+                JSESSIONID does not enable httpOnly. If enabled, the server's protection against XSS can be improved.
+                <a href="https://rasp.baidu.com/doc/usage/security_policy.html#3001" target="_blank">Click here</a> to learn more.
             </p>
         </div>
 
         <div v-if="data.policy_id == '3005'">
             <div class="h6">
-                配置文件路径
+                Configuration file path
             </div>
             <p>
                 {{ data.policy_params.config_file }}
             </p>
             <div class="h6">
-                问题描述
+                Problem Description
             </div>
             <p>
-                开启 Directory Listing 功能，可能会泄露项目代码、配置等敏感信息。
-                <a href="https://rasp.baidu.com/doc/usage/security_policy.html#3005" target="_blank">点击这里</a>了解更多。
+                Enabling the Directory Listing function may reveal sensitive information such as project code and configuration.
+                <a href="https://rasp.baidu.com/doc/usage/security_policy.html#3005" target="_blank">Click here</a> to learn more.
             </p>
         </div>
 
         <div v-if="data.policy_id == '3007'">
             <div class="h6">
-                配置文件路径
+                Configuration file path
             </div>
             <p>
                 {{ data.policy_params.config_file }}
             </p>
             <div class="h6">
-                问题描述
+                Problem Description
             </div>
             <p>
-                以 root/Administrator/system 权限启动应用服务器，会产生巨大的风险。
-                <a href="https://rasp.baidu.com/doc/usage/security_policy.html#3007" target="_blank">点击这里</a>了解更多。
+                Starting the application server with root/Administrator/system authority will cause huge risks.
+                <a href="https://rasp.baidu.com/doc/usage/security_policy.html#3007" target="_blank">Click here</a> to learn more.
             </p>
-        </div>                
+        </div>
 
         <div v-if="data.policy_id == '3002'">
             <div class="h6">
-                进程 PID
+                Process PID
             </div>
             <p>
                 {{ data.policy_params.pid }}
             </p>
             <div class="h6">
-                问题描述
+                Problem Description
             </div>
             <p>
-                以root权限启动应用服务器，会产生巨大的风险。
-                <a href="https://rasp.baidu.com/doc/usage/security_policy.html#3002" target="_blank">点击这里</a>了解更多。
+                Starting the application server with root privileges will create huge risks.
+                <a href="https://rasp.baidu.com/doc/usage/security_policy.html#3002" target="_blank">Click here</a> to learn more.
             </p>
         </div>
 
         <div v-if="data.policy_id == '3003'">
             <div v-if="data.policy_params.config_file">
                 <div class="h6">
-                    配置文件路径
+                    Configuration file path
                 </div>
                 <p>
                     {{ data.policy_params.config_file }}
@@ -77,7 +77,7 @@
 
             <div v-if="data.policy_params.hostname && data.policy_params.port">
                 <div class="h6">
-                    服务器信息
+                    server information
                 </div>
                 <p>
                     {{ data.policy_params.hostname }}:{{ data.policy_params.port }}
@@ -86,15 +86,15 @@
 
             <div v-if="data.policy_params.socket">
                 <div class="h6">
-                    服务器信息
+                    server information
                 </div>
                 <p>
                     {{ data.policy_params.socket }}
                 </p>
-            </div>           
+            </div>
 
             <div class="h6">
-                弱口令
+                Weak password
             </div>
             <p>
                 {{ data.policy_params.username }}:{{ data.policy_params.password }}
@@ -102,61 +102,61 @@
 
             <div v-if="data.stack_trace && data.stack_trace.length">
                 <div class="h6">
-                    应用堆栈
+                    Application stack
                 </div>
-                <pre>{{ data.stack_trace }}</pre>    
+                <pre>{{ data.stack_trace }}</pre>
             </div>
 
             <div class="h6">
-                问题描述
+                Problem Description
             </div>
             <p v-if="data.policy_params.server">
-                {{ data.policy_params.server }} 存在弱口令，若账号被爆破会有数据泄露风险。
-                <a href="https://rasp.baidu.com/doc/usage/security_policy.html#3003" target="_blank">点击这里</a>了解更多。
+                {{ data.policy_params.server }} There is a weak password. If the account is blasted, there is a risk of data leakage.
+                <a href="https://rasp.baidu.com/doc/usage/security_policy.html#3003" target="_blank">Click here</a> to learn more.
             </p>
             <p v-else-if="data.policy_params.type">
-                {{ data.policy_params.type }} 存在弱口令。
-                <a href="https://rasp.baidu.com/doc/usage/security_policy.html#3003" target="_blank">点击这里</a>了解更多。
+                {{ data.policy_params.type }} There is a weak password.
+                <a href="https://rasp.baidu.com/doc/usage/security_policy.html#3003" target="_blank">Click here</a> to learn more.
             </p>
             <p v-else>
-                Tomcat 管理后台存在弱口令，若管理后台对外暴露，会有被入侵的风险。
-                <a href="https://rasp.baidu.com/doc/usage/security_policy.html#3003" target="_blank">点击这里</a>了解更多。
-            </p>            
+                There is a weak password in the Tomcat management background. If the management background is exposed to the outside, there is a risk of intrusion.
+                <a href="https://rasp.baidu.com/doc/usage/security_policy.html#3003" target="_blank">Click here</a> to learn more.
+            </p>
         </div>
 
         <div v-if="data.policy_id == '3004'">
             <div class="h6">
-                webapps 路径
+                webapps path
             </div>
             <p>
                 {{ data.policy_params.path }}
             </p>
 
             <div class="h6">
-                未删除的默认应用列表
+                List of default apps not deleted
             </div>
             <p>
                 {{ data.policy_params.apps.join (", ") }}
             </p>
             <div class="h6">
-                问题描述
+                Problem Description
             </div>
             <p>
-                没有删除 tomcat 默认的 app，或多或少会泄露敏感信息，或者造成管理后台对外暴露的风险。
-                <a href="https://rasp.baidu.com/doc/usage/security_policy.html#3004" target="_blank">点击这里</a>了解更多。
-            </p>             
+                Failure to delete tomcat's default app will more or less leak sensitive information or cause the risk of external exposure to the management background.
+                <a href="https://rasp.baidu.com/doc/usage/security_policy.html#3004" target="_blank">Click here</a> to learn more.
+            </p>
         </div>
 
         <div v-if="data.policy_id == '3006'">
             <div class="h6">
-                数据库类型
+                Database type
             </div>
             <p>
                 {{ data.policy_params.server }}
             </p>
 
             <div class="h6">
-                用户名
+                username
             </div>
             <p>
                 {{ data.policy_params.username }}
@@ -170,7 +170,7 @@
             </p>
 
             <div class="h6" v-if="data.policy_params.socket">
-                UNIX socket 路径
+                UNIX socket path
             </div>
             <p v-if="data.policy_params.socket">
                 {{ data.policy_params.socket }}
@@ -178,38 +178,38 @@
 
             <div v-if="data.stack_trace && data.stack_trace.length">
                 <div class="h6">
-                    应用堆栈
+                    Application stack
                 </div>
-                <pre>{{ data.stack_trace }}</pre>    
+                <pre>{{ data.stack_trace }}</pre>
             </div>
 
             <div class="h6">
-                问题描述
+                Problem Description
             </div>
             <p>
-                当存在SQL注入漏洞，使用高权限账号连接数据库会带来更大风险，泄露更多的数据。
-                <a href="https://rasp.baidu.com/doc/usage/security_policy.html#3004" target="_blank">点击这里</a>了解更多。
+                When there are SQL injection vulnerabilities, using a high-privileged account to connect to the database will bring greater risks and leak more data.
+                <a href="https://rasp.baidu.com/doc/usage/security_policy.html#3004" target="_blank">Click here</a> to learn more.
             </p>
         </div>
 
         <div v-if="data.policy_id == '3009'">
             <div class="h6">
-                问题描述
+                Problem Description
             </div>
             <p>
-                Web 根目录下存在压缩包或者其他敏感文件。若被外界下载，可能造成源代码、网站备份泄露，加大网站被入侵的风险。
-                <a href="https://rasp.baidu.com/doc/usage/security_policy.html#3009" target="_blank">点击这里</a>了解更多。
+                There are compressed packages or other sensitive files in the web root directory. If downloaded by the outside world, the source code and website backup may be leaked, increasing the risk of website intrusion.
+                <a href="https://rasp.baidu.com/doc/usage/security_policy.html#3009" target="_blank">Click here</a> to learn more.
             </p>
 
             <div class="h6">
-                Web 根目录
+                Web root directory
             </div>
             <p>
                 {{ data.policy_params.webroot }}
             </p>
 
             <div class="h6">
-                敏感文件列表
+                List of sensitive files
             </div>
             <ul>
                 <li v-for="(file, index) in data.policy_params.files" :key="index">
@@ -218,44 +218,44 @@
             </ul>
         </div>
 
-        <!-- 4000 - 4999 PHP 相关 -->
+        <!-- 4000-4999 PHP related -->
         <div v-if="data.policy_id == '4001'">
             <div class="h6">
-                问题描述
+                Problem Description
             </div>
             <p>
-                allow_url_include 没有关闭，当应用存在文件包含、任意文件读取等漏洞，开启这个配置会让应用更加容易被入侵。
-                <a href="https://rasp.baidu.com/doc/usage/security_policy.html#4001" target="_blank">点击这里</a>了解更多。
-            </p>            
-        </div>    
+                allow_url_include is not closed. When the application has vulnerabilities such as file inclusion and arbitrary file reading, enabling this configuration will make the application more vulnerable to intrusion.
+                <a href="https://rasp.baidu.com/doc/usage/security_policy.html#4001" target="_blank">Click here</a> to learn more.
+            </p>
+        </div>
 
         <div v-if="data.policy_id == '4002'">
             <div class="h6">
-                问题描述
+                Problem Description
             </div>
             <p>
-                expose_php 没有关闭，会泄露PHP版本号。
-                <a href="https://rasp.baidu.com/doc/usage/security_policy.html#4002" target="_blank">点击这里</a>了解更多。
+                Expose_php is not closed, it will reveal the PHP version number.
+                <a href="https://rasp.baidu.com/doc/usage/security_policy.html#4002" target="_blank">Click here</a> to learn more.
             </p>
-        </div>     
+        </div>
 
         <div v-if="data.policy_id == '4003'">
             <div class="h6">
-                问题描述
+                Problem Description
             </div>
             <p>
-                display_errors 没有关闭，用户可以在前台看到PHP程序的错误信息。
-                <a href="https://rasp.baidu.com/doc/usage/security_policy.html#4002" target="_blank">点击这里</a>了解更多。
-            </p>            
+                The display_errors is not closed, and the user can see the error message of the PHP program in the foreground.
+                <a href="https://rasp.baidu.com/doc/usage/security_policy.html#4002" target="_blank">Click here</a> to learn more.
+            </p>
         </div>
 
         <div v-if="data.policy_id == '4004'">
             <div class="h6">
-                问题描述
+                Problem Description
             </div>
             <p>
-                yaml.decode_php 没有关闭，将允许YAML反序列化PHP对象。若应用存在漏洞，可导致服务器被入侵。
-                <a href="https://rasp.baidu.com/doc/usage/security_policy.html#4002" target="_blank">点击这里</a>了解更多。
+                yaml.decode_php is not closed and will allow YAML to deserialize PHP objects. If the application has vulnerabilities, the server can be compromised.
+                <a href="https://rasp.baidu.com/doc/usage/security_policy.html#4002" target="_blank">Click here</a> to learn more.
             </p>
         </div>
 
@@ -266,7 +266,7 @@
 <script>
 
 export default {
-    name: 'baseline_params',
+    name:'baseline_params',
     data: function () {
         return {
             data: {
@@ -278,12 +278,12 @@ export default {
         setData: function (data) {
             this.data = data
 
-            // v1.0 版本，weblogic 忘记增加 policy_params 字段，简单修复
+            // v1.0 version, weblogic forgot to add the policy_params field, simple fix
             if (! data['policy_params']) {
                 data['policy_params'] = {}
             }
 
-            // v1.2 之后，删除外面的字符串堆栈，改用 params.stack 数组
+            // After v1.2, delete the outer string stack and use the params.stack array instead
             if (! data.stack_trace && data['policy_params'].stack)
             {
                 data.stack_trace = data['policy_params'].stack.join("\n")

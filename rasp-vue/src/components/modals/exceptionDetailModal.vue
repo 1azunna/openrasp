@@ -4,7 +4,7 @@
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title">
-            异常详情
+            Exception details
           </h5>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close" />
         </div>
@@ -12,22 +12,22 @@
           <ul id="myTab" class="nav nav-tabs" role="tablist">
             <li class="nav-item">
               <a id="home-tab" class="nav-link active" data-toggle="tab" href="#exception">
-                异常信息
+                Exception information
               </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab">资产信息</a>
+              <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab">Asset information</a>
             </li>
           </ul>
           <br>
           <div id="myTabContent" class="tab-content">
             <div id="exception" class="tab-pane fade show active" role="tabpanel" aria-labelledby="home-tab">
               <div class="h6">
-                报警时间
+                Alarm time
               </div>
               <p>{{ moment(data.event_time).format('YYYY-MM-DD HH:mm:ss') }}</p>
               <div class="h6">
-                报警消息
+                Alarm message
               </div>
               <p style="word-break: break-all; ">
                 [{{ data.error_code }}] {{ data.message }}
@@ -44,7 +44,7 @@
 
               <div v-if="data.path">
                 <div class="h6">
-                  日志路径
+                  Log path
                 </div>
                 <p style="word-break: break-all; ">
                   {{ data.path }}
@@ -52,18 +52,18 @@
               </div>
 
               <div class="h6" v-if="data.stack_trace">
-                堆栈信息
+                Stack information
               </div>
               <pre v-if="data.stack_trace">{{ data.stack_trace }}</pre>
             </div>
 
             <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
               <div class="h6">
-                主机名称
+               Host name
               </div>
               <p>{{ data.server_hostname }}</p>
               <div class="h6">
-                服务器 IP
+                Server IP
               </div>
               <ul>
                 <li v-for="nic in data.server_nic" :key="nic.name">{{ nic.name }}: {{ nic.ip }}</li>
@@ -73,7 +73,7 @@
         </div>
         <div class="modal-footer">
           <button class="btn btn-primary" data-dismiss="modal">
-            关闭
+           shut down
           </button>
         </div>
       </div>

@@ -2,7 +2,7 @@
   <div style="height: 12rem;">
     <VueC3 v-show="data.length" :handler="category_handler" />
     <p v-show="! data.length" class="text-center" style="display: flex; justify-content: center; height: 100%; align-items: center; ">
-      暂无数据
+      No data
     </p>
   </div>
 </template>

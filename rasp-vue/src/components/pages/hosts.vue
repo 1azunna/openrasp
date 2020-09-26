@@ -3,28 +3,28 @@
     <div class="container">
       <div class="page-header">
         <h1 class="page-title">
-          Agent 管理
+          Agent management
         </h1>
         <div class="page-options d-flex" style="margin-top: 5px;">
           <select v-model="currentVersion" class="form-control">
             <option value="">
-              版本: 全部
+            Version: All
             </option>
             <option :value="v.version" v-for="v in agent_versions" :key="v.version">
-              版本: {{v.version}} ({{ v.count }})
+              version:{{v.version}} ({{ v.count }})
             </option>
           </select>
         </div>
         <div class="page-options d-flex" style="margin-top: 5px; margin-left: 10px; ">
           <div>
-            <b-dropdown :text="'状态' + toHostStatus()" class="">
+            <b-dropdown :text="'status' + toHostStatus()" class="">
               <div class="row px-2">
                 <div class="col-6">
                   <label class="custom-switch">
                     <input v-model="filter.online" type="checkbox" checked="filter.online" class="custom-switch-input" @change="$emit('selected')">
                     <span class="custom-switch-indicator" />
                     <span class="custom-switch-description">
-                      在线
+                    Online
                     </span>
                   </label>
                 </div>
@@ -33,13 +33,13 @@
                     <input v-model="filter.offline" type="checkbox" checked="filter.offline" class="custom-switch-input" @change="$emit('selected')">
                     <span class="custom-switch-indicator" />
                     <span class="custom-switch-description">
-                      离线
+                     Offline
                     </span>
                   </label>
                 </div>
               </div>
             </b-dropdown>
-            <b-dropdown :text="'语言' + toLanguageStatus()" class="" style="margin-left: 10px; ">
+            <b-dropdown :text="'Language' +toLanguageStatus()" class="" style="margin-left: 10px; ">
               <div class="row px-2">
                 <div class="col-6">
                   <label class="custom-switch">
@@ -66,19 +66,19 @@
             <span class="input-icon-addon">
               <i class="fe fe-search" />
             </span>
-            <input v-model.trim="hostname" type="text" class="form-control w-10" placeholder="主机名称/备注/IP/OS" @keyup.enter="loadRaspList(1)">
+            <input v-model.trim="hostname" type="text" class="form-control w-10" placeholder="Host Name/Remarks/IP/OS" @keyup.enter="loadRaspList(1)">
           </div>
 
           <button class="btn btn-primary ml-2" @click="loadRaspList(1)">
-            搜索
+            search for
           </button>
 
           <a class="btn btn-primary ml-2" v-bind:href="getHref()" target="_blank">
-            导出
+            Export
           </a>
 
           <button class="btn btn-info ml-2" @click="deleteExpired()">
-            清理
+            Clean up
           </button>
         </div>
       </div>
@@ -90,7 +90,7 @@
             <ul class="pagination pull-left">
               <li class="active">
                 <span style="margin-top: 0.5em; display: block; ">
-                  <strong>{{ total }}</strong> 结果，显示 {{ currentPage }} / {{ ceil(total / 10) }} 页
+                  <strong>{{ total }}</strong> The results show that {{ currentPage }} / {{ ceil(total / 10) }} page
                 </span>
               </li>
             </ul>
@@ -101,25 +101,25 @@
             <thead>
               <tr>
                 <th nowrap>
-                  主机名
+                CPU name
                 </th>
                 <th>
-                  注册 IP
+                 Register IP
                 </th>
                 <th>
-                  RASP 版本
+                RASP version
                 </th>
                 <th>
-                  RASP 目录
+                 RASP directory
                 </th>
                 <th>
-                  上次通信
+                Upper communication
                 </th>
                 <th>
-                  状态
+                status
                 </th>
                 <th>
-                  操作
+                operating
                 </th>
               </tr>
             </thead>
@@ -145,31 +145,31 @@
                 </td>
                 <td nowrap>
                   <span v-if="! row.online" class="text-danger">
-                    离线
+                  Offline
                   </span>
                   <span v-if="row.online">
-                    正常
+                 normal
                   </span>
                 </td>
                 <td nowrap>
                   <a href="javascript:" @click="setComment(row)">
-                    备注
+                  Remarks
                   </a>
                   <a href="javascript:" v-if="! row.online" @click="doDelete(row)">
-                    删除
+                  delete
                   </a>
                 </td>
               </tr>
             </tbody>
           </table>
 
-          <p v-if="! loading && total == 0" class="text-center">暂无数据</p>
+          <p v-if="! loading && total == 0" class="text-center">No data</p>
 
           <nav v-if="! loading && total > 10">
             <ul class="pagination pull-left">
               <li class="active">
                 <span style="margin-top: 0.5em; display: block; ">
-                  <strong>{{ total }}</strong> 结果，显示 {{ currentPage }} / {{ ceil(total / 10) }} 页
+                  <strong>{{ total }}</strong> The results show that {{ currentPage }} / {{ ceil(total / 10) }} page
                 </span>
               </li>
             </ul>
@@ -241,8 +241,8 @@ export default {
     }
   },
   mounted() {
-    // 记住主机状态
-    // TODO: 改为类库实现
+    // Remember host status
+    // TODO:Change to class library implementation
     // console.log('load filter')
     try {
       let filter = JSON.parse(localStorage.getItem('host_filter_status'))
@@ -256,7 +256,7 @@ export default {
       }
     } catch (e) {}
 
-    // 加载信息
+    // Loading information
     if (this.current_app.id) {
       this.loadRaspList(1)
     }
@@ -282,7 +282,7 @@ export default {
       } else if (!this.filter.online && this.filter.offline) {
           body.data.online = false
       }
-      // 筛选语言
+      //Filter language
       if (this.filter.language_java && !this.filter.language_php) {
         body.data.language = "java"
       } else if (!this.filter.language_java && this.filter.language_php) {
@@ -300,30 +300,30 @@ export default {
     },
     toHostStatus() {
       if (this.filter.online && this.filter.offline) {
-        return ': 全部'
+        return ': All'
       }
       if (! this.filter.online && ! this.filter.offline) {
         return ''
       }
 
       if (this.filter.online) {
-        return ': 仅在线'
+        return ':Online only'
       } else {
-        return ': 仅离线'
+        return ': Offline only'
       }      
     },
     toLanguageStatus() {
       if (this.filter.language_java && this.filter.language_php) {
-        return ': 全部'
+        return ':All'
       }
       if (! this.filter.language_java && ! this.filter.language_php) {
         return ''
       }
 
       if (this.filter.language_java) {
-        return ': 仅 Java'
+        return ': Java only'
       } else {
-        return ': 仅 PHP'
+        return ':PHP only'
       }      
     },
     showHostDetail(data) {
@@ -339,7 +339,7 @@ export default {
         return
       }
 
-      // 每次搜索 rasp，都应该触发一次版本聚合
+      // Each search for rasp should trigger a version aggregation
       this.enumAgentVersion()
 
       const body = {
@@ -366,8 +366,7 @@ export default {
         body.data.online = true
       } else if (!this.filter.online && this.filter.offline) {
         body.data.online = false
-      }
-      // 筛选语言
+      }// 筛选语言
       if (this.filter.language_java && !this.filter.language_php) {
         body.data.language = "java"
       } else if (!this.filter.language_java && this.filter.language_php) {
@@ -383,7 +382,7 @@ export default {
     },
     setComment: function(data) {
       var oldVal = data.description
-      var newVal = prompt('输入新的备注', oldVal)
+      var newVal = prompt('Enter a new note', oldVal)
 
       if (newVal == null) {
         return
@@ -397,7 +396,7 @@ export default {
       })
     },
     doDelete: function(data) {
-      if (!confirm('确认删除? 删除前请先在主机端卸载 OpenRASP Agent')) {
+      if (!confirm('Confirm to delete? Please uninstall OpenRASP Agent on the host before deleting')) {
         return
       }
       var body = {
@@ -410,7 +409,7 @@ export default {
         .then(() => this.loadRaspList(1))
     },
     deleteExpired: function() {
-      if (!confirm('删除离线超过7天的主机？')) {
+      if (!confirm('Delete hosts offline for more than 7 days?')) {
         return
       }
 

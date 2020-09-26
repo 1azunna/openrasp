@@ -3,18 +3,18 @@
     <div class="card">
       <div class="card-header">
         <h3 class="card-title">
-          防护引擎白名单
+          Protection engine whitelist
         </h3>
       </div>
       <div class="card-body">
-        <p>最多允许200个URL，单条URL长度限制为200字符</p>
+        <p>A maximum of 200 URLs are allowed, and the length of a single URL is limited to 200 characters</p>
         <b-table hover bordered :items="data" :fields="fields">
           <template v-slot:cell(index)="data" nowrap>
             {{ data.index + 1 }}
           </template>
           <template v-slot:cell(hook)="data">
             <span v-if="data.value.all">
-              所有 Hook 点
+              All hook points
             </span>
             <span v-if="!data.value.all">
               {{ whitelist2str(data.value) }}
@@ -22,43 +22,43 @@
           </template>
           <template v-slot:cell(command)="data">
             <a href="javascript:" @click="showModal(data.index)">
-              编辑
+             edit
             </a>
             <a href="javascript:" @click="deleteItem(data.index)">
-              删除
+             delete
             </a>
           </template>
         </b-table>
-        <p v-if="data.length == 0" class="text-center">暂无数据</p>
+        <p v-if="data.length == 0" class="text-center">No data</p>
       </div>
       <div v-bind:class="{'card-footer': true, 'sticky-card-footer': sticky}">
         <button class="btn btn-info" @click="showModal(-1)">
-          添加
+          Add to
         </button>
         <button class="btn btn-primary pull-right" @click="doSave()">
-          保存
+         Save
         </button>
       </div>
     </div>
 
     <b-modal id="whitelistEditModal" ref="modal" no-fade title="添加/编辑 白名单" size="lg" hide-header-close @hidden="hideModal()" @shown="$refs.focus.focus()">
       <div class="form-group">
-        <label>URL前缀 - 不区分 http/https，不支持通配符或者正则，格式如 <span class="text-danger">rasp.baidu.com/phpmyadmin/</span>；若要匹配全部URL，请写 <strong>*</strong></label>
+        <label>URL prefix-does not distinguish between http/https, does not support wildcards or regular, format such as<span class="text-danger">rasp.baidu.com/phpmyadmin/</span>；To match all URLs, write <strong>*</strong></label>
         <input ref="focus" v-model.trim="modalData.url" maxlength="200" type="text" class="form-control" maxlen="200">
       </div>
       <div class="form-group">
-        <label>白名单备注（可选）</label>
+        <label>Whitelist note (optional)</label>
         <input ref="focus" v-model.trim="modalData.description" maxlength="200" type="text" class="form-control" maxlen="200">
       </div>
       <div class="form-group">
-        <label>检测点</label>
+        <label>check Point</label>
         <div class="row">
           <div class="col-12">
             <label class="custom-switch">
               <input v-model="modalData.hook.all" type="checkbox" class="custom-switch-input">
               <span class="custom-switch-indicator" />
               <span class="custom-switch-description">
-                关闭所有检测点
+               Turn off all detection points
               </span>
             </label>
           </div>
@@ -77,10 +77,10 @@
       </div>
       <div slot="modal-footer" class="w-100">
         <b-button class="float-right ml-2 btn-info" variant="default" @click="hideModal()">
-          取消
+         cancel
         </b-button>
         <b-button class="float-right ml-2" variant="primary" @click="hideModal(true)">
-          确定
+        determine
         </b-button>
       </div>
     </b-modal>
@@ -100,9 +100,9 @@ export default {
       fields: [
         { key: 'index', label: '#', tdAttr: {'nowrap': ''} },
         { key: 'url', label: 'URL' },
-        { key: 'hook', label: '检测点', tdAttr: {'style': 'min-width: 150px; '} },
-        { key: 'description', label: '备注' },
-        { key: 'command', label: '操作', tdAttr: {'nowrap': ''} }
+        { key: 'hook', label: 'check Point', tdAttr: {'style': 'min-width: 150px; '} },
+        { key: 'description', label: 'Remarks' },
+        { key: 'command', label: 'operating', tdAttr: {'nowrap': ''} }
       ],
       modalData: { url: '', hook: {}, description: ''},
       attack_types
@@ -124,7 +124,7 @@ export default {
     },
     showModal(index) {
       if (index === -1 && this.data.length >= 200) {
-        alert('为了保证性能，白名单最多支持 200 条')
+        alert('In order to ensure performance, the whitelist supports up to 200 entries')
         return
       }
 
@@ -136,17 +136,17 @@ export default {
     hideModal(save) {
       if (save === true) {
         if (!this.modalData.url || this.modalData.url.trim().length == 0) {
-          alert('URL 未填写')
+          alert('URL is not filled in')
           return
         }
         if (this.modalData.url.startsWith('http://') || this.modalData.url.startsWith('https://')) {
-          alert('URL 无需以 http/https 开头，请删除')
+          alert('URL does not need to start with http/https, please delete')
           return
         }
 
         let hookSelected = Object.values(this.modalData.hook).indexOf(true)
         if (hookSelected < 0) {
-          alert('请至少选择一个 hook 点来加白名单')
+          alert('Please select at least one hook point to whitelist')
           return
         }
 
@@ -162,7 +162,7 @@ export default {
       this.setSticky(true)
     },
     deleteItem: function(index) {
-      if (!confirm('确认删除?')) {
+      if (!confirm('confirm deletion?')) {
         return
       }
       this.data.splice(index, 1)
@@ -179,7 +179,7 @@ export default {
         app_id: this.current_app.id,
         config: this.data
       }).then(() => {
-        alert('保存成功')
+        alert('Successfully saved')
       })
     }
   }

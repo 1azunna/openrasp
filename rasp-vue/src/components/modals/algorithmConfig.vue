@@ -4,7 +4,7 @@
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title">
-            高级选项
+           advanced options
           </h5>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close" />
         </div>
@@ -14,13 +14,13 @@
             <label class="custom-switch m-0">
               <input type="checkbox" v-model="data.pre_enable" class="custom-switch-input">
               <span class="custom-switch-indicator"></span>
-              <span class="custom-switch-description">开启关键词过滤: 有漏洞但是没有攻击时不报警</span>              
+              <span class="custom-switch-description">Enable keyword filtering: no alarm when there are loopholes but no attacks</span>              
             </label>
 
             <label class="custom-switch m-0">
               <input type="checkbox" v-model="data.allow_full" class="custom-switch-input">
               <span class="custom-switch-indicator"></span>
-              <span class="custom-switch-description">允许数据库查询: 通过接口传递完整SQL语句并执行</span>              
+              <span class="custom-switch-description">Allow database query: Pass the complete SQL statement through the interface and execute it</span>              
             </label>
           </div>
 
@@ -47,13 +47,13 @@
           </div>
 
           <div v-if="key.endsWith('_protocol')">
-            <label>禁止加载的协议列表，逗号分隔</label>
+            <label>A list of protocols that are prohibited from loading, separated by commas</label>
             <textarea class="form-control" autocomplete="off" autocorrect="off"
               autocapitalize="off" spellcheck="false" v-model.trim="protocol_concat"></textarea>            
           </div>
 
           <div v-if="key == 'eval_regex'">
-            <label>EVAL 语句正则表达式</label>
+            <label>EVAL statement regular expression</label>
             <div v-bind:class="{'form-group': true, 'has-error': eval_regex_error}">
               <input type="text" v-model.trim="data.regex" class="form-control">
             </div>
@@ -61,7 +61,7 @@
           </div>          
 
           <div v-if="key == 'sql_regex'">
-            <label>SQL语句正则表达式</label>
+            <label>SQL statement regular expression</label>
             <div v-bind:class="{'form-group': true, 'has-error': sql_regex_error}">
               <input type="text" v-model.trim="data.regex" class="form-control">
             </div>
@@ -69,14 +69,14 @@
           </div>
 
           <div v-if="key == 'sql_exception'">
-            <label>SQL异常代码（逗号分隔；v1.2.1 之前不支持自定义错误代码）</label>
+            <label>SQL exception codes (comma separated; custom error codes are not supported before v1.2.1）</label>
             <div class="form-group">
               <input type="text" v-model.trim="error_code_concat" class="form-control">
             </div>
           </div>
 
           <div v-if="key == 'command_common'">
-            <label>渗透命令探针 - 正则表达式</label>
+            <label>Penetration Command Probe-Regular Expression</label>
             <div v-bind:class="{'form-group': true, 'has-error': command_common_error}">
               <input type="text" v-model.trim="data.pattern" class="form-control">
             </div>
@@ -87,21 +87,21 @@
             <label class="custom-switch m-0">
               <input type="checkbox" v-model="data.kind.phone" class="custom-switch-input">
               <span class="custom-switch-indicator"></span>
-              <span class="custom-switch-description">检测手机号泄露</span>              
+              <span class="custom-switch-description">Detect mobile phone number leakage</span>              
             </label>
             <br/>
 
             <label class="custom-switch m-0">
               <input type="checkbox" v-model="data.kind.identity_card" class="custom-switch-input">
               <span class="custom-switch-indicator"></span>
-              <span class="custom-switch-description">检测身份证泄露</span>              
+              <span class="custom-switch-description">Detect ID card leaks</span>              
             </label>
             <br/>
 
             <label class="custom-switch m-0">
               <input type="checkbox" v-model="data.kind.bank_card" class="custom-switch-input">
               <span class="custom-switch-indicator"></span>
-              <span class="custom-switch-description">检测银行卡、信用卡泄露</span>              
+              <span class="custom-switch-description">Detect bank card and credit card leaks</span>              
             </label>
           </div>
 
@@ -137,51 +137,50 @@ export default {
       error_code_concat: '',
       sql_policy_keys: [
         {
-          key:   'stacked_query',
-          descr: '拦截多语句执行，如 select ...; update ...',
+          key:'stacked_query',
+          descr:'Intercept the execution of multiple statements, such as select ...; update ...',
         },
         {
-          key:   'no_hex',
-          descr: '拦截16进制字符串，如 0x41424344',
+          key:'no_hex',
+          descr:'Intercept hexadecimal strings, such as 0x41424344',
         },
         {
-          key:   'version_comment',
-          descr: '拦截版本号注释，如 select/*!500001,2,*/3',
+          key:'version_comment',
+          descr:'Intercept the version number comment, such as select/*!500001,2,*/3',
         },
         {
-          key:   'function_blacklist',
-          descr: '拦截黑名单函数，如 load_file、sleep、updatexml',
+          key:'function_blacklist',
+          descr:'Intercept blacklist functions, such as load_file, sleep, updatexml',
         },
         {
-          key:   'function_count',
-          descr: '函数频次算法，如 chr(123)||chr(123)||chr(123)',
+          key:'function_count',
+          descr:'Function frequency algorithm, such as chr(123)||chr(123)||chr(123)',
         },
         {
-          key:   'union_null',
-          descr: '拦截连续3个NULL或者数字，如 select NULL,NULL,NULL',
+          key:'union_null',
+          descr:'Intercept 3 consecutive NULLs or numbers, such as select NULL, NULL, NULL',
         },
         {
-          key:   'into_outfile',
-          descr: '拦截 into outfile 写文件操作',
+          key:'into_outfile',
+          descr:'Intercept into outfile write file operation',
         },
         {
-          key:   'information_schema',
-          descr: '拦截 information_schema 相关操作'
+          key:'information_schema',
+          descr:'Intercept information_schema related operations'
         }
       ],
       command_error_keys: [
         {
-          key:   'unbalanced_quote_enable',
-          descr: '检查单双反引号的个数，是否为基数'
+          key:'unbalanced_quote_enable',
+          descr:'Check the number of single and double backquotes, whether it is a base'
         },
         {
-          key:   'sensitive_cmd_enable',
-          descr: '检查恶意的命令拼接操作，如 | bash'
+          key:'sensitive_cmd_enable',
+          descr:'Check for malicious command splicing operations, such as | bash'
         },
         {
-          key:   'alarm_token_enable',
-          descr: '检查恶意的 TOKEN，如 $IFS'
-        }
+          key:'alarm_token_enable',
+          descr:'Check for malicious TOKEN, such as $IFS'        }
       ]
     }
   },
@@ -190,7 +189,7 @@ export default {
       if (this.key == 'sql_regex')
         this.sql_regex_error = this.validateRegex(newval)
     },
-    // 以前的版本插件写错了，没有统一命名为 `regex`，为了兼容只能先这样了
+    // The previous version of the plug-in was wrong, and it was not named as `regex`. For compatibility, we can only do this
     'data.pattern': function(newval, oldval) {
       if (this.key == 'command_common')
         this.command_common_error = this.validateRegex(newval)

@@ -6,7 +6,7 @@ import org.apache.log4j.helpers.PatternParser;
 import org.apache.log4j.spi.LoggingEvent;
 
 /**
- * @description: 自定义log4j的pattern解析器
+ * @description: Custom log4j pattern parser
  * @author: anyang
  * @create: 2018/10/23 17:02
  */

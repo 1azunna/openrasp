@@ -21,7 +21,7 @@ import java.util.List;
 
 /**
  * @author anyang
- * @Description: 字典树
+ * @Description: Dictionary tree
  * @date 2018/9/13 15:13
  */
 public class DoubleArrayTrie {

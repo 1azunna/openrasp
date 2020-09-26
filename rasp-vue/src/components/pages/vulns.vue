@@ -3,7 +3,7 @@
     <div class="container">
       <div class="page-header">
         <h1 class="page-title">
-          漏洞列表
+          Vulnerability list
         </h1>
         <div class="page-options d-flex">
           <div class="input-icon ml-2">
@@ -12,7 +12,7 @@
             </span>
             <DatePicker ref="datePicker" @selected="loadEvents(1)" />
           </div>
-          <b-dropdown text="拦截状态" class="ml-2" right>
+          <b-dropdown text="Blocking state" class="ml-2" right>
             <b-container style="width: 250px;">
               <b-form-row>
                 <template v-for="(value, key) in status_types">
@@ -29,7 +29,7 @@
               </b-form-row>
             </b-container>
           </b-dropdown>           
-          <b-dropdown text="漏洞类型" class="ml-2" right>
+          <b-dropdown text="Vulnerability type" class="ml-2" right>
             <b-container style="width: 500px;">
               <b-form-row>
                 <b-col>
@@ -37,7 +37,7 @@
                     <input type="checkbox" class="custom-switch-input" checked @change="selectAll">
                     <span class="custom-switch-indicator" />
                     <span class="custom-switch-description">
-                      全选
+                      select all
                     </span>
                   </label>
                 </b-col>
@@ -64,7 +64,7 @@
             <input v-model.trim="url" type="text" class="form-control w-10" placeholder="目标URL" @keyup.enter="loadEvents(1)">
           </div>
           <button class="btn btn-primary ml-2" @click="loadEvents(1)">
-            搜索
+            search for
           </button>
         </div>
       </div>
@@ -76,7 +76,7 @@
             <ul class="pagination pull-left">
               <li class="active">
                 <span style="margin-top: 0.5em; display: block; ">
-                  <strong>{{ total }}</strong> 结果，显示 {{ currentPage }} / {{ ceil(total / 10) }} 页
+                  <strong>{{ total }}</strong> The results show that {{ currentPage }} / {{ ceil(total / 10) }}page
                 </span>
               </li>
             </ul>
@@ -87,25 +87,25 @@
             <thead>
               <tr>
                 <th>
-                  最后发现
+                  Finally found
                 </th>
                 <th style="min-width: 150px; ">
                   URL
                 </th>
                 <th>
-                  攻击来源
+                  Source of attack
                 </th>
                 <th>
-                  最后状态
+                  Final state
                 </th>
                 <th nowrap>
-                  漏洞类型
+                 Vulnerability type
                 </th>
                 <th>
-                  报警消息
+                  Alarm message
                 </th>
                 <th>
-                  操作
+                 operating
                 </th>
               </tr>
             </thead>
@@ -129,7 +129,7 @@
                     </a>                    
                     <br/>
                   </div>
-                  利用 {{ row.attack_count }} 次
+                  Use{{ row.attack_count }} 次
                 </td>
                 <td nowrap>
                   {{ block_status2name(row.intercept_state) }}
@@ -144,19 +144,19 @@
                 </td>
                 <td nowrap>
                   <a href="javascript:" @click="showEventDetail(row)">
-                    查看详情
+                    see details
                   </a>
                 </td>
               </tr>
             </tbody>
           </table>
-          <p v-if="! loading && total == 0" class="text-center">暂无数据</p>
+          <p v-if="! loading && total == 0" class="text-center">No data</p>
 
           <nav v-if="! loading && total > 10">
             <ul class="pagination pull-left">
               <li class="active">
                 <span style="margin-top: 0.5em; display: block; ">
-                  <strong>{{ total }}</strong> 结果，显示 {{ currentPage }} / {{ ceil(total / 10) }} 页
+                  <strong>{{ total }}</strong> The results show that {{ currentPage }} / {{ ceil(total / 10) }} page
                 </span>
               </li>
             </ul>

@@ -1,12 +1,12 @@
 #!/bin/bash
-# 中文 PHP 扩展编译说明
+# Chinese PHP extension compilation instructions
 # https://rasp.baidu.com/doc/hacking/compile/php.html
 
 set -ex
 script_base="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
 cd "$script_base"
 
-# PHP 版本和架构
+# PHP version and architecture
 php_version=$(php -r 'echo PHP_MAJOR_VERSION, ".", PHP_MINOR_VERSION;')
 php_arch=$(uname -m)
 php_zts=$(php -r 'echo ZEND_THREAD_SAFE ? "-ts" : "";')
@@ -25,7 +25,7 @@ case "$(uname -s)" in
 		;;
 esac
 
-# 编译 openrasp-v8
+# Compile openrasp-v8
 git submodule update --init
 rm -rf openrasp-v8/build
 mkdir -p openrasp-v8/build
@@ -35,11 +35,11 @@ make
 
 cd "$script_base"
 
-# 确定编译目录
+#Determine the compilation directory
 output_base="$script_base/rasp-php-$(date +%Y-%m-%d)"
 output_ext="$output_base/php${php_zts}/${php_os}-php${php_version}-${php_arch}"
 
-# 编译
+#Compile
 cd agent/php7
 phpize --clean
 phpize
@@ -54,26 +54,26 @@ fi
 
 make
 
-# 复制扩展
+# Copy extension
 mkdir -p "$output_ext"
 cp modules/openrasp.so "$output_ext"/
 make distclean
 phpize --clean
 
-# 复制其他文件
+# Copy other files
 mkdir -p "$output_base"/{conf,assets,logs,locale,plugins}
 cp ../../plugins/official/plugin.js "$output_base"/plugins/official.js
 cp ../../rasp-install/php/*.php "$output_base"
 cp ../../rasp-install/php/openrasp.yml "$output_base"/conf/openrasp.yml
 cp ../../rasp-install/php/iast.yml "$output_base"/conf/iast.yml
 
-# 生成并拷贝mo文件
+# Generate and copy the mo file
 ./scripts/locale.sh
 mv ./po/locale.tar "$output_base"/locale
 cd "$output_base"/locale
 tar xvf locale.tar && rm -f locale.tar
 
-# 打包
+# Bale
 cd "$script_base"
 if [[ -z "$NO_TAR" ]]; then
 	tar --numeric-owner --group=0 --owner=0 -cjvf "$script_base/rasp-php.tar.bz2" "$(basename "$output_base")"

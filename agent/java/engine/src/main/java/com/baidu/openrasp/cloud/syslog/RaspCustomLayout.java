@@ -5,7 +5,7 @@ import org.apache.log4j.helpers.PatternParser;
 
 /**
  * @program openrasp
- * @description: 自定义patternLayout
+ * @description: Custom patternLayout
  * @author: anyang
  * @create: 2018/10/23 11:49
  */

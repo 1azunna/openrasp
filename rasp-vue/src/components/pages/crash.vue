@@ -11,10 +11,10 @@
           "
         >
           <h1 class="page-title" style="padding-top: 3px;">
-            崩溃信息
+           Crash information
           </h1>
           <div class="page-options d-flex" style="margin-top: 5px;">
-            <!-- <b-dropdown text="应用语言" class="ml-4" right>
+            <!-- <b-dropdown text="Application language" class="ml-4" right>
               <b-container style="width: 250px;">
                 <b-form-row>
                   <template v-for="(row, index) in language_list">
@@ -50,7 +50,7 @@
                 v-model.trim="hostname"
                 type="text"
                 class="form-control w-10"
-                placeholder="主机名称"
+                placeholder="Host Name"
                 @keyup.enter="loadEvents(1)"
               />
             </div>
@@ -63,7 +63,7 @@
                 v-model.trim="crash_message"
                 type="text"
                 class="form-control w-10"
-                placeholder="报警信息"
+                placeholder="Alarm Information"
                 style="width: 210px;"
                 @keyup.enter="loadEvents(1)"
               />
@@ -92,7 +92,7 @@
             <ul class="pagination pull-left">
               <li class="active">
                 <span style="margin-top: 0.5em; display: block;">
-                  <strong>{{ total }}</strong> 结果，显示 {{ currentPage }} /
+                  <strong>{{ total }}</strong> As a result, {{ currentPage }} /
                   {{ ceil(total / 10) }} 页
                 </span>
               </li>
@@ -110,22 +110,22 @@
             <thead>
               <tr>
                 <th>
-                  最后发现时间
+                 Finally found time
                 </th>
                 <th nowrap>
-                  主机名
+                 CPU name
                 </th>
                 <th>
-                  RASP 版本
+                 RASP version
                 </th>
                 <th>
-                  RASP 目录
+                 RASP directory
                 </th>
                 <th nowrap>
-                  报警信息
+                 Alarm information
                 </th>
                 <th>
-                  操作
+                 operating
                 </th>
               </tr>
             </thead>
@@ -151,20 +151,20 @@
                 </td>
                 <td nowrap>
                   <a href="javascript:" @click="showEventDetail(row)">
-                    查看详情
+                  see details
                   </a>
                 </td>
               </tr>
             </tbody>
           </table>
-          <p v-if="!loading && total == 0" class="text-center">暂无数据</p>
+          <p v-if="!loading && total == 0" class="text-center">No data yet</p>
 
           <nav v-if="!loading && total > 10">
             <ul class="pagination pull-left">
               <li class="active">
                 <span style="margin-top: 0.5em; display: block;">
-                  <strong>{{ total }}</strong> 结果，显示 {{ currentPage }} /
-                  {{ ceil(total / 10) }} 页
+                  <strong>{{ total }}</strong>The results show that {{ currentPage }} /
+                  {{ ceil(total / 10) }}page
                 </span>
               </li>
             </ul>

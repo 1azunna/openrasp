@@ -3,19 +3,18 @@
     <b-card>
       <div slot="header">
         <h3 class="card-title">
-          后台设置
+         Background settings
         </h3>
       </div>
       <div class="form-group">
         <label class="form-label">
-          管理后台地址 [用于生成邮件里的报警链接]
+          Manage background address [used to generate alarm link in email]
         </label>
         <input v-model="data.panel_url" type="text" class="form-control" />
       </div>
       <div class="form-group">
         <label class="form-label">
-          若开启<a href="https://rasp.baidu.com/doc/install/panel.html#load-balance" target="_blank">负载均衡</a>，请填写 Agent 服务器列表 [用于生成 "添加主机" 里的安装命令，一行一个]
-        </label>
+         If you enable <a href="https://rasp.baidu.com/doc/install/panel.html#load-balance" target="_blank">load balancing</a>, please fill in the Agent server list [for Generate the installation commands in "Add Host", one per line]</label>
         <textarea
           type="text"
           class="form-control"
@@ -25,23 +24,23 @@
       </div>
       <div slot="footer">
         <b-button variant="primary" @click="saveData">
-          保存
+          Save
         </b-button>
       </div>
     </b-card>
     <b-card>
       <div slot="header">
         <h3 class="card-title">
-          清空数据
+         Clear data
         </h3>
       </div>     
-      <p>点击执行后，会清空如下内容（<strong>仅当前应用</strong>）</p>      
+      <p>After clicking execute, the following content will be cleared (<strong>Current application only</strong>）</p>      
       <ul>
-        <li v-for="x in ['攻击事件', '基线报警', '异常日志', '请求数量', '崩溃信息']">{{x}}</li>
+        <li v-for="x in ['attack event', 'baseline alarm', 'abnormal log', 'number of requests', 'crash information']">{{x}}</li>
       </ul>
       <div slot="footer">
         <b-button variant="danger" @click="removeLogs">
-          执行
+         carried out
         </b-button>
       </div>
     </b-card>
@@ -92,11 +91,11 @@ export default {
         agent_urls: this.parseAgentURL()
       };
       return this.request.post("v1/api/server/url", data).then(() => {
-        alert("保存成功");
+        alert("Successfully saved");
       });
     },
     removeLogs: function() {
-      if (! confirm('清空日志不可恢复，请确认')) {
+      if (! confirm('Empty log cannot be recovered, please confirm')) {
         return
       }
 
@@ -105,7 +104,7 @@ export default {
       }
 
       return this.request.post("v1/api/server/clear_logs", data).then(() => {
-        alert("操作成功");
+        alert("operation successful");
       });
     }
   }

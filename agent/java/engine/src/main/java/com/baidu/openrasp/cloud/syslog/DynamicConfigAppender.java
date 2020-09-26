@@ -35,7 +35,7 @@ import java.io.FileInputStream;
 import java.util.Map;
 
 /**
- * @description: 根据配置动态开启syslog
+ * @description: Open syslog dynamically according to configuration
  * @author: anyang
  * @create: 2018/10/12 11:35
  */
@@ -92,7 +92,7 @@ public class DynamicConfigAppender {
     }
 
     /**
-     * 初始化log4j的logger，并添加fileAppender
+     * Initialize log4j logger, and add fileAppender
      */
     public static void initLog4jLogger() {
         String log4jBaseDir = getLog4jPath(false, null);
@@ -131,12 +131,12 @@ public class DynamicConfigAppender {
             }
         }
         setLogMaxBackup();
-        //初始化时是否开启log4j的debug的功能
+     //Whether the debug function of log4j is turned on during initialization
         enableDebug();
     }
 
     /**
-     * 创建fileAppender
+     * Create fileAppender
      */
     public static OpenraspDailyRollingFileAppender createFileAppender(String appender, String targetPath) {
         OpenraspDailyRollingFileAppender fileAppender = new OpenraspDailyRollingFileAppender();
@@ -158,7 +158,7 @@ public class DynamicConfigAppender {
     }
 
     /**
-     * 创建NullAppender
+     * Create NullAppender
      */
     public static NullAppender createNullAppender(String appenderName) {
         NullAppender appender = new NullAppender();
@@ -167,7 +167,7 @@ public class DynamicConfigAppender {
     }
 
     /**
-     * 为fileAppender添加限速filter
+     * Add rate limit filter for fileAppender
      */
     public static void fileAppenderAddBurstFilter() {
         for (AppenderMappedLogger type : AppenderMappedLogger.values()) {
@@ -191,7 +191,7 @@ public class DynamicConfigAppender {
     }
 
     /**
-     * 为httpAppender添加限速filter
+     * Add speed limit filter for httpAppender
      */
     public static void httpAppenderAddBurstFilter() {
         Logger.getRootLogger().getAppender(AppenderMappedLogger.HTTP_ROOT.getAppender()).clearFilters();
@@ -203,7 +203,7 @@ public class DynamicConfigAppender {
     }
 
     /**
-     * 创建日志限速filter
+     * Create log rate limit filter
      */
     public static BurstFilter createBurstFilter() {
         BurstFilter filter = new BurstFilter();
@@ -215,7 +215,7 @@ public class DynamicConfigAppender {
     }
 
     /**
-     * log4j debug开关
+     * log4j debug switch
      */
     public static void enableDebug() {
         if (Config.getConfig().isDebugEnabled()) {
@@ -228,7 +228,7 @@ public class DynamicConfigAppender {
     }
 
     /**
-     * 为fileAppender设置最大日志备份天数
+     * Set the maximum log backup days for fileAppender
      */
     public static void setLogMaxBackup() {
         int logMaxBackup = Config.getConfig().getLogMaxBackUp();
@@ -254,7 +254,7 @@ public class DynamicConfigAppender {
         }
     }
 
-    //手动触发日志文件rotate
+     //Manually trigger the log file rotate
     private static void fileAppenderRollFiles(OpenraspDailyRollingFileAppender fileAppender) {
         try {
             String fileName = fileAppender.getFile();
@@ -265,7 +265,7 @@ public class DynamicConfigAppender {
     }
 
     /**
-     * 获取log4j的日志自定义路径
+     * Get the log custom path of log4j
      */
     private static String getLog4jPath(boolean isCloud, String path) {
         if (isCloud) {
@@ -295,7 +295,7 @@ public class DynamicConfigAppender {
     }
 
     /**
-     * 更新log4j的日志自定义路径
+     * Update the log custom path of log4j
      */
     public static void updateLog4jPath(boolean isCloud, String path) {
         String log4jBaseDir = getLog4jPath(isCloud, path);

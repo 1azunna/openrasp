@@ -1,6 +1,6 @@
 const plugin_version = '2018-1000-1000'
 const plugin_name    = 'event-logger-normalize'
-const plugin_desc    = '事件记录器插件（范式化SQL）'
+const plugin_desc    = 'Event recorder plugin (normalized SQL)'
 
 //
 // OpenRASP plugin: event logger - normalize SQL phrase
@@ -46,15 +46,15 @@ plugin.register('command', function (params, context) {
     return clean
 })
 
-// 为了提高性能，只有当OGNL表达式长度超过30时，才会调用插件
-// 这个30可以配置，aka "ognl.expression.minlength"
+// In order to improve performance, only when the length of the OGNL expression exceeds 30, the plugin will be called
+// This 30 can be configured, aka "ognl.expression.minlength"
 // https://rasp.baidu.com/doc/setup/others.html
 plugin.register('ognl', function (params, context) {
     plugin.log('Evaluating OGNL expression: ' + params.expression)
     return clean
 })
 
-// 下面的这些方法，可能产生大量日志
+// The following methods may generate a lot of logs
 plugin.register('xxe', function (params, context) {
     plugin.log('Loading XML entity: ' + params.entity)
     return clean
@@ -80,7 +80,7 @@ function normalize_query(query) {
     for (var i = 0; i < tokens.length; i ++) {
         var token = tokens[i]
 
-        // 检查是否为字符串
+        // Check if it is a string
         if ( (token[0] == "'" || token[0] == '"') &&
             (token[token.length - 1] == "'" || token[token.length - 1] == '"'))
         {
@@ -91,9 +91,9 @@ function normalize_query(query) {
     return tokens.join(' ')
 }
 
-// 记录SQL日志，可能带来如下两种问题
-// 1. 查询语句中，可能包含敏感信息
-// 2. 日志量可能会很大
+// Recording SQL logs may bring the following two problems
+// 1. The query statement may contain sensitive information
+// 2. The amount of logs may be large
 plugin.register('sql', function (params, context) {
     plugin.log('SQL query: ' + normalize_query(params.query))
     return clean

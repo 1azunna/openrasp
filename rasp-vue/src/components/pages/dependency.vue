@@ -3,7 +3,7 @@
     <div class="container">
       <div class="page-header">
         <h1 class="page-title">
-          类库信息
+          Class library information
         </h1>
         <div class="page-options d-flex">
           <!--
@@ -18,18 +18,18 @@
             <span class="input-icon-addon">
               <i class="fe fe-search" />
             </span>
-            <b-form-input v-model.trim="hostname" type="text" class="form-control" placeholder="搜索主机/IP/OS"
+            <b-form-input v-model.trim="hostname" type="text" class="form-control" placeholder="Search host/IP/OS"
                           @keyup.enter="fetchData(1)" />
           </div>
           <div class="input-icon ml-2">
             <span class="input-icon-addon">
               <i class="fe fe-search" />
             </span>
-            <b-form-input v-model.trim="key_word" type="text" class="form-control" placeholder="搜索厂商或者产品"
+            <b-form-input v-model.trim="key_word" type="text" class="form-control" placeholder="Search manufacturer or product"
                           @keyup.enter="fetchData(1)" />
           </div>
           <button class="btn btn-primary ml-2" @click="fetchData(1)">
-            搜索
+           search for
           </button>
         </div>
       </div>
@@ -41,7 +41,7 @@
             <ul class="pagination pull-left">
               <li class="active">
                 <span style="margin-top: 0.5em; display: block; ">
-                  <strong>{{ total }}</strong> 结果，显示 {{ currentPage }} / {{ ceil(total / 10) }} 页
+                  <strong>{{ total }}</strong>The results show that {{ currentPage }} / {{ ceil(total / 10) }}page
                 </span>
               </li>
             </ul>
@@ -50,17 +50,17 @@
 
           <b-table hover bordered :items="data" :fields="fields">
             <template v-slot:cell(button)="data">
-              <b-link @click="showDependencyDetail(data.item)">查看详情</b-link>
+              <b-link @click="showDependencyDetail(data.item)">View details</b-link>
             </template>
           </b-table>
 
-          <p v-if="! loading && total == 0" class="text-center">暂无数据</p>
+          <p v-if="! loading && total == 0" class="text-center">No data</p>
 
           <nav v-if="! loading && total > 10">
             <ul class="pagination pull-left">
               <li class="active">
                 <span style="margin-top: 0.5em; display: block; ">
-                  <strong>{{ total }}</strong> 结果，显示 {{ currentPage }} / {{ ceil(total / 10) }} 页
+                  <strong>{{ total }}</strong>The results show that{{ currentPage }} / {{ ceil(total / 10) }} 页
                 </span>
               </li>
             </ul>
@@ -96,11 +96,11 @@ export default {
       key_word: '',
       total: 0,
       fields: [
-        { key: 'vendor',     label: '厂商' },
-        { key: 'product',    label: '产品' },
-        { key: 'version',    label: '版本号',   tdAttr: { 'style': 'min-width: 150px;' } },
-        { key: 'rasp_count', label: '影响主机' },
-        { key: 'button',     label: '查看详情', class: 'text-nowrap' }
+        {key:'vendor', label:'vendor' },
+        {key:'product', label:'product' },
+        {key:'version', label:'version number', tdAttr: {'style':'min-width: 150px;'} },
+        {key:'rasp_count', label:'Affect the host' },
+        {key:'button', label:'View details', class:'text-nowrap'}
       ]
     }
   },

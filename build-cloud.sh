@@ -4,7 +4,7 @@
 # Output to rasp-cloud.tar.gz
 #
 
-# Mac 下面需要用 coreutils/gnu-tar 编译
+# Mac needs to be compiled with coreutils/gnu-tar
 if [[ $(uname -s) == "Darwin" ]]; then
     if [[ $(which readlink) == "/usr/bin/readlink" ]] || [[ $(which tar) == "/usr/bin/tar" ]]; then
         echo "The release script is supposed to run on Linux server only."
@@ -46,12 +46,12 @@ function repack()
     mkdir tmp
     tar xf "$tar" -C tmp
 
-    # 仅在 Linux 编译环境下 strip 二进制包
+   # Strip binary package only in Linux compilation environment
     if [[ $(uname -s) == "Linux" ]] && file tmp/rasp-cloud | grep -q 'ELF 64-bit'; then
         strip -s tmp/rasp-cloud
     fi
 
-    # 安装默认插件
+# Install the default plugin
     mkdir tmp/resources
     rm -rf tmp/dist
 
@@ -62,7 +62,7 @@ function repack()
     mv tmp "$name"
     tar --numeric-owner --owner=0 --group=0 -czf "$output" "$name"
 
-    # 删除临时文件，以前的包
+  # Delete temporary files, previous packages
     rm -rf "$name" "$tar"
 }
 
@@ -93,7 +93,7 @@ var BuildTime = "${build_time}"
 EOF
     fi
 
-    # 设置国内代理
+# Set up domestic agent
     go env -w GOPROXY=https://goproxy.cn,direct
 
     # linux

@@ -32,7 +32,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * @description: 云控注册接口
+ * @description: Cloud control registration interface
  * @author: anyang
  * @create: 2018/10/08 11:58
  */

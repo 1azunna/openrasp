@@ -26,7 +26,7 @@ import java.util.TreeMap;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 
 /**
- * @description: 缓存hook点的白名单信息
+ * @description: Cache whitelist information of hook points
  * @author: anyang
  * @create: 2018/09/13 20:55
  */

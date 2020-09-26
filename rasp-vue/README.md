@@ -1,19 +1,19 @@
-# OpenRASP 管理后台 - 前端界面
+# OpenRASP Management background-front-end interface
 
-本项目基于 vue2
+This project is based on vue2
 
-## 编译方法
+## Compilation method
 
-安装依赖，
+Installation dependencies,
 
 ```
 npm install
 ```
 
-编译，
+Compile,
 
 ```
 npm run build
 ```
 
-最后生成的文件在 `dist` 目录
+The final generated file is in the `dist` directory

@@ -1,6 +1,6 @@
 const plugin_version = '2018-1000-1000'
 const plugin_name    = 'event-logger'
-const plugin_desc    = '事件记录器插件'
+const plugin_desc    = 'Event recorder plugin'
 
 //
 // OpenRASP plugin: event logger
@@ -51,15 +51,15 @@ plugin.register('command', function (params, context) {
     return clean
 })
 
-// 为了提高性能，只有当OGNL表达式长度超过30时，才会调用插件
-// 这个30可以配置，aka "ognl.expression.minlength"
+// In order to improve performance, the plug-in will be called only when the length of the OGNL expression exceeds 30
+// This 30 can be configured, aka "ognl.expression.minlength"
 // https://rasp.baidu.com/doc/setup/others.html
 plugin.register('ognl', function (params, context) {
     plugin.log('Evaluating OGNL expression: ' + params.expression)
     return clean
 })
 
-// 下面的这些方法，可能产生大量日志
+//The following methods may generate a lot of logs
 plugin.register('xxe', function (params, context) {
     plugin.log('Loading XML entity: ' + params.entity)
     return clean

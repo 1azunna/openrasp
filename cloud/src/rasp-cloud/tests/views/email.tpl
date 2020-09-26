@@ -1,12 +1,12 @@
 <table border="1" cellspacing="0" cellpadding="5">
     <thead>
         <tr>
-            <th>报警时间</th>
-            <th>报警类型</th>
-            <th>攻击来源</th>
-            <th>攻击目标</th>
-            <th>拦截状态</th>
-            <th>报警详情</th>
+            <th>Alarm time</th>
+            <th>Alarm type</th>
+            <th>Source of attack</th>
+            <th>Target of attack</th>
+            <th>Interception status</th>
+            <th>Alarm details</th>
         </tr>
     </thead>
     <tbody>

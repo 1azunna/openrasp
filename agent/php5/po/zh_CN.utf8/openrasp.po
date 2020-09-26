@@ -1,5 +1,5 @@
 # Chinese translations for PACKAGE package
-# PACKAGE 软件包的简体中文翻译.
+# PACKAGE Simplified Chinese translation of the package.
 # Copyright (C) 2018 Baidu Inc.
 # This file is distributed under the same license as the PACKAGE package.
 # Automatically generated, 2018.

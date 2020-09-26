@@ -4,21 +4,21 @@
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title">
-            添加/编辑 应用
+            Add/edit application
           </h5>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close" />
         </div>
         <div class="modal-body">
           <div class="form-group">
-            <label>应用名称</label>
+            <label>Application Name</label>
             <input ref="name" v-model.trim="data.name" type="text" class="form-control">
           </div>
           <div class="form-group">
-            <label>应用备注</label>
+            <label>Application Note</label>
             <input v-model.trim="data.description" type="text" class="form-control">
           </div>
           <div class="form-group">
-            <label>应用语言</label>
+            <label>Application language</label>
             <select v-model="data.language" class="form-control">
               <option value="java">
                 java
@@ -31,10 +31,10 @@
         </div>
         <div class="modal-footer">
           <button class="btn btn-primary" data-dismiss="modal" @click="saveApp()">
-            保存
+            Save
           </button>
           <button class="btn btn-info" data-dismiss="modal">
-            关闭
+            shut down
           </button>
         </div>
       </div>

@@ -1,6 +1,6 @@
 const plugin_version = '2019-1220-1800'
 const plugin_name    = 'iast'
-const plugin_desc    = 'IAST Fuzz 插件'
+const plugin_desc    = 'IAST Fuzz plugin'
 
 /*
  * Copyright 2017-2019 Baidu Inc.
@@ -25,7 +25,7 @@ var plugin = new RASP(plugin_name)
 // BEGIN ALGORITHM CONFIG //
 
 var algorithmConfig = {
-    // 防止前端报错
+    // Prevent front-end errors
     meta: {},
     iast: {
         fuzz_server:     'http://127.0.0.1:25931/openrasp-result',
@@ -141,7 +141,7 @@ function send_rasp_result(context) {
     delete context.hook_info
     delete context.filter
 
-    // 不检测不包含hook_info的请求, xml类型除外
+    // Do not detect requests that do not contain hook_info, except for the xml type
     if (hook_info.length == 0 && 
         context.header["scan-request-id"] === undefined && 
         context.header["content-type"] != undefined &&
@@ -157,7 +157,7 @@ function send_rasp_result(context) {
         default_port = 80
     }
 
-    // 构建 context
+    //Build context
     var new_context             = Object.assign({}, context)
     new_context.json            = new_context.json || {}
     new_context.parameter       = new_context.parameter || {}
@@ -205,7 +205,7 @@ function send_rasp_result(context) {
         }
     }
 
-    // 将hook点信息发送给扫描服务器
+    // Send the hook point information to the scan server
     var data = {
         "web_server":     web_server,
         "context":        new_context,

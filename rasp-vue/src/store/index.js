@@ -43,7 +43,7 @@ const store = new Vuex.Store({
               if (res) {
                 commit('setCurrentApp', res)
               } else {
-                alert('没有这个应用: ' + appId)
+                alert('Not this app: ' + appId)
                 commit('setCurrentApp', data[0])
               }
             })

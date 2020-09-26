@@ -3,16 +3,16 @@
     <div class="container">
       <div class="page-header">
         <h1 class="page-title">
-          插件管理
+          Plugin management
         </h1>
         <div class="page-options d-flex">
           <FileUpload ref="fileUpload" />
         </div>
         <button class="btn btn-primary ml-2" @click="doUpload()">
-          提交
+          submit
         </button>
         <button class="btn btn-info ml-2" @click="loadPluginList(1)">
-          刷新
+          Refresh
         </button>
       </div>
       <div class="card">
@@ -23,7 +23,7 @@
             <ul class="pagination pull-left">
               <li class="active">
                 <span style="margin-top: 0.5em; display: block; ">
-                  <strong>{{ total }}</strong> 结果，显示 {{ currentPage }} / {{ ceil(total / 10) }} 页
+                  <strong>{{ total }}</strong> The results show that{{ currentPage }} / {{ ceil(total / 10) }}page
                 </span>
               </li>
             </ul>
@@ -33,47 +33,47 @@
           <table v-if="! loading" class="table table-bordered">
             <thead>
               <tr>
-                <th>上传时间</th>
-                <th>插件版本</th>
-                <th>当前版本</th>
-                <th>操作</th>
+                <th>Upload time</th>
+                <th>Plugin version</th>
+                <th>current version</th>
+                <th>operating</th>
               </tr>
             </thead>
             <tbody>
               <tr v-for="row in data" :key="row.id">
                 <td>{{ moment(row.upload_time).format('YYYY-MM-DD HH:mm:ss') }}</td>
                 <td>{{ row.name }}: {{ row.version }} 
-                  <span v-if="row.name == 'official'">(防护插件)</span>
-                  <span v-else-if="row.name == 'iast'">(扫描插件)</span>
+                  <span v-if="row.name == 'official'">(Protection plug-in)</span>
+                  <span v-else-if="row.name == 'iast'">(Scan plugin)</span>
                 </td>
                 <td>
                   <span v-if="current_app.selected_plugin_id == row.id">
-                    是
+                    Yes
                   </span>
                 </td>
                 <td>
                   <a href="javascript:" @click="doSelect(row)">
-                    推送
+                   Push
                   </a> &nbsp;
                   <a :href="'/v1/api/plugin/download?id='+row.id" target="_blank">
-                    下载
+                    download
                   </a> &nbsp;
                   <a href="javascript:" @click="doDelete(row)">
-                    删除
+                   delete
                   </a> &nbsp;
-                  <router-link v-if="current_app.selected_plugin_id == row.id" :to="{name: 'settings', params: {setting_tab: 'algorithm'}}">配置</router-link>
+                  <router-link v-if="current_app.selected_plugin_id == row.id" :to="{name: 'settings', params: {setting_tab: 'algorithm'}}">Configuration</router-link>
                 </td>
               </tr>
             </tbody>
           </table>
           
-          <p v-if="! loading && total == 0" class="text-center">暂无数据</p>
+          <p v-if="! loading && total == 0" class="text-center">No data</p>
 
           <nav v-if="! loading && total > 10">
             <ul class="pagination pull-left">
               <li class="active">
                 <span style="margin-top: 0.5em; display: block; ">
-                  <strong>{{ total }}</strong> 结果，显示 {{ currentPage }} / {{ ceil(total / 10) }} 页
+                  <strong>{{ total }}</strong>The results show that {{ currentPage }} / {{ ceil(total / 10) }} 页
                 </span>
               </li>
             </ul>
@@ -147,7 +147,7 @@ export default {
         id: row.id
       }
 
-      if (!confirm('确认删除?')) {
+      if (!confirm('confirm deletion?')) {
         return
       }
 
@@ -155,7 +155,7 @@ export default {
         .then(() => this.loadPluginList(1))
     },
     doSelect: function(row) {
-      if (!confirm('确认下发? 一个心跳周期后生效')) {
+      if (!confirm('Confirm to send? Takes effect after one heartbeat cycle')) {
         return
       }
 

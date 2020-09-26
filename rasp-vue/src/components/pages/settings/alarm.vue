@@ -4,7 +4,7 @@
     <div class="card">
       <div class="card-header">
         <h3 class="card-title">
-          报警类型配置
+          Alarm type configuration
         </h3>
         <div class="card-options">
           <!-- <label class="custom-switch m-0">
@@ -23,21 +23,21 @@
               <label class="custom-switch m-0">
                 <input type="checkbox" value="1" class="custom-switch-input" v-model="sendMethods[name].email">
                 <span class="custom-switch-indicator"></span>
-                <span class="custom-switch-description">邮件报警</span>
+                <span class="custom-switch-description">Email alarm</span>
               </label>
             </div>
             <div class="col">
               <label class="custom-switch m-0">
                 <input type="checkbox" value="1" class="custom-switch-input" v-model="sendMethods[name].ding">
                 <span class="custom-switch-indicator"></span>
-                <span class="custom-switch-description">钉钉报警</span>
+                <span class="custom-switch-description">Dingding alarm</span>
               </label>
             </div>
             <div class="col">
               <label class="custom-switch m-0">
                 <input type="checkbox" value="1" class="custom-switch-input" v-model="sendMethods[name].http">
                 <span class="custom-switch-indicator"></span>
-                <span class="custom-switch-description">HTTP 推送</span>
+                <span class="custom-switch-description">HTTP push</span>
               </label>
             </div>
           </div>
@@ -46,13 +46,13 @@
         <div>
           <div class="row" style="margin-top: 3px">
             <div class="col">
-              <label style="min-width: 220px;">客户端崩溃（v1.2.3 新增功能）</label>
+              <label style="min-width: 220px;">Client crashes (v1.2.3 new features）</label>
             </div>
             <div class="col">
               <label class="custom-switch m-0">
                 <input type="checkbox" value="1" class="custom-switch-input" v-model="sendMethods['crash'].email">
                 <span class="custom-switch-indicator"></span>
-                <span class="custom-switch-description">邮件报警</span>
+                <span class="custom-switch-description">Email alarm</span>
               </label>
             </div>
             <div class="col"></div>
@@ -63,14 +63,14 @@
       
       <div v-bind:class="{'card-footer': true, 'sticky-card-footer': sticky}">
         <button type="submit" class="btn btn-primary" @click="saveAlarmMethods()">
-          保存
+          Save
         </button>
 
         <button type="submit" class="btn btn-info pull-right" @click="resetAlarmMethods(false, true);">
-          全部关闭
+          Close all
         </button>
         <button type="submit" class="btn btn-info pull-right" @click="resetAlarmMethods(true, true);" style="margin-right: 5px; ">
-          全部打开
+          Open all
         </button>
       </div>
     </div>
@@ -80,7 +80,7 @@
     <div class="card">
       <div class="card-header">
         <h3 class="card-title">
-          报警通用配置(全局配置，对所有应用生效)
+          Alarm general configuration (global configuration, effective for all applications)
         </h3>
         <div class="card-options">
         </div>
@@ -88,7 +88,7 @@
       <div class="card-body">
         <div class="form-group">
           <label class="form-label">
-            每隔多少秒发送一次报警（报警并非实时发送，而是每隔一段时间检查ES里是否有新报警）
+           How many seconds to send an alarm (alarms are not sent in real time, but check whether there are new alarms in ES every time）
           </label>
           <input v-model.number="data.general_alarm_conf.alarm_check_interval"
                  class="form-control" placeholder=120>
@@ -96,7 +96,7 @@
       </div>
       <div class="card-footer">
         <button type="submit" class="btn btn-primary" @click="saveSettings('general')">
-          保存
+          Save
         </button>
       </div>
     </div>
@@ -106,7 +106,7 @@
     <div class="card">
       <div class="card-header">
         <h3 class="card-title">
-          邮件报警
+         Email alarm
         </h3>
         <div class="card-options">
           <!-- <label class="custom-switch m-0">
@@ -118,37 +118,37 @@
       <div class="card-body">
         <div class="form-group">
           <label class="form-label">
-            推送邮箱地址 - 逗号或者分号分隔
+           Push email address-separated by comma or semicolon
           </label>
           <input v-model.trim="data.email_alarm_conf.recv_addr" type="text" class="form-control" placeholder="user1@example.com; user2@example.com">
         </div>
         <div class="form-group">
           <label class="form-label">
-            报警标题
+           Alarm title
           </label>
           <input v-model.trim="data.email_alarm_conf.subject" type="text" class="form-control">
         </div>
         <div class="form-group">
           <label class="form-label">
-            自定义 From 头信息
+           Custom From header information
           </label>
           <input v-model.trim="data.email_alarm_conf.from" type="text" class="form-control">
         </div>
         <div class="form-group">
           <label class="form-label">
-            邮件服务器地址
+           Mail server address
           </label>
           <input v-model.trim="data.email_alarm_conf.server_addr" type="text" class="form-control" placeholder="smtp.163.com:25" autocomplete="off">
         </div>
         <div class="form-group">
           <label class="form-label">
-            邮箱账号
+            email address
           </label>
           <input v-model="data.email_alarm_conf.username" type="email" class="form-control" placeholder="hello@163.com" autocomplete="off">
         </div>
         <div class="form-group">
           <label class="form-label">
-            邮箱密码
+            email Password
           </label>
           <input v-model="data.email_alarm_conf.password" type="password" class="form-control" autocomplete="off">
         </div>
@@ -157,7 +157,7 @@
             <input v-model="data.email_alarm_conf.enable" type="checkbox" checked="data.email_alarm_conf.enable" class="custom-switch-input">
             <span class="custom-switch-indicator" />
             <span class="custom-switch-description">
-              开启邮件报警
+              Turn on email alert
             </span>
           </label>
           <br/>
@@ -166,30 +166,30 @@
             <input v-model="data.email_alarm_conf.tls_enable" type="checkbox" checked="data.email_alarm_conf.enable" class="custom-switch-input">
             <span class="custom-switch-indicator" />
             <span class="custom-switch-description">
-              强制开启 TLS <a target="_blank" href="https://rasp.baidu.com/doc/setup/panel.html#email-alarm">[帮助文档]</a>
+             Force open TLS <a target="_blank" href="https://rasp.baidu.com/doc/setup/panel.html#email-alarm">[Help Document]</a>
             </span>
           </label>
         </div>
       </div>
       <div class="card-footer">
         <button type="submit" class="btn btn-primary" @click="saveSettings('email')">
-          保存
+         Save
         </button>
         <button type="submit" class="btn btn-info pull-right" @click="testSettings('email')">
-          发送测试数据
+          Send test data
         </button>
       </div>
     </div>
     <div class="card">
       <div class="card-header">
         <h3 class="card-title">
-          HTTP 报警推送
+         HTTP alarm push
         </h3>
       </div>
       <div class="card-body">
         <div class="form-group">
           <label class="form-label">
-            HTTP/HTTPS URL <a href="https://rasp.baidu.com/doc/setup/log/main.html#format" target="_blank">[推送数据格式说明]</a>
+            HTTP/HTTPS URL <a href="https://rasp.baidu.com/doc/setup/log/main.html#format" target="_blank">[Push data format description]</a>
           </label>
           <input v-model.trim="data.http_alarm_conf.recv_addr" type="text" class="form-control" placeholder="http://myserver/myurl">
         </div>
@@ -198,17 +198,17 @@
             <input v-model="data.http_alarm_conf.enable" type="checkbox" checked="data.http_alarm_conf.enable" class="custom-switch-input">
             <span class="custom-switch-indicator" />
             <span class="custom-switch-description">
-              开启报警推送
+              Turn on alarm push
             </span>
           </label>
         </div>
       </div>
       <div class="card-footer">
         <button type="submit" class="btn btn-primary" @click="saveSettings('http')">
-          保存
+         Save
         </button>
         <button type="submit" class="btn btn-info pull-right" @click="testSettings('http')">
-          发送测试数据
+          Send test data
         </button>
       </div>
     </div>
@@ -216,22 +216,22 @@
     <div class="card">
       <div class="card-header">
         <h3 class="card-title">
-          钉钉集成
+          Dingding integration
         </h3>
       </div>
       <div class="card-body">
         <div class="form-group">
           <label class="form-label">
-            推送用户列表 - 逗号或者分号分隔
+           Push user list-separated by comma or semicolon
             <a target="_blank" href="https://rasp.baidu.com/doc/setup/panel.html#dingding-alarm">
-              [帮助文档]
+             [Help Document]
             </a>
           </label>
           <input v-model.trim="data.ding_alarm_conf.recv_user" type="text" class="form-control">
         </div>
         <div class="form-group">
           <label class="form-label">
-            推送部门列表
+           Push department list
           </label>
           <input v-model.trim="data.ding_alarm_conf.recv_party" type="text" class="form-control">
         </div>
@@ -258,17 +258,17 @@
             <input v-model="data.ding_alarm_conf.enable" type="checkbox" checked="data.ding_alarm_conf.enable" class="custom-switch-input">
             <span class="custom-switch-indicator" />
             <span class="custom-switch-description">
-              开启钉钉推送
+              Turn on DingTalk
             </span>
           </label>
         </div>
       </div>
       <div class="card-footer">
         <button type="submit" class="btn btn-primary" @click="saveSettings('ding')">
-          保存
+          Save
         </button>
         <button type="submit" class="btn btn-info pull-right" @click="testSettings('ding')">
-          发送测试数据
+          Send test data
         </button>
       </div>
     </div>
@@ -276,15 +276,15 @@
     <div class="card">
       <div class="card-header">
         <h3 class="card-title">
-          Syslog 报警配置（Agent 推送）
+         Syslog alarm configuration (Agent push)
         </h3>
       </div>
       <div class="card-body">
         <div class="form-group">
           <label class="form-label">
-            服务器地址
+            server address
             <a href="https://rasp.baidu.com/doc/setup/others.html#common-syslog" target="_blank">
-              [帮助文档]
+             [Help Document]
             </a>
           </label>
           <input v-model.trim="data.general_config['syslog.url']" type="text" class="form-control" placeholder="tcp://1.1.1.1:6666">
@@ -306,14 +306,14 @@
             <input v-model="data.general_config['syslog.enable']" type="checkbox" checked="data.general_config['syslog.enable']" class="custom-switch-input">
             <span class="custom-switch-indicator" />
             <span class="custom-switch-description">
-              开启 syslog 日志
+             Enable syslog log
             </span>
           </label>
         </div>
       </div>
       <div class="card-footer">
         <button type="submit" class="btn btn-primary" @click="saveSettings('syslog')">
-          保存
+          Save
         </button>
       </div>
     </div>
@@ -321,13 +321,13 @@
     <div class="card">
       <div class="card-header">
         <h3 class="card-title">
-          Kafka 报警推送（后台推送，Kafka版本号应大于等于0.8）
+          Kafka alarm push (background push, Kafka version number should be greater than or equal to 0.8）
         </h3>
       </div>
       <div class="card-body">
         <div class="form-group">
           <label class="form-label">
-            服务器地址
+           server address
           </label>
           <input v-model.trim="data.kafka_alarm_conf['url']" type="text" class="form-control" placeholder="127.0.0.1:6666">
         </div>
@@ -339,13 +339,13 @@
         </div>
         <div class="form-group">
           <label class="form-label">
-            kafka 用户名（可选）
+            Kafka username (optional)
           </label>
           <b-form-input v-model="data.kafka_alarm_conf['user']" type="text" class="form-control" />
         </div>
         <div class="form-group">
           <label class="form-label">
-            kafka 密码（可选）
+            kafka password (optional)
           </label>
           <b-form-input v-model="data.kafka_alarm_conf['pwd']" type="text" class="form-control" />
         </div>
@@ -354,17 +354,17 @@
             <input v-model="data.kafka_alarm_conf['enable']" type="checkbox" class="custom-switch-input">
             <span class="custom-switch-indicator" />
             <span class="custom-switch-description">
-              开启 Kafka 日志推送
+              Enable Kafka log push
             </span>
           </label>
         </div>
       </div>
       <div class="card-footer">
         <button type="submit" class="btn btn-primary" @click="saveSettings('kafka')">
-          保存
+          Save
         </button>
         <button type="submit" class="btn btn-info pull-right" @click="testSettings('kafka')">
-          发送测试数据
+         Send test data
         </button>
       </div>
     </div>    
@@ -407,12 +407,12 @@ export default {
     loadAlarmMethod: function() {
       var self = this
       var conf = self.data.attack_type_alarm_conf
-      // 没配置等于全开
+      // No configuration equals full open
       if (! conf) {
         this.resetAlarmMethods(false)
         return
       }
-      // 转换
+      // convert
       self.sendMethods['crash'] = {}
 
       Object.keys(self.sendMethods).forEach(function (name) {
@@ -444,7 +444,7 @@ export default {
 
       self.sendMethods = Object.assign({}, self.sendMethods)
 
-      // 重置时保存
+      // Save on reset
       if (save) {
         setTimeout(() => (self.saveAlarmMethods()), 500)
       }
@@ -468,7 +468,7 @@ export default {
 
       this.request.post('v1/api/app/alarm/config', body)
         .then(() => {
-          alert('报警方式保存成功')
+          alert('Alarm mode saved successfully')
         })
     },    
     saveSettings: function(type) {
@@ -478,7 +478,7 @@ export default {
         } catch (err) {
           this.data.general_config['syslog.facility'] = null
         }
-        msg = 'Syslog 报警设置保存成功'
+        msg = 'Syslog alarm settings saved successfully'
         return this.request.post('v1/api/app/general/config', {
           app_id: this.current_app.id,
           config: this.data.general_config
@@ -489,7 +489,7 @@ export default {
       var body = {
         app_id: this.current_app.id
       }
-      var msg = '报警设置保存成功'
+      var msg ='Alarm settings saved successfully'
 
       switch (type) {
         case 'email':
@@ -498,7 +498,7 @@ export default {
             body.email_alarm_conf.recv_addr = body.email_alarm_conf.recv_addr.split(/\s*[,;]\s*/).filter(item => !!item)
           }
 
-          msg = '邮件报警设置保存成功'
+          msg = 'Mail alarm settings saved successfully'
           break
         case 'ding':
           body['ding_alarm_conf'] = this.data.ding_alarm_conf
@@ -509,7 +509,7 @@ export default {
             body.ding_alarm_conf.recv_party = body.ding_alarm_conf.recv_party.split(/\s*[,;]\s*/).filter(item => !!item)
           }
 
-          msg = '钉钉报警设置保存成功'
+          msg = 'Dingding alarm settings saved successfully'
           break
         case 'http':
           body['http_alarm_conf'] = this.data.http_alarm_conf
@@ -517,19 +517,19 @@ export default {
             body.http_alarm_conf.recv_addr = [body.http_alarm_conf.recv_addr]
           }
 
-          msg = 'HTTP 推送设置保存成功'
+          msg = 'HTTP push settings saved successfully'
           break
 
         case 'kafka':
           body['kafka_alarm_conf'] = this.data.kafka_alarm_conf
 
-          msg = 'Kafka 推送设置保存成功'
+          msg = 'Kafka push settings saved successfully'
           break
         
         case 'general':
           body['general_alarm_conf'] = this.data.general_alarm_conf
 
-          msg = '通用报警设置保存成功'
+          msg = 'General alarm settings saved successfully'
           break
       }
 
@@ -541,7 +541,7 @@ export default {
     testSettings: function(type) {
       this.saveSettings(type)
         .then(() => this.request.post('v1/api/app/' + type + '/test', { app_id: this.current_app.id }))
-        .then(() => alert('发送成功'))
+        .then(() => alert('Send successfully'))
     }
   }
 }

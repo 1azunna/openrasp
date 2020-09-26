@@ -12,22 +12,22 @@
             </div>
             <div class="form-group">
               <label class="form-label">
-                用户名
+                username
               </label>
               <input v-model.trim="username" type="text" class="form-control">
             </div>
             <div class="form-group">
               <label class="form-label">
-                密码
+                password
                 <a href="https://rasp.baidu.com/doc/install/panel.html#forget-password" target="_blank" class="float-right small">
-                  忘记密码?
+                  forget password?
                 </a>
               </label>
-              <input v-model="password" type="password" class="form-control" placeholder="输入密码" autocomplete="off">
+              <input v-model="password" type="password" class="form-control" placeholder="enter password" autocomplete="off">
             </div>
             <div class="form-footer">
               <button type="submit" class="btn btn-primary btn-block" :plain="true" @click.prevent="doLogin()">
-                登录
+                log in
               </button>
             </div>
           </div>
@@ -47,7 +47,7 @@ export default {
     return {
       username: 'openrasp',
       password: '',
-      title:    'OpenRASP 管理后台登录',
+      title:    'OpenRASP management background login',
       logo:     ''
     }
   },

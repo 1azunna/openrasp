@@ -1,17 +1,16 @@
 const plugin_version = '2018-1000-1000'
 const plugin_name    = '001-xss-demo'
 
-// 本demo插件已经废弃
+// This demo plugin has been abandoned
 //
-// Java 版本需要设置 request.param_encoding 之后才能使用
-// PHP  版本不支持 request hook 点，所以没有这个检测
-//  
+// The Java version can only be used after setting request.param_encoding
+// The PHP version does not support request hook points, so there is no such detection//  
 //  https://rasp.baidu.com/doc/setup/others.html
 
 var plugin = new RASP(plugin_name)
 var clean  = {
     action: 'ignore',
-    message: '无风险',
+    message: 'no risk',
     confidence: 0
 }
 
@@ -23,9 +22,8 @@ var algorithmConfig = {}
 
 plugin.register('request', function(params, context) {
 
-    // XSS 检测 DEMO
-    // 在 request hook 点简单匹配用户输入参数
-
+   // XSS detection DEMO
+    // Simply match user input parameters at request hook
     function detectXSS(params, context) {
         var xssRegex   = /<script|script>|<iframe|iframe>|javascript:(?!(?:history\.(?:go|back)|void\(0\)))/i
         var parameters = context.parameter;
@@ -34,7 +32,7 @@ plugin.register('request', function(params, context) {
         Object.keys(parameters).some(function (name) {
             parameters[name].some(function (value) {
                 if (xssRegex.test(value)) {
-                    message = 'XSS 攻击: ' + value;
+                    message = 'XSS attack: ' + value;
                     return true;
                 }
             });
@@ -47,7 +45,7 @@ plugin.register('request', function(params, context) {
         return message
     }
 
-    // XSS 检测 DEMO //
+   // XSS detection DEMO //
     var message = detectXSS(params, context)
     if (message.length) {
         return {
@@ -60,5 +58,5 @@ plugin.register('request', function(params, context) {
     return clean    
 })
 
-plugin.log('001-xss-demo 加载完成')
+plugin.log('001-xss-demo loading completed')
 

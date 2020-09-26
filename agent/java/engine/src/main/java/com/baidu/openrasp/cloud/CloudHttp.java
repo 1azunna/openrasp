@@ -40,7 +40,7 @@ import java.security.cert.X509Certificate;
 import java.util.zip.GZIPInputStream;
 
 /**
- * @description: 云控http请求
+ * @description: Cloud control http request
  * @author: anyang
  * @create: 2018/09/17 16:56
  */

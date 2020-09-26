@@ -4,63 +4,62 @@
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title">
-            添加主机
-          </h5>
+Add host          </h5>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close" />
         </div>
         <div class="modal-body" style="padding-top: 0">
           <div v-if="agent_urls.length == 0">
             <p>
               <br>
-              你还没有设置 Agent 服务器地址，请先前往 
-              <router-link data-dismiss="modal" :to="{name: 'settings', params: {setting_tab: 'panel'}}">[后台设置]</router-link> 页面添加
+              You have not set the Agent server address, please go to
+              <router-link data-dismiss="modal" :to="{name: 'settings', params: {setting_tab: 'panel'}}">[Background settings]</router-link> page added
             </p>            
           </div>
           <div v-else>
             <ul id="myTab" class="nav nav-tabs" role="tablist">
               <li class="nav-item">
                 <a class="nav-link" data-toggle="tab" href="#common-tab">
-                  手动安装
+                  Manual installation
                 </a>
               </li>
               <li class="nav-item">
                 <a class="nav-link" data-toggle="tab" href="#batch-tab">
-                  批量部署
+                  Batch deployment
                 </a>
               </li>
               <li class="nav-item">
                 <a class="nav-link" data-toggle="tab" href="#docker-tab">
-                  Docker 部署
+                  Docker deployment
                 </a>
               </li>
               <li class="nav-item">
                 <a class="nav-link active" data-toggle="tab" href="#java-tab">
-                  Java 服务器
+                  Java server
                 </a>
               </li>
               <li class="nav-item">
                 <a class="nav-link" data-toggle="tab" href="#php-tab">
-                  PHP 服务器
+                  PHP server
                 </a>
               </li>
               <li class="nav-item">
                 <a class="nav-link" data-toggle="tab" href="#iast-tab">
-                  Fuzz 工具安装
+                  Fuzz tool installation
                 </a>
               </li>
             </ul>
             <br>
             <div id="myTabContent" class="tab-content">
               <div id="common-tab" class="tab-pane fade">
-                <p>OpenRASP 自动安装程序可以覆盖绝大多数场景，如果你的环境无法自动安装，请参考 <a href="https://rasp.baidu.com/doc/install/software.html" target="_blank">安装客户端</a> 进行手动安装。以下是连接管理后台所需要的关键参数，Java 版本请附加到 conf/openrasp.yml，PHP 版本请附加到 ini 文件。</p>
-                <h4>Java 版本</h4>
+                <p>The OpenRASP automatic installation program can cover most scenarios. If your environment cannot be installed automatically, please refer to <a href="https://rasp.baidu.com/doc/install/software.html" target="_blank"> Install the client</a> for manual installation. The following are the key parameters required to connect to the management backend. Please attach the Java version to conf/openrasp.yml, and the PHP version to the ini file. </p>
+                <h4>Java version</h4>
                 <pre>cloud.enable: true
 cloud.backend_url: {{ agent_urls[0] }}
 cloud.app_id: {{ current_app.id }}
 cloud.app_secret: {{ current_app.secret }}
 cloud.heartbeat_interval: 90</pre>
 
-                <h4>PHP 版本</h4>
+                <h4>PHP version</h4>
                 <pre>openrasp.app_id={{ current_app.id }}
 openrasp.app_secret={{ current_app.secret }}            
 openrasp.backend_url={{ agent_urls[0] }}
@@ -76,36 +75,36 @@ openrasp.heartbeat_interval=90</pre>
 
               <div id="batch-tab" class="tab-pane fade">
                 <div class="alert alert-warning">
-                  批量部署脚本，会自动安装并重启应用，更多信息请看
-                  <a target="_blank" href="https://rasp.baidu.com/doc/install/deploy.html" class="active router-link-active">大规模部署</a>
-                  文档
+                 Batch deployment scripts will automatically install and restart applications. For more information, please see
+                  <a target="_blank" href="https://rasp.baidu.com/doc/install/deploy.html" class="active router-link-active">large scale deployment</a>
+                  Documentation
                 </div>
-                <h4>1. 下载自动安装程序</h4>
+                <h4>1. Download the automatic installer</h4>
                 <pre style="white-space: inherit; ">curl https://packages.baidu.com/app/openrasp/release/{{rasp_version}}/installer.sh -o installer.sh</pre>
-                <h4>2. 执行脚本</h4>
+                <h4>2. Execute script</h4>
                 <pre style="white-space: inherit; ">bash installer.sh -i -a {{ current_app.id }} -b {{ current_app.secret }} -c {{ agent_urls[agent_url_id] }}</pre>
               </div>
               <div id="docker-tab" class="tab-pane fade">
                 <div class="alert alert-warning">
-                  在构建镜像阶段加入 OpenRASP 即可，更多信息请看
-                  <a target="_blank" href="https://rasp.baidu.com/doc/install/deploy.html#container" class="active router-link-active">大规模部署</a>
+                 Just add OpenRASP during the mirroring phase. For more information, please see
+                  <a target="_blank" href="https://rasp.baidu.com/doc/install/deploy.html#container" class="active router-link-active">Large-scale deployment</a>
                   文档
                 </div>
-                <h4>Java Tomcat 容器示例</h4>
+                <h4>Java Tomcat container example</h4>
                 <pre>ADD https://packages.baidu.com/app/openrasp/release/{{rasp_version}}/rasp-java.tar.gz /tmp
 RUN cd /tmp \
     && tar -xf rasp-java.tar.* \
     && /jdk/bin/java -jar rasp-*/RaspInstall.jar -install /tomcat/ -heartbeat 90 -appid {{ current_app.id }} -appsecret {{ current_app.secret }} -backendurl {{ agent_urls[agent_url_id] }} \
     && rm -rf rasp-*
-# 对于Alpine Linux容器，需要安装系统依赖
+#For Alpine Linux containers, system dependencies need to be installed
 # RUN apk add --no-cache libcurl libstdc++</pre>
-                <h4>Java SpringBoot 容器示例</h4>
+                <h4>Java SpringBoot container example</h4>
                 <pre>ADD https://packages.baidu.com/app/openrasp/release/{{rasp_version}}/rasp-java.tar.gz /tmp
 RUN cd /tmp \
     && tar -xf rasp-java.tar.* \
     && mv rasp-*/rasp/ /rasp/ \
     && rm -f rasp-java.tar.gz
-# 对于Alpine Linux容器，需要安装系统依赖
+# For Alpine Linux containers, system dependencies need to be installed
 # RUN apk add --no-cache libcurl libstdc++
 
 RUN echo "cloud.enable: true" >> /rasp/conf/openrasp.yml \
@@ -113,10 +112,10 @@ RUN echo "cloud.enable: true" >> /rasp/conf/openrasp.yml \
     && echo "cloud.app_id: {{ current_app.id }}" >> /rasp/conf/openrasp.yml \
     && echo "cloud.app_secret: {{ current_app.secret }}" >> /rasp/conf/openrasp.yml
 
-# 对于 JDK9，需要额外增加 --add-opens java.base/jdk.internal.loader=ALL-UNNAMED 参数
+#For JDK9, additional--add-opens java.base/jdk.internal.loader=ALL-UNNAMED 参数
 CMD java -javaagent:"/rasp/rasp.jar" -jar /springboot.jar</pre>
 
-                <h4>PHP 容器示例</h4>
+              <h4>PHP container example</h4>
                 <pre>ADD https://packages.baidu.com/app/openrasp/release/{{rasp_version}}/rasp-php-linux.tar.bz2 /tmp/
 RUN cd /tmp \
     && tar -xf rasp-php-linux.tar.bz2 \
@@ -124,38 +123,38 @@ RUN cd /tmp \
     && rm -rf rasp-php*</pre>
               </div>
               <div id="java-tab" class="tab-pane fade show active">
-                <h4>1. 下载 Java Agent 安装包</h4>
-                <pre style="white-space: inherit; ">curl https://packages.baidu.com/app/openrasp/release/{{rasp_version}}/rasp-java.tar.gz -o rasp-java.tar.gz<br>tar -xvf rasp-java.tar.gz<br>cd rasp-*/</pre>
-                <h4>2. 执行 RaspInstall 进行安装</h4>
-                <p>请先替换 /path/to/tomcat 为你的服务器路径，再执行命令安装</p>
+                <h4>1. Download the Java Agent installation package</h4>
+                <pre style="white-space: inherit; ">curl https://packages.baidu.com/app/openrasp/release/{{rasp_version}}/rasp-java.tar.gz -o rasp-java.tar .gz<br>tar -xvf rasp-java.tar.gz<br>cd rasp-*/</pre>
+                <h4>2. Execute RaspInstall to install</h4>
+                <p>Please replace /path/to/tomcat as your server path first, and then execute the command to install</p>
                 <pre style="white-space: inherit; ">java -jar RaspInstall.jar -heartbeat 90 -appid {{ current_app.id }} -appsecret {{ current_app.secret }} -backendurl {{ agent_urls[agent_url_id] }} -install <font color="red">/path/to/tomcat</font></pre>
-                <h4>3. 重启 Tomcat/JBoss/WebLogic/SpringBoot 应用服务器</h4>
+                <h4>3. Restart Tomcat/JBoss/WebLogic/SpringBoot application server</h4>
                 <pre style="white-space: inherit; ">/path/to/tomcat/bin/shutdown.sh<br>/path/to/tomcat/bin/startup.sh</pre>
               </div>
               <div id="php-tab" class="tab-pane fade">
-                <h4>1. 下载 PHP 安装包</h4>
-                <pre style="white-space: inherit; ">curl https://packages.baidu.com/app/openrasp/release/{{rasp_version}}/rasp-php-linux.tar.bz2 -o rasp-php-linux.tar.bz2<br>tar -xvf rasp-php-linux.tar.bz2<br>cd rasp-*/</pre>
-                <h4>2. 执行 install.php 进行安装</h4>
+                <h4>1. Download the PHP installation package</h4>
+                <pre style="white-space: inherit; ">curl https://packages.baidu.com/app/openrasp/release/{{rasp_version}}/rasp-php-linux.tar.bz2 -o rasp-php -linux.tar.bz2<br>tar -xvf rasp-php-linux.tar.bz2<br>cd rasp-*/</pre>
+                <h4>2. Execute install.php to install it</h4>
                 <pre style="white-space: inherit; ">php install.php -d <font color="red">/opt/rasp</font> --heartbeat 90 --app-id {{ current_app.id }} --app-secret {{ current_app.secret }} --backend-url {{ agent_urls[agent_url_id] }}</pre>
-                <h4>3. 重启 PHP-FPM 或者 Apache 服务器</h4>
+                <h4>3. Restart the PHP-FPM or Apache server</h4>
                 <pre style="white-space: inherit; ">service php-fpm restart</pre>
-                <p>-或者-</p>
+                <p>-or-</p>
                 <pre style="white-space: inherit; ">apachectl -k restart</pre>
               </div>
               <div id="iast-tab" class="tab-pane fade">
-                <h4>1. 下载或者升级 Fuzz 工具</h4>
+                <h4>1. Download or upgrade the Fuzz tool</h4>
                 <pre style="white-space: inherit; ">pip3 install --upgrade git+https://github.com/baidu-security/openrasp-iast</pre>
-                <h4>2. 配置 MySQL 服务器 - 使用 MySQL root 账号执行以下命令授权</h4>
+                <h4>2. Configure MySQL server-use the MySQL root account to execute the following commands to authorize</h4>                
                 <pre>DROP DATABASE IF EXISTS openrasp;
 CREATE DATABASE openrasp default charset utf8mb4 COLLATE utf8mb4_general_ci;
 grant all privileges on openrasp.* to 'rasp'@'%' identified by 'rasp123';
 grant all privileges on openrasp.* to 'rasp'@'localhost' identified by 'rasp123';
 </pre>
-                <h4>3. 配置 Fuzz 工具 - 请修正 MySQL 服务器地址</h4>
+                <h4>3. Configure Fuzz Tool-Please correct the MySQL server address</h4>
                 <pre style="white-space: inherit; ">openrasp-iast config -a {{ current_app.id }} -b {{ current_app.secret }} -c {{ panel_url }} -m mysql://rasp:rasp123@127.0.0.1/openrasp</pre>
-                <h4>4. 启动 Fuzz 工具</h4>
+                <h4>4. Start the Fuzz tool</h4>
                 <pre style="white-space: inherit; ">openrasp-iast start -f</pre>
-                <p>-或者后台启动-</p>
+                <p>-Or start in the background-</p>
                 <pre style="white-space: inherit; ">openrasp-iast start</pre>
               </div>
             </div>
@@ -163,10 +162,10 @@ grant all privileges on openrasp.* to 'rasp'@'localhost' identified by 'rasp123'
         </div>
         <div class="modal-footer">
           <a class="btn btn-secondary mr-auto" href="https://rasp.baidu.com/doc/install/software.html" target="_blank">
-            了解更多
+            Learn more
           </a>
           <button class="btn btn-primary" data-dismiss="modal">
-            关闭
+           Close
           </button>
         </div>
       </div>

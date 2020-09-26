@@ -24,7 +24,7 @@ import com.baidu.openrasp.tool.OSUtil;
 import org.apache.commons.lang3.StringUtils;
 
 /**
- * @description: 缓存云控数据
+ * @description: Cache cloud control data
  * @author: anyang
  * @create: 2018/09/29 16:08
  */

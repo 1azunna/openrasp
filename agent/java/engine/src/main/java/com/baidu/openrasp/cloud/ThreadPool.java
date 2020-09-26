@@ -19,7 +19,7 @@ package com.baidu.openrasp.cloud;
 import java.util.concurrent.*;
 
 /**
- * @description: 异步发送http请求
+ * @description: Send http request asynchronously
  * @author: anyang
  * @create: 2018/09/19 20:12
  */

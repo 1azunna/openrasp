@@ -2,7 +2,7 @@
     <div class="event-detail">
         <div v-if="data.attack_type == 'sql'">
             <div class="h6">
-                数据库类型
+               Database type
             </div>
             <p>
                 {{ data.attack_params.server }}
@@ -13,7 +13,7 @@
                 <a href="javascript:" style="color: #467fcf"
                     v-clipboard:copy="data.attack_params.query"
                     v-clipboard:success="onCopySucc"
-                    v-clipboard:error="onCopyError">[复制]</a> 
+                    v-clipboard:error="onCopyError">[copy]</a> 
                 -->
             </div>
             <p>
@@ -23,14 +23,14 @@
 
         <div v-if="data.attack_type == 'sql_exception'">
             <div class="h6">
-                数据库类型
+               Database type
             </div>
             <p>
                 {{ data.attack_params.server }}
             </p>            
             <div v-if="data.attack_params.query">
                 <div class="h6">
-                    执行的SQL语句 
+                   SQL statement executed
 
                     <!--
                     <a href="javascript:" 
@@ -46,7 +46,7 @@
             </div>
             <!--
             <div class="h6">
-                错误信息
+               Error message
             </div>
             <p>
                 [{{ data.attack_params.error_code }}] {{ data.attack_params.error_msg }}
@@ -56,13 +56,13 @@
 
         <div v-if="data.attack_type == 'directory'">
             <div class="h6">
-                读取的目录
+                Read directory
             </div>
             <p>
                 {{ data.attack_params.path }}
             </p>
             <div class="h6">
-                读取的目录 - 真实路径
+              Read directory-real path
             </div>
             <p>
                 {{ data.attack_params.realpath }}
@@ -71,13 +71,13 @@
 
         <div v-if="data.attack_type == 'readFile'">
             <div class="h6">
-                读取的文件
+              File read
             </div>
             <p>
                 {{ data.attack_params.path }}
             </p>
             <div class="h6">
-                读取的文件 - 真实路径
+                File read-real path
             </div>
             <p>
                 {{ data.attack_params.realpath }}
@@ -86,13 +86,13 @@
 
         <div v-if="data.attack_type == 'writeFile'">
             <div class="h6">
-                写入的文件
+               File written
             </div>
             <p>
                 {{ data.attack_params.path }}
             </p>
             <div class="h6">
-                写入的文件 - 真实路径
+              File written-real path
             </div>
             <p>
                 {{ data.attack_params.realpath }}
@@ -101,13 +101,13 @@
 
         <div v-if="data.attack_type == 'deleteFile'">
             <div class="h6">
-                删除的文件
+              Deleted files
             </div>
             <p>
                 {{ data.attack_params.path }}
             </p>
             <div class="h6">
-                删除的文件 - 真实路径
+             Deleted file-real path
             </div>
             <p>
                 {{ data.attack_params.realpath }}
@@ -116,13 +116,13 @@
 
         <div v-if="data.attack_type == 'include'">
             <div class="h6">
-                要包含的文件
+              Files to include
             </div>
             <p>
                 {{ data.attack_params.url }}
             </p>
             <div class="h6" v-if="data.attack_params.realpath">
-                要包含的文件 - 真实路径
+             File to include-real path
             </div>
             <p>
                 {{ data.attack_params.realpath }}
@@ -131,13 +131,13 @@
 
         <div v-if="data.attack_type == 'webdav'">
             <div class="h6">
-                源文件
+               Source File
             </div>
             <p>
                 {{ data.attack_params.source }}
             </p>
             <div class="h6">
-                目标文件
+               Target file
             </div>
             <p>
                 {{ data.attack_params.dest }}
@@ -146,14 +146,14 @@
 
         <div v-if="data.attack_type == 'fileUpload'">
             <div class="h6" v-if="data.attack_params.name">
-                Multipart 参数名称
+               Multipart parameter name
             </div>
             <p v-if="data.attack_params.name">
                 {{ data.attack_params.name }}
             </p>
 
             <div class="h6">
-                上传的文件名
+                Uploaded file name
             </div>
             <p>
                 {{ data.attack_params.filename }}
@@ -161,18 +161,18 @@
 
             <template v-if="data.attack_params.dest_path">
                 <div class="h6">
-                    文件存储位置
+                   File storage location
                 </div>
                 <p>{{ data.attack_params.dest_path }}</p>
 
                 <div class="h6">
-                    文件存储位置（真实路径）
+                 File storage location (real path)
                 </div>
                 <p>{{ data.attack_params.dest_realpath }}</p>
             </template>
             
             <div class="h6">
-                上传的文件内容 - 前4KB
+                Uploaded file content-first 4KB
             </div>
             <pre>{{ data.attack_params.content }}</pre>
 
@@ -181,13 +181,13 @@
 
         <div v-if="data.attack_type == 'rename'">
             <div class="h6">
-                源文件
+               Source File
             </div>
             <p>
                 {{ data.attack_params.source }}
             </p>
             <div class="h6">
-                目标文件
+                Target file
             </div>
             <p>
                 {{ data.attack_params.dest }}
@@ -196,7 +196,7 @@
 
         <div v-if="data.attack_type == 'command'">
             <div class="h6">
-                要执行的命令
+                Command to execute
             </div>
             <p>
                 {{ data.attack_params.command }}
@@ -205,7 +205,7 @@
 
         <div v-if="data.attack_type == 'xxe'">
             <div class="h6">
-                要加载的外部实体
+                External entity to load
             </div>
             <p>
                 {{ data.attack_params.entity }}
@@ -214,7 +214,7 @@
 
         <div v-if="data.attack_type == 'ognl'">
             <div class="h6">
-                要执行的OGNL表达式
+                OGNL expression to be executed
             </div>
             <p>
                 {{ data.attack_params.expression }}
@@ -223,7 +223,7 @@
 
         <div v-if="data.attack_type == 'deserialization'">
             <div class="h6">
-                要生成的Java类名
+                Java class name to be generated
             </div>
             <p>
                 {{ data.attack_params.clazz }}
@@ -232,13 +232,13 @@
 
         <div v-if="data.attack_type == 'ssrf' || data.attack_type == 'ssrfRedirect'">
             <div class="h6">
-                要访问的 URL
+                URL to visit
             </div>
             <p>
                 {{ data.attack_params.url }}
             </p>
             <div class="h6">
-                目标 IP
+                Target IP
             </div>
             <p>
                 {{ data.attack_params.ip.join(", ") }}
@@ -247,14 +247,14 @@
 
         <div v-if="data.attack_type == 'xss_echo' || data.attack_type == 'xss_userinput'">
             <div class="h6" v-if="data.attack_params.name">
-                XSS 参数名称
+                XSS parameter name
             </div>
             <p v-if="data.attack_params.name">
                 {{ data.attack_params.name }}
             </p>
 
             <div class="h6" v-if="data.attack_params.value">
-                XSS 利用代码
+                XSS exploit code
             </div>
             <p v-if="data.attack_params.value">
                 {{ data.attack_params.value.length > 10000 ? data.attack_params.value + ' ...' : data.attack_params.value }}   
@@ -263,15 +263,15 @@
 
         <div v-if="data.attack_type == 'response' && data.plugin_algorithm == 'response_dataLeak'">
             <div class="h6">
-                泄露的敏感信息样例
+                Examples of leaked sensitive information
             </div>
             <div>
                 <table class="table table-bordered">
                     <thead>
                         <tr>
-                            <th>类型</th>
-                            <th>未打码信息</th>
-                            <th>原始内容（片段）</th>
+                            <th>Type</th>
+                            <th>Uncoded information</th>
+                            <th>Original content (fragment)</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -289,7 +289,7 @@
 
         <div v-if="data.attack_type == 'webshell_eval'">
             <div class="h6">
-                菜刀要 eval 的内容
+                The content of eval
             </div>
             <p>
                 {{ data.attack_params.eval }}
@@ -298,7 +298,7 @@
 
         <div v-if="data.attack_type == 'webshell_command'">
             <div class="h6">
-                WebShell 要执行的命令
+                Command to be executed by WebShell
             </div>
             <p>
                 {{ data.attack_params.command }}
@@ -307,13 +307,13 @@
 
         <div v-if="data.attack_type == 'webshell_file_put_contents'">
             <div class="h6">
-                WebShell 要写入的文件
+                File to be written by WebShell
             </div>
             <p>
                 {{ data.attack_params.name }}
             </p>
             <div class="h6">
-                WebShell 要写入的文件 - 真实路径
+                File to be written by WebShell-real path
             </div>
             <p>
                 {{ data.attack_params.realpath }}
@@ -322,7 +322,7 @@
         
         <div v-if="data.attack_type == 'webshell_callable'">
             <div class="h6">
-                后门要执行的函数
+                The function to be executed by the backdoor
             </div>
             <p>
                 {{ data.attack_params.function }}()

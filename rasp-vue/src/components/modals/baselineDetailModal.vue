@@ -3,7 +3,7 @@
     <div class="modal-dialog modal-lg" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title">基线详情</h5>
+          <h5 class="modal-title">Baseline details</h5>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body" style="padding-top: 0">
@@ -18,11 +18,11 @@
           <div class="tab-content" id="myTabContent">
             <div :class="{'tab-pane': true, 'fade': true, 'show': tabIndex == 0, 'active': tabIndex == 0}">
               <div class="h6">
-                报警时间
+                Alarm time
               </div>
               <p>{{ moment(data.event_time).format('YYYY-MM-DD HH:mm:ss') }}</p>
               <div class="h6">
-                报警消息
+                Alarm message
               </div>
               <p>
                 [{{ data.policy_id }}] {{ data.message }}
@@ -31,28 +31,28 @@
             </div>
             <div :class="{'tab-pane': true, 'fade': true, 'show': tabIndex == 1, 'active': tabIndex == 1}">
               <div class="h6">
-                主机名称
+                Host name
               </div>
               <p>{{ data.server_hostname }}</p>
               <div class="h6">
-                服务器 IP
+                Server IP
               </div>
               <ul>
                 <li v-for="nic in data.server_nic" :key="nic.name">{{ nic.name }}: {{ nic.ip }}</li>
               </ul>
               <div class="h6">
-                RASP 版本
+                RASP version
               </div>
               <p>
                 {{ data.rasp_version }}
               </p>
               <div class="h6">
-                应用版本
+                App version
               </div>
               <p>{{ data.server_type }}/{{ data.server_version }}</p>
             </div>
             <!-- <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">
-              进入 /var/lib/tomcat/webapps 目录，删除 manager/host-manager 等目录
+              Enter the /var/lib/tomcat/webapps directory and delete the manager/host-manager directory
             </div> -->
           </div>
         </div>

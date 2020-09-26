@@ -3,20 +3,20 @@
     <div class="container">
       <div class="page-header">
         <h1 class="page-title">
-          扫描任务列表
+          Scan task list
         </h1>
         <div class="page-options d-flex" style="margin-top: 5px">
           <div class="p-4">
             <label class="custom-switch" for="checkRefresh">
               <input v-model="refreshFreq" type="checkbox" id="checkRefresh" class="custom-switch-input" :value=true>
               <span class="custom-switch-indicator" />
-              <span class="custom-switch-description">自动刷新</span>
+              <span class="custom-switch-description">Auto Refresh</span>
             </label>
           </div>
 
           <div class="p-2">
             <button type="button" class="btn btn-primary ml-2" @click="refreshDriver()">
-              <span class="fa fa-refresh" aria-hidden="true"></span> 刷新
+              <span class="fa fa-refresh" aria-hidden="true"></span> Refresh
             </button>
           </div>
         </div>
@@ -29,7 +29,7 @@
             <ul class="pagination pull-left">
               <li class="active">
                 <span style="margin-top: 0.5em; display: block; ">
-                  <strong>{{ total }}</strong> 结果，显示 {{ currentPage }} / {{ ceil(total / 10) }} 页
+                  <strong>{{ total }}</strong> The results show that{{ currentPage }} / {{ ceil(total / 10) }}page
                 </span>
               </li>
             </ul>
@@ -40,22 +40,22 @@
             <thead>
             <tr>
               <th nowrap>
-                目标
+                aims
               </th>
               <th nowrap>
-                状态
+               status
               </th>
               <th nowrap>
-                已扫描/已失败/总任务
+               Scanned/Failed/Total Tasks
               </th>
               <th>
-                最后收到任务
+               Finally received the task
               </th>
               <th>
-                进程资源消耗
+                Process resource consumption
               </th>
               <th nowrap>
-                操作
+               operating
               </th>
             </tr>
             </thead>
@@ -83,27 +83,27 @@
                           <!--@click="stopTask(i)" :disabled="taskObject[i] == unscanned || loadIcon[i]"-->
                           <!--v-show="taskObject[i] != unscanned">-->
                     <!--<i class="fas fa-spinner fa-spin" v-show="loadIcon[i]"></i>-->
-                    <!--停止扫描-->
+                    <!--Stop scanning-->
                   <!--</button>-->
                   <a href="javascript:" @click="stopTask(i)" v-model="taskObject[i]"
                      :disabled="taskObject[i] == unscanned || loadIcon[i]"
                      v-show="taskObject[i] != unscanned">
                     <i class="fas fa-spinner fa-spin" v-show="loadIcon[i]"></i>
-                    停止扫描
+                   Stop scanning
                   </a>
                   <a href="javascript:" @click="startTask(i)" :disabled="taskObject[i] == running || loadIcon[i]"
                      v-show="taskObject[i] ==  unscanned">
                     <i class="fas fa-spinner fa-spin" v-show="loadIcon[i]"></i>
-                    启动扫描
+                   Start scan
                   </a>
                   <a href="javascript:" @click="getConfig(row)">
-                    设置
+                   Set up
                   </a>
                   <a href="javascript:" @click="cleanTask(i, true)" v-model="status" v-show="taskObject[i] == unscanned">
-                    清空队列
+                  Empty the queue
                   </a>
                   <a href="javascript:" @click="cleanTask(i, false)" v-model="status" v-show="taskObject[i] == unscanned">
-                    删除任务
+                   Delete task
                   </a>
                 </div>
               </td>
@@ -111,17 +111,17 @@
             </tbody>
           </table>
 
-          <p v-if="! loading && register == 0" class="text-center" v-model="register">扫描器未连接或已离线</p>
-          <p v-if="! loading && total == 0 && register == 1" class="text-center" v-model="register">连接中</p>
-          <p v-if="! loading && total == 0 && register == 2" class="text-center" v-model="register">扫描器已连接，暂无数据</p>
-          <p v-if="! loading && register == 3" class="text-center" v-model="register">响应接收异常</p>
-          <p v-if="! loading && register == 4" class="text-center" v-model="register">扫描器连接超时</p>
+          <p v-if="! loading && register == 0" class="text-center" v-model="register">Scanner is not connected or offline</p>
+          <p v-if="! loading && total == 0 && register == 1" class="text-center" v-model="register">Connecting</p>
+          <p v-if="! loading && total == 0 && register == 2" class="text-center" v-model="register">Scanner is connected, no data temporarily</p>
+          <p v-if="! loading && register == 3" class="text-center" v-model="register">Response receiving exception</p>
+          <p v-if="! loading && register == 4" class="text-center" v-model="register">Scanner connection timeout</p>
 
           <nav v-if="! loading && total > 10">
             <ul class="pagination pull-left">
               <li class="active">
                 <span style="margin-top: 0.5em; display: block; ">
-                  <strong>{{ total }}</strong> 结果，显示 {{ currentPage }} / {{ ceil(total / 10) }} 页
+                  <strong>{{ total }}</strong>The results show that {{ currentPage }} / {{ ceil(total / 10) }} page
                 </span>
               </li>
             </ul>
@@ -163,11 +163,11 @@ export default {
       total: 0,
       register: 0,
       baseUrl: 'v1/iast',
-      running: "运行中",
-      cancel: "终止",
-      pause: "暂停",
-      unknown: "未知状态",
-      unscanned: '未启动'
+      running: "Running",
+      cancel: "termination",
+      pause: "time out",
+      unknown: "Unknown status",
+      unscanned: 'not initiated'
     }
   },
   computed: {
@@ -252,7 +252,7 @@ export default {
                 var status = res.status;
                 this.fetchData(this.currentPage);
                 if (status == 0) {
-                    // alert('终止成功!');
+                    // alert('Successful termination!');
                 } else {
                     alert(res.description)
                 }
@@ -270,7 +270,7 @@ export default {
               var status = res.status;
               this.fetchData(this.currentPage);
               if(status == 0){
-                  // alert("启动扫描任务成功！");
+                  // alert("Start the scan task successfully!");
               }else {
                   alert(res.description);
               }
@@ -289,7 +289,7 @@ export default {
                       var status = res.status;
                       this.fetchData(this.currentPage);
                       if(status == 0){
-                          alert("清除成功!");
+                          alert("Cleared successfully!");
                       }else {
                           alert(res.description);
                       }
@@ -297,7 +297,7 @@ export default {
 
           }
       } else {
-          var tmpUrlOnly = confirm("确认清空扫描队列?")
+          var tmpUrlOnly = confirm("Are you sure to clear the scan queue?")
           if(tmpUrlOnly == true){
               var host = this.data[taskId].host
               var port = this.data[taskId].port
@@ -306,7 +306,7 @@ export default {
                       var status = res.status;
                       this.fetchData(this.currentPage);
                       if(status == 0){
-                          alert("清除成功!");
+                          alert("Cleared successfully!");
                       }else {
                           alert(res.description);
                       }

@@ -4,7 +4,7 @@
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title">
-            主机详情
+            Host details
           </h5>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close" />
         </div>
@@ -12,12 +12,12 @@
           <ul id="myTab" class="nav nav-tabs" role="tablist">
             <li class="nav-item">
               <a id="home-tab" class="nav-link active" data-toggle="tab" href="#basic">
-                基础信息
+                basic information
               </a>
             </li>
             <li class="nav-item">
               <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab">
-                RASP 信息
+                RASP information
               </a>
             </li>
           </ul>
@@ -25,31 +25,31 @@
           <div id="myTabContent" class="tab-content">
             <div id="basic" class="tab-pane fade show active" role="tabpanel" aria-labelledby="home-tab">
               <div class="h6">
-                主机名称
+                Host name
               </div>
               <p>{{ data.hostname }}</p>
               
               <div v-if="data.host_type">
                 <div class="h6">
-                  容器类型
+                  Container type
                 </div>
                 <p>{{ data.host_type }}</p>
               </div>
 
               <div class="h6">
-                注册时间
+                Registration time
               </div>
               <p>{{ moment(data.register_time * 1000).format('YYYY-MM-DD HH:mm:ss') }}</p>              
 
               <div class="h6">
-                注册 IP
+                Register IP
               </div>
               <p style="word-break: break-all; ">
                 {{ data.register_ip }}
               </p>
               <div v-if="data.environ && Object.keys(data.environ).length != 0">
                 <div class="h6">
-                  环境变量
+                 Environment variable
                 </div>
                 <pre>{{ env2str(data.environ) }}</pre>
               </div>
@@ -57,17 +57,17 @@
 
             <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
               <div class="h6">
-                服务器版本
+                Server version
               </div>
               <p>{{ data.language }}/{{ data.language_version }}</p>
 
               <div class="h6">
-                Agent 版本
+                Agent version
               </div>
               <p>{{ data.version }}</p>
 
               <div class="h6">
-                插件版本
+                Plugin version
               </div>
               <p>{{ data.plugin_version }}</p>
 

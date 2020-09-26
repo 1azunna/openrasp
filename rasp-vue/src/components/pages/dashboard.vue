@@ -15,7 +15,7 @@
                 </span>
               </div>
               <div class="text-muted mb-4">
-                未处理
+                Untreated
               </div>
             </div>
           </div>
@@ -31,7 +31,7 @@
                 17
               </div>
               <div class="text-muted mb-4">
-                拦截数量
+                Number of interceptions
               </div>
             </div>
           </div>
@@ -47,7 +47,7 @@
                 7
               </div>
               <div class="text-muted mb-4">
-                放行数量
+               Number of releases
               </div>
             </div>
           </div>
@@ -63,7 +63,7 @@
                 1
               </div>
               <div class="text-muted mb-4">
-                在线主机
+                Online host
               </div>
             </div>
           </div>
@@ -79,7 +79,7 @@
                 3
               </div>
               <div class="text-muted mb-4">
-                失联主机
+                Missing host
               </div>
             </div>
           </div>
@@ -95,7 +95,7 @@
                 10d
               </div>
               <div class="text-muted mb-4">
-                运行时间
+                operation hours
               </div>
             </div>
           </div>
@@ -107,7 +107,7 @@
           <div class="card">
             <div class="card-header">
               <h3 class="card-title">
-                攻击趋势
+               Attack trend
               </h3>
             </div>
             <EventTrend ref="event_trend" />
@@ -119,7 +119,7 @@
               <div class="card">
                 <div class="card-header">
                   <h3 class="card-title">
-                    TOP 10 攻击UA
+                   TOP 10 attacks on UA
                   </h3>
                 </div>
                 <div class="card-body">
@@ -131,7 +131,7 @@
               <div class="card">
                 <div class="card-header">
                   <h3 class="card-title">
-                    TOP 10 攻击类型
+                   TOP 10 attack types
                   </h3>
                 </div>
                 <div class="card-body">

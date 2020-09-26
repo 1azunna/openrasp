@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-        <title>[OpenRASP] 邮件报警</title>
+        <title>[OpenRASP] Email alert</title>
         <meta name="viewport" content="width=device-width" />
        <style type="text/css">
             @media only screen and (max-width: 550px), screen and (max-device-width: 550px) {
@@ -26,7 +26,7 @@
         <table align="center" border="0" cellpadding="0" cellspacing="0" style="border-collapse: collapse; width: 100%; max-width: 600px;" class="content">
             <tr>
                 <td align="center" bgcolor="#148e81" style="padding: 20px 20px 20px 20px; color: #ffffff; font-family: Arial, sans-serif; font-size: 36px; font-weight: bold;">
-                    攻击事件
+                    Attack
                 </td>
             </tr>            
             {{range .Alarms}}
@@ -38,19 +38,19 @@
             <tr>
                 <td bgcolor="#ffffff" style="padding: 0 20px 20px 20px; color: #555555; font-family: Arial, sans-serif; font-size: 15px; line-height: 24px; border-bottom: 1px solid #f6f6f6;">
                     <dl>
-                        <dt style="float: left"><b>攻击时间: </b></dt>
+                        <dt style="float: left"><b>Attack time: </b></dt>
                         <dd style="margin-left: 70px;">{{.event_time}}</dd>
 
-                        <dt style="float: left"><b>攻击类型: </b></dt>
+                        <dt style="float: left"><b>Attack type:</b></dt>
                         <dd style="margin-left: 70px;">{{.attack_type}}</dd>
 
-                        <dt style="float: left"><b>拦截状态: </b></dt>
+                        <dt style="float: left"><b>Intercept status: </b></dt>
                         <dd style="margin-left: 70px;">{{.intercept_state}}</dd>
 
-                        <dt style="float: left"><b>攻击来源: </b></dt>
+                        <dt style="float: left"><b>Source of attack: </b></dt>
                         <dd style="margin-left: 70px;">{{.attack_source}}</dd>
 
-                        <dt style="float: left"><b>攻击目标: </b></dt>
+                        <dt style="float: left"><b>Attack target:</b></dt>
                         <dd style="margin-left: 70px;">{{.url}}</dd>
                     </dl>
                 </td>
@@ -63,7 +63,7 @@
                         <tr>
                             <td align="center" height="50" style=" padding: 0 25px 0 25px; font-family: Arial, sans-serif; font-size: 16px; font-weight: bold;" class="button">
                                 {{if .DetailedLink}}
-                                    <a href="{{.DetailedLink}}" style="color: #ffffff; text-align: center; text-decoration: none;">查看 {{.AppName}} 所有报警</a>
+                                    <a href="{{.DetailedLink}}" style="color: #ffffff; text-align: center; text-decoration: none;">View {{.AppName}} all alarms</a>
                                 {{else}}
                                     http://127.0.0.1:{{.HttpPort}}
                                 {{end}}

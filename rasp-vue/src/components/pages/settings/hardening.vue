@@ -34,9 +34,9 @@
       </div>
 
       <div class="form-group">
-        <label class="form-label">自定义 X-Protected-By 头（要求 Agent 版本 >= 1.2.2，留空则不展示）
+        <label class="form-label">Custom X-Protected-By header (Requires Agent version >= 1.2.2, leave it blank to not display)
           <a href="https://rasp.baidu.com/doc/usage/hardening.html#X-Protected-By" target="_blank">
-            [帮助文档]
+            [Help Document]
           </a>
         </label>
         <input type="text" class="form-control" v-model="data['inject.custom_headers']['X-Protected-By']" maxlength="200">
@@ -47,7 +47,7 @@
           variant="primary"
           @click="saveData"
         >
-          保存
+          Save
         </b-button>
       </div>
     </b-card>
@@ -87,7 +87,7 @@ export default {
     saveData: function() {
       var data = Object.assign(this.data)
 
-      // 避免下发空的配置
+      // Avoid sending empty configurations
       if (typeof data['inject.custom_headers']['X-Protected-By'] === 'string') {
         data['inject.custom_headers']['X-Protected-By'] = data['inject.custom_headers']['X-Protected-By'].trim()
         if (data['inject.custom_headers']['X-Protected-By'].length == 0)
@@ -98,7 +98,7 @@ export default {
         app_id: this.current_app.id,
         config: this.data
       }).then(() => {
-        alert('保存成功')
+        alert('Save successfully')
       })
     }
   }

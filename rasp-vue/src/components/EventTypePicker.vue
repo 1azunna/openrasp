@@ -1,7 +1,7 @@
 <template>
   <div class="dropdown ml-2">
     <button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown">
-      攻击类型
+      Attack type
     </button>
     <ul class="dropdown-menu dropdown-menu-right dropdown-menu-arrow keep-open-on-click" style="width: 440px; padding: 10px; ">
       <div class="row">
@@ -10,7 +10,7 @@
             <input v-model="all_checked" type="checkbox" checked="all_checked" class="custom-switch-input" @change="toggle_all()">
             <span class="custom-switch-indicator" />
             <span class="custom-switch-description">
-              全选
+              select all
             </span>
           </label>
         </div>
@@ -56,8 +56,8 @@ export default {
     var self = this
 
     Object.keys(attack_types).forEach(function(key) {
-      // FIXME: 目前PHP几个webshell_XXX没有统一成 webshell 类型，
-      // 所以 webshell 这个类型没必要显示出来
+      // FIXME: Currently, several webshell_XXX in PHP are not unified into webshell type.
+      // So there is no need to display the type of webshell
       if (key == 'webshell') {
         return
       }

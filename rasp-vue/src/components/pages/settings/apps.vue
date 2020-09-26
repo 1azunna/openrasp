@@ -4,7 +4,7 @@
     <div class="card">
       <div class="card-header">
         <h3 class="card-title">
-          应用管理
+         Application management
         </h3>
       </div>
       <div class="card-body">
@@ -13,16 +13,16 @@
         <table v-if="! loading" class="table table-bordered table-hover">
           <thead>
             <th>
-              名称
+              name
             </th>
             <th>
-              语言
+             Language
             </th>
             <th>
-              备注
+             Remarks
             </th>
             <th>
-              操作
+              operating
             </th>
           </thead>
           <tbody>
@@ -38,13 +38,13 @@
               </td>
               <td nowrap>
                 <a href="javascript:" @click.prevent="setCurrentApp(row)">
-                  切换
+                Switch
                 </a>
                 <a href="javascript:" @click="editApp(row, true)">
-                  编辑
+                  edit
                 </a>
                 <a href="javascript:" @click="deleteApp(row)">
-                  删除
+                  delete
                 </a>
               </td>
             </tr>
@@ -57,10 +57,10 @@
       <div class="card-footer text-right">
         <div class="d-flex">
           <button class="btn btn-primary" @click="editApp({language: 'java'})">
-            添加
+           Add to
           </button>
           <a class="btn btn-primary pull-right" href="v1/api/app/export" style="margin-left: auto" target="_blank">
-            导出
+            Export
           </a>
         </div>
       </div>
@@ -120,7 +120,7 @@ export default {
         });
     },
     deleteApp(data) {
-      if (!confirm("确认操作")) {
+      if (!confirm("Confirm operation")) {
         return;
       }
       return this.request

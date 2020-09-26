@@ -4,10 +4,10 @@
       <div class="page-header" style="flex-direction: column; display: flex; ">
         <div style="display: flex; flex-direction: row; justify-content: flex-start; width: 100%;">
           <h1 class="page-title">
-            攻击事件
+            Attack
           </h1>
           <div class="page-options d-flex">
-            <b-dropdown text="拦截状态" class="ml-2" right>
+            <b-dropdown text="Intercept status" class="ml-2" right>
               <b-container style="width: 250px;">
                 <b-form-row>
                   <template v-for="(value, key) in status_types">
@@ -24,7 +24,7 @@
                 </b-form-row>
               </b-container>
             </b-dropdown>          
-            <b-dropdown text="攻击类型" class="ml-2" right>
+            <b-dropdown text="Type of Attack" class="ml-2" right>
               <b-container style="width: 500px;">
                 <b-form-row>
                   <b-col>
@@ -32,7 +32,7 @@
                       <input type="checkbox" class="custom-switch-input" checked @change="selectAll">
                       <span class="custom-switch-indicator" />
                       <span class="custom-switch-description">
-                        全选
+                       select all
                       </span>
                     </label>
                   </b-col>
@@ -62,7 +62,7 @@
               <span class="input-icon-addon">
                 <i class="fe fe-search" />
               </span>
-              <input v-model.trim="srcip" type="text" class="form-control w-10" placeholder="攻击来源" @keyup.enter="loadEvents(1)" style="width: 210px">
+              <input v-model.trim="srcip" type="text" class="form-control w-10" placeholder="Source of Attack" @keyup.enter="loadEvents(1)" style="width: 210px">
             </div>
           </div>
         </div>
@@ -71,13 +71,13 @@
             <span class="input-icon-addon">
               <i class="fe fe-search" />
             </span>
-            <input v-model.trim="url" type="text" class="form-control w-10" placeholder="目标 URL" @keyup.enter="loadEvents(1)" style="width: 210px">
+            <input v-model.trim="url" type="text" class="form-control w-10" placeholder="Target URL" @keyup.enter="loadEvents(1)" style="width: 210px">
           </div>      
           <div class="input-icon ml-2">
             <span class="input-icon-addon">
               <i class="fe fe-search" />
             </span>
-            <input v-model.trim="plugin_message" type="text" class="form-control w-10" placeholder="报警消息" @keyup.enter="loadEvents(1)" style="width: 210px">
+            <input v-model.trim="plugin_message" type="text" class="form-control w-10" placeholder="Alarm Message"@keyup.enter="loadEvents(1)" style="width: 210px">
           </div>
         </div>
         <div class="page-options d-flex" style="margin-top: 5px;">
@@ -85,13 +85,13 @@
             <span class="input-icon-addon">
               <i class="fe fe-search" />
             </span>
-            <input v-model.trim="request_id" type="text" class="form-control w-10" placeholder="请求 ID" @keyup.enter="loadEvents(1)" style="width: 210px">
+            <input v-model.trim="request_id" type="text" class="form-control w-10" placeholder="Request ID" @keyup.enter="loadEvents(1)" style="width: 210px">
           </div>      
           <div class="input-icon ml-2">
             <span class="input-icon-addon">
               <i class="fe fe-search" />
             </span>
-            <input v-model.trim="stack_md5" type="text" class="form-control w-10" placeholder="堆栈 MD5" @keyup.enter="loadEvents(1)" style="width: 210px">
+            <input v-model.trim="stack_md5" type="text" class="form-control w-10" placeholder="Stack MD5" @keyup.enter="loadEvents(1)" style="width: 210px">
           </div>
         </div>
 
@@ -110,7 +110,7 @@
             <ul class="pagination pull-left">
               <li class="active">
                 <span style="margin-top: 0.5em; display: block; ">
-                  <strong>{{ total }}</strong> 结果，显示 {{ currentPage }} / {{ ceil(total / 10) }} 页
+                  <strong>{{ total }}</strong>The results show that{{ currentPage }} / {{ ceil(total / 10) }} 页
                 </span>
               </li>
             </ul>
@@ -121,25 +121,25 @@
             <thead>
               <tr>
                 <th>
-                  攻击时间
+                 Attack time
                 </th>
                 <th style="min-width: 150px; ">
                   URL
                 </th>
                 <th>
-                  攻击来源
+                  Source of attack
                 </th>
                 <th>
-                  拦截状态
+                 Blocking state
                 </th>
                 <th nowrap>
-                  攻击类型
+                 Attack type
                 </th>
                 <th>
-                  报警消息
+                 Alarm message
                 </th>
                 <th>
-                  操作
+                 operating
                 </th>
               </tr>
             </thead>
@@ -174,19 +174,19 @@
                 </td>
                 <td nowrap>
                   <a href="javascript:" @click="showEventDetail(row)">
-                    查看详情
+                  see details
                   </a>
                 </td>
               </tr>
             </tbody>
           </table>
-          <p v-if="! loading && total == 0" class="text-center">暂无数据</p>
+          <p v-if="! loading && total == 0" class="text-center">No data yet</p>
 
           <nav v-if="! loading && total > 10">
             <ul class="pagination pull-left">
               <li class="active">
                 <span style="margin-top: 0.5em; display: block; ">
-                  <strong>{{ total }}</strong> 结果，显示 {{ currentPage }} / {{ ceil(total / 10) }} 页
+                  <strong>{{ total }}</strong>The results show that {{ currentPage }} / {{ ceil(total / 10) }} 页
                 </span>
               </li>
             </ul>

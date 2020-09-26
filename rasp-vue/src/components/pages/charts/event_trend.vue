@@ -21,8 +21,8 @@ export default {
     setData: function(data) {
       var self = this
 
-      data.data[0].unshift('拦截请求')
-      data.data[1].unshift('记录日志')
+      data.data[0].unshift('Intercept request')
+      data.data[1].unshift('Log')
 
       const trend_chart = {
         size: {
@@ -37,8 +37,8 @@ export default {
             data2: '#5eba00'
           },
           names: {
-            data1: '拦截数量',
-            data2: '日志数量'
+            data1: 'Number of interceptions',
+            data2: 'Number of logs'
           }
         },
         axis: {

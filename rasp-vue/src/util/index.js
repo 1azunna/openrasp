@@ -6,151 +6,151 @@ export var rasp_version = '1.3.5'
 
 // 起始 type_id: 1001
 export var audit_types = {
-  1002: 'Agent 注册',
-  1003: 'Agent 删除',
-  1004: '重置 AppSecret',
-  1005: '下发通用配置',
-  1006: '下发白名单配置',
-  1007: '下发算法配置',
-  1008: '下发报警配置',
-  1009: '下发检测插件',
-  1010: '上传插件',
-  1011: '删除插件',
-  1012: '创建应用',
-  1013: '删除应用',
-  1014: '更新应用信息',
-  1015: '重置插件配置'
+  1002:'Agent registration',
+  1003:'Agent delete',
+  1004:'Reset AppSecret',
+  1005:'Deliver general configuration',
+  1006:'Distribute whitelist configuration',
+  1007:'Send algorithm configuration',
+  1008:'Send alarm configuration',
+  1009:'Send detection plug-in',
+  1010:'Upload plugin',
+  1011:'Remove plugin',
+  1012:'Create application',
+  1013:'Delete application',
+  1014:'Update application information',
+  1015:'Reset plugin configuration'
 }
 
 export var browser_headers = [{
-  name: 'X-Frame-Options',
-  descr: '点击劫持防护',
+  name:'X-Frame-Options',
+  descr:'click hijacking protection',
   options: [{
-    name: '不开启',
+    name:'Do not open',
     value: undefined
   },
   {
-    name: '拒绝 (deny)',
-    value: 'deny'
+    name:'Reject (deny)',
+    value:'deny'
   },
   {
-    name: '只允许同源 (sameorigin)',
-    value: 'sameorigin'
+    name:'Only allow same origin (sameorigin)',
+    value:'sameorigin'
   }
   ]
 },
 {
-  name: 'X-Content-Type-Options',
-  descr: 'MIME 嗅探防护',
+  name:'X-Content-Type-Options',
+  descr:'MIME sniffing protection',
   options: [{
-    name: '不开启',
+    name:'Do not open',
     value: undefined
   },
   {
-    name: '开启',
-    value: 'nosniff'
+    name:'Open',
+    value:'nosniff'
   }
   ]
 },
 {
-  name: 'X-XSS-Protection',
-  descr: 'XSS Auditor 防护',
+  name:'X-XSS-Protection',
+  descr:'XSS Auditor protection',
   options: [{
-    name: '不开启',
+    name:'Do not open',
     value: undefined
   },
   {
-    name: '拦截模式',
+    name:'Intercept mode',
     value: '1; mode=block'
   }
   ]
 },
 // {
-//   name: "X-Referrer-Policy",
-//   descr: "Referrer 保护",
-//   options: [
-//     "no-referrer",
-//     "no-referrer-when-downgrade",
-//     "same-origin",
-//     "origin",
-//     "strict-origin",
-//     "origin-when-cross-origin",
-//     "strict-origin-when-cross-origin",
-//     "unsafe-url"
-//   ]
+// name: "X-Referrer-Policy",
+// descr: "Referrer protection",
+// options: [
+// "no-referrer",
+// "no-referrer-when-downgrade",
+// "same-origin",
+// "origin",
+// "strict-origin",
+// "origin-when-cross-origin",
+// "strict-origin-when-cross-origin",
+// "unsafe-url"
+//]
 // },
 {
-  name: 'X-Download-Options',
-  descr: '文件下载防护',
+  name:'X-Download-Options',
+  descr:'File download protection',
   options: [{
-    name: '不开启',
+    name:'Do not open',
     value: undefined
   },
   {
-    name: '关闭自动运行 (noopen)',
-    value: 'noopen'
+    name:'Close automatic operation (noopen)',
+    value:'noopen'
   }
   ]
 }
 ]
 
 export var baseline_types = {
-  3001: 'Cookie httpOnly 检查',
-  3002: '进程启动账号检查',
-  3003: '后台弱口令检查',
-  3004: '不安全的默认应用检查',
-  3005: '开放目录检查',
-  3006: '数据库连接账号审计',
-  3007: 'JBoss 后台无认证检查',
-  // 3008: '日志泄露敏感信息',
-  3009: 'Web 根目录敏感文件泄露',
+  3001:'Cookie httpOnly check',
+  3002:'Process start account check',
+  3003:'Background weak password check',
+  3004:'Insecure default application check',
+  3005:'Open Directory Check',
+  3006:'Database connection account audit',
+  3007:'JBoss background no authentication check',
+  // 3008:'Log leaks sensitive information',
+  3009:'Web root directory sensitive files leaked',
 
-  4001: 'allow_url_include 配置审计',
-  4002: 'expose_php 配置审计',
-  4003: 'display_errors 配置审计',
-  4004: 'yaml.decode_php 配置审计'
+  4001:'allow_url_include configuration audit',
+  4002:'expose_php configuration audit',
+  4003:'display_errors configuration audit',
+  4004:'yaml.decode_php configuration audit'
 }
 
 export var attack_types = {
-  sql: 'SQL 注入',
-  sql_exception: 'SQL 语句异常',
-  eval: 'EVAL 代码执行',
-  loadLibrary: '类库加载',
-  command: '命令执行',
-  xxe: 'XXE 外部实体加载',
-  directory: '目录遍历',
-  rename: '文件重命名',
-  readFile: '任意文件读取',
-  deleteFile: '任意文件删除',
-  include: '任意文件包含',
-  writeFile: '任意文件写入',
-  ssrf: 'SSRF 请求伪造',
-  ssrfRedirect: 'SSRF 请求伪造(重定向后)',
-  ognl: 'OGNL 代码执行',
-  webdav: '任意文件上传 (PUT)',
-  fileUpload: '任意文件上传',
-  deserialization: 'Transformer 反序列化',
-  xss_echo: 'Echo XSS 跨站脚本攻击',
-  xss_userinput: 'BODY XSS 跨站脚本攻击',
-  webshell_callable: 'WebShell - 变形后门',
-  webshell_eval: 'WebShell - 中国菜刀',
-  webshell_command: 'WebShell - 命令执行',
-  webshell_file_put_contents: 'WebShell - 后门上传',
-  webshell_ld_preload: 'WebShell - LD_PRELOAD 后门',
-  response: 'HTTP 响应采样检测',
-  request: '请求开始',
-  link: '文件链接'
+  sql:'SQL injection',
+  sql_exception:'SQL statement exception',
+  eval:'EVAL code execution',
+  loadLibrary:'Class library loading',
+  command:'Command execution',
+  xxe:'XXE external entity loading',
+  directory:'Directory traversal',
+  rename:'File rename',
+  readFile:'Any file read',
+  deleteFile:'Any file delete',
+  include:'Any file includes',
+  writeFile:'Any file write',
+  ssrf:'SSRF request forgery',
+  ssrfRedirect:'SSRF request forgery (after redirection)',
+  ognl:'OGNL code execution',
+  webdav:'Any file upload (PUT)',
+  fileUpload:'Any file upload',
+  deserialization:'Transformer deserialization',
+  xss_echo:'Echo XSS cross-site scripting attack',
+  xss_userinput:'BODY XSS cross-site scripting attack',
+  webshell_callable:'WebShell-Deformed Backdoor',
+  webshell_eval:'WebShell-Chinese Kitchen Knife',
+  webshell_command:'WebShell-command execution',
+  webshell_file_put_contents:'WebShell-Backdoor upload',
+  webshell_ld_preload:'WebShell-LD_PRELOAD backdoor',
+  response:'HTTP response sampling detection',
+  request:'Request start',
+  link:'File link'
 }
 
 export var status_types = {
-  block: '拦截请求',
-  log: '记录日志'
-  // ignore: '忽略放行'
+  block:'Intercept request',
+  log:'Record log'
+  // ignore:'Ignore release'
 }
 
-// 去除空格、换行，按照指定的分隔符分隔，最后删掉 null/undefined/空字符串
+// Remove spaces and new lines, separate them according to the specified delimiter, and finally delete null/undefined/empty strings
 export function trimSplit(data, sep) {
-  var tmp = data.replace(/\s/g, '').split(sep)
+  var tmp = data.replace(/\s/g,'').split(sep)
   return tmp.filter(a => a)
 }
 
@@ -193,7 +193,7 @@ export function validateRegex(value) {
   try {
     new RegExp(value)
   } catch (e) {
-    error = '正则表达式错误:' + e.toString()
+    error ='Regular expression error:' + e.toString()
   }
 
   return error
@@ -204,12 +204,12 @@ export function block_status2name(status) {
 }
 
 export function attack_type2name(id) {
-  if (id == 'webshell') {
-    return 'WebShell 网站后门'
+  if (id =='webshell') {
+    return'WebShell website backdoor'
   }
 
-  if (id == 'xss') {
-    return 'XSS 跨站脚本攻击'
+  if (id =='xss') {
+    return'XSS cross-site scripting attack'
   }
 
   return attack_types[id] || id
@@ -217,14 +217,14 @@ export function attack_type2name(id) {
 
 export const request = axios.create({
   baseURL:
-    process.env.NODE_ENV === 'production'
-      ? '/'
-      : 'http://10.14.117.55:8080/',
+    process.env.NODE_ENV ==='production'
+      ?'/'
+      :'http://10.14.117.55:8080/',
   timeout: 8000
 })
 request.interceptors.request.use(
   config => {
-    if (process.env.NODE_ENV !== 'production') {
+    if (process.env.NODE_ENV !=='production') {
       config.headers['X-OpenRASP-Token'] =
         '9256a3555fbd4f24f7a2ba915a32261ab4c720fc'
     }
@@ -241,16 +241,16 @@ request.interceptors.response.use(
     if (res.status !== 0) {
       if (res.status === 401) {
         Cookie.set('RASP_AUTH_ID', null)
-        if (router.currentRoute.name !== 'login') {
+        if (router.currentRoute.name !=='login') {
           router.push({
-            name: 'login',
+            name:'login',
             query: {
               redirect: location.href
             }
           })
         }
       } else {
-        alert(response.config.url + ' 接口出错: ' + res.status + ' - ' + res.description)
+        alert(response.config.url + 'Interface error:' + res.status + '-' + res.description)
       }
       return Promise.reject(res)
     } else {
@@ -258,7 +258,7 @@ request.interceptors.response.use(
     }
   },
   error => {
-    alert('HTTP 请求出错: 响应码 ' + error.response.status)
+    alert('HTTP request error: response code '+ error.response.status)
     console.error(error)
     return Promise.reject(error)
   }

@@ -8,7 +8,7 @@
               <span class="avatar" :style="{ 'background-image': current_app.language ? 'url(/static/images/lang/' + current_app.language + '.png)' : undefined }" />
               <span class="ml-2 d-none d-lg-block">
                 <span class="text-muted" style="margin-left: -2px; ">
-                  当前应用
+                  Current application
                   <i class="fa fa-caret-down" />
                 </span>
                 <small class="text-default d-block mt-1">
@@ -29,14 +29,14 @@
               <div class="dropdown-divider" />
               <router-link :class="{'dropdown-item': true, 'active': false}" :to="{name: 'settings', params: {setting_tab: 'app'}}">
                 <i class="dropdown-icon fe fe-settings" />
-                应用管理 ({{ total }})
+                Application management ({{ total }})
               </router-link>
             </div>
           </div>
           <div class="d-flex order-lg-2 ml-auto">
             <div class="nav-item d-none d-md-flex">
               <a href="javascript:" class="btn btn-sm btn-outline-primary" @click="showAddHostModal">
-                添加主机
+                Add host
               </a>
             </div>
             <div class="dropdown">
@@ -46,7 +46,7 @@
                     openrasp <i class="fa fa-caret-down" />
                   </span>
                   <small class="text-muted d-block mt-1">
-                    管理员权限
+                    Administrator rights
                   </small>
                 </span>
               </a>
@@ -58,25 +58,25 @@
 
                 <RouterLink class="dropdown-item" :to="{ name: 'exceptions', params: { app_id: current_app.id } }">
                   <i class="dropdown-icon fe fe-alert-circle" />
-                  异常日志
+                  Exception log
                 </RouterLink>
                 <RouterLink class="dropdown-item" :to="{ name: 'crash', params: { app_id: current_app.id } }">
                   <i class="dropdown-icon fe fe-alert-triangle" />
-                  崩溃信息
+                  Crash information
                 </RouterLink>
                 <RouterLink class="dropdown-item" :to="{ name: 'audit', params: { app_id: current_app.id } }">
                   <i class="dropdown-icon fe fe-user-check" />
-                  操作审计
+                  Operation audit
                 </RouterLink>
                 <a class="dropdown-item" href="https://rasp.baidu.com/doc" target="_blank">
-                  <i class="dropdown-icon fe fe-file-text" /> 帮助文档
+                  <i class="dropdown-icon fe fe-file-text" /> Help document
                 </a>
                 <a class="dropdown-item" href="https://rasp.baidu.com/#section-support" target="_blank">
-                  <i class="dropdown-icon fa fa-qq" /> 技术支持
+                  <i class="dropdown-icon fa fa-qq" /> Technical Support
                 </a>
                 <div class="dropdown-divider"/>
                 <a class="dropdown-item" href="javascript:" @click="doLogout()">
-                  <i class="dropdown-icon fe fe-log-out" /> 退出登录
+                  <i class="dropdown-icon fe fe-log-out" /> sign out
                 </a>
               </div>
             </div>
@@ -95,61 +95,61 @@
               <li class="nav-item">
                 <RouterLink :to="{ name: 'dashboard', params: { app_id: current_app.id } }" class="nav-link">
                   <i class="fe fe-home" />
-                  安全总览
+                  Safety overview
                 </RouterLink>
               </li>
               <li class="nav-item">
                 <RouterLink :to="{ name: 'vulns', params: { app_id: current_app.id } }" class="nav-link">
                   <i class="fe fe-eye" />
-                  漏洞列表
+                  Vulnerability list
                 </RouterLink>
               </li>
               <li class="nav-item">
                 <RouterLink :to="{ name: 'events', params: { app_id: current_app.id } }" class="nav-link">
                   <i class="fe fe-bell" />
-                  攻击事件
+                  Attack
                 </RouterLink>
               </li>
               <li class="nav-item dropdown">
                 <RouterLink :to="{ name: 'baseline', params: { app_id: current_app.id } }" class="nav-link">
                   <i class="fe fe-check-square" />
-                  安全基线
+                  Security baseline
                 </RouterLink>
               </li>
               <li class="nav-item">
                 <RouterLink :to="{ name: 'hosts', params: { app_id: current_app.id } }" class="nav-link">
                   <i class="fe fe-cloud" />
-                  主机管理
+                  Host management
                 </RouterLink>
               </li>
               <li class="nav-item">
                 <RouterLink :to="{ name: 'iast', params: { app_id: current_app.id } }" class="nav-link">
                   <i class="fa fa-paper-plane-o" />
-                  扫描器
+                  scanner
                 </RouterLink>
               </li>
               <li class="nav-item">
                 <RouterLink :to="{ name: 'plugins', params: { app_id: current_app.id } }" class="nav-link">
                   <i class="fe fe-zap" />
-                  插件管理
+                  Plugin management
                 </RouterLink>
               </li>
               <li class="nav-item">
                 <RouterLink :to="{ name: 'dependency', params: { app_id: current_app.id } }" class="nav-link">
                   <i class="fe fe-code" />
-                  类库信息
+                  Class library information
                 </RouterLink>
               </li>
               <li class="nav-item dropdown">
                 <RouterLink :to="{ name: 'settings', params: { setting_tab: 'general', app_id: current_app.id } }" class="nav-link">
                   <i class="fe fe-settings" />
-                  系统设置
+                  System settings
                 </RouterLink>
               </li>
               <!-- <li class="nav-item">
                 <a href="https://rasp.baidu.com/#section-support" target="_blank" class="nav-link">
                   <i class="fa fa-qq" />
-                  技术支持
+                  Technical Support
                 </a>
               </li> -->
             </ul>
@@ -160,22 +160,22 @@
 
     <div v-if="is_default_password" class="alert alert-warning" style="margin-bottom: 0">
       <div class="container">
-        你还没有修改默认的后台密码，可前往 
-        <router-link :to="{name: 'settings', params: {setting_tab: 'auth'}}">登录认证</router-link> 设置
+        You have not changed the default background password, you can go to 
+        <router-link :to="{name: 'settings', params: {setting_tab: 'auth'}}">Login authentication</router-link> settings
       </div>
     </div> 
 
     <div v-if="no_plugin" class="alert alert-warning">
       <div class="container">
-        <strong>注意!</strong> 当前应用没有配置任何检测插件，请前往 
-        <router-link :to="{name: 'plugins'}">插件页面</router-link> 进行配置
+        <strong>Attention!</strong> The current application does not have any detection plug-ins, please go to
+        <router-link :to="{name:'plugins'}">plugin page</router-link> for configuration
       </div>
     </div>
 
     <div v-if="all_log" class="alert alert-warning">
       <div class="container">
-        当前以「记录日志」模式运行，可前往 
-        <router-link :to="{name: 'settings', params: {setting_tab: 'algorithm'}}">防护设置</router-link> 关闭
+        Currently running in "Logging" mode, you can go to
+        <router-link :to="{name:'settings', params: {setting_tab:'algorithm'}}">Protection settings</router-link> Close
       </div>
     </div> 
 
@@ -279,7 +279,7 @@ export default {
   },
   mounted: function() {
     this.request.post('v1/api/server/url/get', {}).then(res => {
-      // TODO: logout 接口返回的是 200，所以没有 reject promise
+      // TODO: The logout interface returns 200, so there is no reject promise
       if (! res) {
         return
       }

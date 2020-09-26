@@ -4,39 +4,39 @@
     <div class="card">
       <div class="card-header">
         <h3 class="card-title">
-          {{ data.iast ? '扫描设置' : '防护设置' }}
+          {{ data.iast?'Scan Settings':'Protection Settings' }}
         </h3>
       </div>
       <div class="card-body" v-if="! current_app.selected_plugin_id || ! current_app.selected_plugin_id.length">
         <p>
-          你还没有选择插件，请在「插件管理」中进行设置
+          You have not selected a plug-in, please set it in "plug-in management"
         </p>
       </div>
       <div class="card-body" v-else>
-        <!-- IAST设置 -->
+        <!-- IAST settings -->
         <div v-if="data.iast">
           <div class="form-group">
-            <label for="">Fuzz 服务器地址</label>
+            <label for="">Fuzz server address</label>
             <input type="text" class="form-control" v-model="data.iast.fuzz_server">
           </div>
 
           <div class="form-group">
-            <label for="">Fuzz 服务器连接超时（毫秒）</label>
+            <label for="">Fuzz server connection timeout (ms)</label>
             <input type="number" class="form-control" v-model="data.iast.request_timeout">
           </div>
 
           <div v-bind:class="{'form-group': true, 'has-error': byhost_regex_error}">
-            <label for="">使用 HOST 直接访问的服务（正则）<a target="_blank" href="https://rasp.baidu.com/doc/install/iast.html#faq-no-task">[帮助文档]</a></label>
+            <label for="">Use HOST to directly access services (regular）<a target="_blank" href="https://rasp.baidu.com/doc/install/iast.html#faq-no-task">[Help Document]</a></label>
             <input type="text" class="form-control" v-model="data.iast.byhost_regex">
             <span class="text-danger" style="margin-top: 5px; display: block" v-if="byhost_regex_error">{{byhost_regex_error }}</span>
           </div>
         </div>
-        <!-- 结束 IAST设置 -->
+        <!-- End IAST setting -->
 
-        <!-- 快速设置 -->
+        <!-- Quick Setup -->
         <div class="form-group" v-if="data.meta && ! data.iast">
           <div class="form-label">
-            快速设置
+            Quick Setup
           </div>
           <label class="custom-switch">
             <input
@@ -47,7 +47,7 @@
             >
             <span class="custom-switch-indicator" />
             <span class="custom-switch-description">
-              将所有算法设置为「记录日志」模式（"XXE 禁止外部实体加载" 算法除外）
+              Set all algorithms to "logging" mode (except the "XXE prohibit external entity loading" algorithm)
             </span>
           </label>
           <br>
@@ -60,7 +60,7 @@
             >
             <span class="custom-switch-indicator" />
             <span class="custom-switch-description">
-              启动「研发模式」，开启一些消耗性能的检测算法
+             Start the "R&D mode" and turn on some performance-consuming detection algorithms
             </span>
           </label>
           <br>
@@ -73,11 +73,11 @@
             >
             <span class="custom-switch-indicator" />
             <span class="custom-switch-description">
-              打印「行为日志」，仅用于调试，请勿在线上开启
+              Print "behavior log" for debugging only, please do not open it online
             </span>
           </label>
         </div>
-        <!-- 结束 快速设置 -->
+       <!-- End Quick Setup -->
 
         <div
           v-for="row in items"
@@ -102,7 +102,7 @@
                     class="selectgroup-input"
                   >
                   <span class="selectgroup-button">
-                    拦截攻击
+                    Intercept attack
                   </span>
                 </label>
                 <label class="selectgroup-item">
@@ -114,7 +114,7 @@
                     class="selectgroup-input"
                   >
                   <span class="selectgroup-button">
-                    记录日志
+                    Log
                   </span>
                 </label>
                 <label class="selectgroup-item">
@@ -126,7 +126,7 @@
                     class="selectgroup-input"
                   >
                   <span class="selectgroup-button">
-                    完全忽略
+                    Completely ignore
                   </span>
                 </label>
               </div>
@@ -137,7 +137,7 @@
                   target="_blank"
                   :href="data[item.key].reference"
                 >
-                  [帮助文档]
+                  [Help Document]
                 </a>
 
                 <a
@@ -146,7 +146,7 @@
                   href="javascript:"
                   @click="showAdvancedConfig(item.key, data[item.key])"
                 >
-                  [高级选项]
+                  [advanced options]
                 </a>
               </p>
             </form>
@@ -175,14 +175,14 @@
           @click="saveConfig()"
           :disabled="byhost_regex_error"
         >
-          保存
+          Save
         </button>
         <button
           type="submit"
           class="btn btn-info pull-right"
           @click="resetConfig()"
         >
-          重置
+          Reset
         </button>
       </div>
     </div>
@@ -284,7 +284,7 @@ export default {
         var hooks = {}
         self.data = data.algorithm_config
 
-        // 格式转换
+        // Format conversion
         Object.keys(tmp).forEach(function(key) {
           if (key.indexOf('_') == -1) {
             return
@@ -310,7 +310,7 @@ export default {
 
         self.items = Object.values(hooks)
 
-        // 老版本的官方插件，sql_exception.X.error_code 字段不存在，不要展示高级配置
+        // Old version of the official plug-in, the sql_exception.X.error_code field does not exist, do not show advanced configuration
         if (! data.algorithm_config.sql_exception || ! data.algorithm_config.sql_exception.mysql) {
           self.hasAdvancedConfig['sql_exception'] = false
         }
@@ -324,11 +324,11 @@ export default {
 
       this.request.post('v1/api/plugin/algorithm/config', body).then(() => {
         this.loadAppList(this.current_app.id)
-        alert('保存成功，请等待一个心跳周期生效（3分钟以内，取决于客户端配置）')
+        alert('Save successfully, please wait for a heartbeat cycle to take effect (within 3 minutes, depending on client configuration)')
       })
     },
     resetConfig: function() {
-      if (!confirm('还原默认配置？')) {
+      if (!confirm('Restore the default configuration?')) {
         return
       }
 
@@ -339,7 +339,7 @@ export default {
       this.request.post('v1/api/plugin/algorithm/restore', body).then(() => {
         this.loadAppList(this.current_app.id)
         this.loadConfig()
-        alert('恢复成功')
+        alert('Recovery successful')
       })
     }
   }

@@ -2,7 +2,7 @@
   <div class="custom-file">
     <input type="file" class="custom-file-input" ref="fileInput" @change="handleFileChange($event.target.name, $event.target.files)">
     <label class="custom-file-label" v-if="file">{{ file.name }}</label>
-    <label class="custom-file-label" v-if="! file">选择插件</label>
+    <label class="custom-file-label" v-if="! file">Select plugin</label>
   </div>
 </template>
 

@@ -19,7 +19,7 @@ package com.baidu.openrasp.cloud;
 /**
  * Created by tyy on 19-5-17.
  *
- * 云控定时任务基类
+ * Cloud control timing task base class
  */
 public abstract class CloudTimerTask implements Runnable {
 
@@ -71,7 +71,7 @@ public abstract class CloudTimerTask implements Runnable {
                     }
                 }
                 try {
-                    // 和上面分开处理，避免心跳失败不走 sleep,不能放到 execute 之前，会导致第一次心跳不能马上运行
+                    // Separate processing from the above to avoid heartbeat failure and do not go sleep, which cannot be placed before execute, which will cause the first heartbeat to not run immediately
                     Thread.sleep(getSleepTime() * 1000);
                 } catch (Throwable t) {
                     if (!(t instanceof InterruptedException)) {

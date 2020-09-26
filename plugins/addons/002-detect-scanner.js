@@ -4,7 +4,7 @@ const plugin_name    = '002-detect-scanner'
 var plugin = new RASP(plugin_name)
 var clean  = {
   action: 'ignore',
-  message: '无风险',
+  message: 'no risk',
   confidence: 0
 }
 
@@ -15,7 +15,7 @@ var algorithmConfig = {}
 // END ALGORITHM CONFIG //
 
 plugin.register('request', function(params, context) {
-  // 已知的扫描器识别
+  // Known scanner recognition
   var foundScanner = false
   var scannerUA    = [
     "attack", "scan", "vulnerability", "injection", "xss",
@@ -41,16 +41,16 @@ plugin.register('request', function(params, context) {
       }
     }
   }
-  // 扫描器识别 DEMO //    
+  // Scanner recognizes DEMO //    
   if (foundScanner) {
     return {
       action:     'block',
-      message:    '已知的扫描器探测行为，UA 特征为: ' + scannerUA[i],
+      message:    'Known scanner detection behavior, UA characteristics are: ' + scannerUA[i],
       confidence: 90
     }
   }
   return clean
 })
 
-plugin.log('002-detect-scanner 加载完成')
+plugin.log('002-detect-scanner loading completed')
 

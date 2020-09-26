@@ -4,7 +4,7 @@
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title">
-            依赖详情: {{ search_data.tag }}
+            Dependency details: {{ search_data.tag }}
           </h5>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close" />
         </div>
@@ -12,10 +12,10 @@
           <table class="table table-bordered">
             <thead>
               <tr>
-                <th>主机名</th>
-                <th>网络信息</th>
-                <th>最后上报</th>
-                <th>路径列表</th>
+                <th>Host name</th>
+                <th>Network Information</th>
+                <th>Final report</th>
+                <th>Path list</th>
               </tr>
             </thead>
             <tbody>
@@ -33,7 +33,7 @@
           <ul class="pagination pull-left">
               <li class="active">
                 <span style="margin-top: 0.5em; display: block; ">
-                  <strong>{{ total }}</strong> 结果，显示 {{ currentPage }} / {{ ceil(total / 10) }} 页
+                  <strong>{{ total }}</strong> The results show that {{ currentPage }} / {{ ceil(total / 10) }} 页
                 </span>
               </li>
           </ul>

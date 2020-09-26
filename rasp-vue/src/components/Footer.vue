@@ -6,14 +6,14 @@
           <div class="row align-items-center">
             <div class="col-auto">
               <ul class="list-inline list-inline-dots mb-0">
-                <li class="list-inline-item"><a href="https://rasp.baidu.com/" target="_blank">官方网站</a></li>
-                <li class="list-inline-item"><a href="https://rasp.baidu.com/#section-books" target="_blank">最佳实践</a></li>
+                <li class="list-inline-item"><a href="https://rasp.baidu.com/" target="_blank">Official website</a></li>
+                <li class="list-inline-item"><a href="https://rasp.baidu.com/#section-books" target="_blank">Best Practices</a></li>
               </ul>
             </div>
           </div>
         </div>
         <div class="col-12 col-lg-auto mt-3 mt-lg-0 text-center">
-          Copyright © 2017-2020 Baidu, Inc. {{ cloud.version }} ({{ cloud.commit_id.substr(0, 8) }})，编译时间 {{ cloud.build_time}}
+          Copyright © 2017-2020 Baidu, Inc. {{ cloud.version }} ({{ cloud.commit_id.substr(0, 8) }})，Compile time {{ cloud.build_time}}
         </div>
       </div>
     </div>
@@ -28,7 +28,7 @@ export default {
   data: function() {
     return {
       cloud: {
-        version: '获取中',
+        version: 'Getting',
         commit_id: '',
         build_time: ''
       },

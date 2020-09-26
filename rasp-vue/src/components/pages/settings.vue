@@ -7,7 +7,7 @@
             <span class="icon mr-3">
               <i class="fe fe-settings" />
             </span>
-            通用设置
+            General settings
           </template>
           <GeneralSettings ref="generalSettings" />
         </b-tab>
@@ -16,7 +16,7 @@
             <span class="icon mr-3">
               <i class="fe fe-alert-triangle" />
             </span>
-            报警设置
+           Alarm system
           </template>
           <AlarmSettings ref="alarmSettings" :data="data" />
         </b-tab>
@@ -25,7 +25,7 @@
             <span class="icon mr-3">
               <i class="fe fe-list" />
             </span>
-            黑白名单
+            Black and white list
           </template>
           <WhitelistSettings ref="whitelistSettings" />
         </b-tab>
@@ -34,7 +34,7 @@
             <span class="icon mr-3">
               <i class="fe fe-filter" />
             </span>
-            防护设置
+            Protection settings
           </template>
           <AlgorithmSettings ref="algorithmSettings" />
         </b-tab>
@@ -43,7 +43,7 @@
             <span class="icon mr-3">
               <i class="fe fe-shield" />
             </span>
-            应用加固
+            Application reinforcement
           </template>
           <HardeningSettings ref="hardeningSettings" />
         </b-tab>
@@ -52,7 +52,7 @@
             <span class="icon mr-3">
               <i class="fe fe-user" />
             </span>
-            登录认证
+            Login authentication
           </template>
           <AuthSettings ref="authSettings" />
         </b-tab>
@@ -61,7 +61,7 @@
             <span class="icon mr-3">
               <i class="fe fe-server" />
             </span>
-            应用管理
+            Application management
           </template>
           <AppSettings ref="appSettings" />
         </b-tab>
@@ -70,7 +70,7 @@
             <span class="icon mr-3">
               <i class="fe fe-settings" />
             </span>
-            后台设置
+            Background settings
           </template>
           <PanelSettings ref="panelSettings" />
         </b-tab>

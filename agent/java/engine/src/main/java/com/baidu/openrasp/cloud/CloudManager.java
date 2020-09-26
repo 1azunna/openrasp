@@ -25,7 +25,7 @@ import org.apache.log4j.Logger;
 import java.util.LinkedList;
 
 /**
- * @description: 初始化云控配置
+ * @description: Initialize cloud control configuration
  * @author: anyang
  * @create: 2018/09/18 15:09
  */
@@ -35,7 +35,7 @@ public class CloudManager {
     private static LinkedList<CloudTimerTask> tasks = new LinkedList<CloudTimerTask>();
 
     public static void init() {
-        //注册成功之后初始化创建http appender
+        //Initially create http appender after successful registration
         DynamicConfigAppender.createRootHttpAppender();
         DynamicConfigAppender.createHttpAppender(AppenderMappedLogger.HTTP_ALARM.getLogger(),
                 AppenderMappedLogger.HTTP_ALARM.getAppender());

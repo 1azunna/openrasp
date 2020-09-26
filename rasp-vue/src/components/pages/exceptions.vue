@@ -3,7 +3,7 @@
     <div class="container">
       <div class="page-header">
         <h1 class="page-title">
-          异常日志
+          Exception log
         </h1>
         <div class="page-options d-flex">
           <div class="input-icon ml-2">
@@ -16,16 +16,16 @@
             <span class="input-icon-addon">
               <i class="fe fe-search" />
             </span>
-            <b-form-input v-model.trim="hostname" type="text" class="form-control" placeholder="搜索主机或者IP" @keyup.enter="fetchData(1)" />
+            <b-form-input v-model.trim="hostname" type="text" class="form-control" placeholder="Search host or IP" @keyup.enter="fetchData(1)" />
           </div>
           <div class="input-icon ml-2">
             <span class="input-icon-addon">
               <i class="fe fe-search" />
             </span>
-            <b-form-input v-model.trim="message" type="text" class="form-control" placeholder="搜索消息" @keyup.enter="fetchData(1)" />
+            <b-form-input v-model.trim="message" type="text" class="form-control" placeholder="Search Message" @keyup.enter="fetchData(1)" />
           </div>
           <button class="btn btn-primary ml-2" @click="fetchData(1)">
-            搜索
+           search for
           </button>
         </div>
       </div>
@@ -37,7 +37,7 @@
             <ul class="pagination pull-left">
               <li class="active">
                 <span style="margin-top: 0.5em; display: block; ">
-                  <strong>{{ total }}</strong> 结果，显示 {{ currentPage }} / {{ ceil(total / 10) }} 页
+                  <strong>{{ total }}</strong> The results show that{{ currentPage }} / {{ ceil(total / 10) }}page
                 </span>
               </li>
             </ul>
@@ -58,17 +58,17 @@
               <span v-for="nic in scope.item.server_nic" :key="nic.name">{{ nic.name }}: {{ nic.ip }}<br/></span>
             </template>
             <template v-slot:cell(button)="scope">
-              <b-link @click="showExceptionDetail(scope.item)">查看详情</b-link>
+              <b-link @click="showExceptionDetail(scope.item)">View details</b-link>
             </template>
           </b-table>
 
-          <p v-if="! loading && total == 0" class="text-center">暂无数据</p>
+          <p v-if="! loading && total == 0" class="text-center">No data yet</p>
 
           <nav v-if="! loading && total > 10">
             <ul class="pagination pull-left">
               <li class="active">
                 <span style="margin-top: 0.5em; display: block; ">
-                  <strong>{{ total }}</strong> 结果，显示 {{ currentPage }} / {{ ceil(total / 10) }} 页
+                  <strong>{{ total }}</strong>The results show that {{ currentPage }} / {{ ceil(total / 10) }}page
                 </span>
               </li>
             </ul>
@@ -106,12 +106,12 @@ export default {
       message: '',
       total: 0,
       fields: [
-        { key: 'event_time',      label: '异常时间', class: 'text-nowrap' },
-        { key: 'error_code',      label: '异常编号', class: 'text-nowrap' },
-        // { key: 'level', label: '级别', class: 'text-nowrap' },
-        { key: 'server_hostname', label: '主机信息', tdAttr: { 'style': 'min-width: 150px;' } },
-        { key: 'message',         label: '内容' },
-        { key: 'button',          label: '查看详情', class: 'text-nowrap' }
+       {key:'event_time', label:'abnormal time', class:'text-nowrap' },
+        {key:'error_code', label:'Exception number', class:'text-nowrap' },
+        // {key:'level', label:'level', class:'text-nowrap' },
+        {key:'server_hostname', label:'Host Information', tdAttr: {'style':'min-width: 150px;'} },
+        {key:'message', label:'content' },
+        {key:'button', label:'View details', class:'text-nowrap'}
       ]
     }
   },

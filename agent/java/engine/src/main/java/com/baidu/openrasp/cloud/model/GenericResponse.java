@@ -19,7 +19,7 @@ package com.baidu.openrasp.cloud.model;
 import java.util.Map;
 
 /**
- * @description: 通用的响应model
+ * @description: Generic response model
  * @author: anyang
  * @create: 2018/09/17 17:56
  */

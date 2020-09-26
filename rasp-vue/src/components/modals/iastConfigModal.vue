@@ -4,7 +4,7 @@
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title">
-            任务设置
+            Task settings
           </h5>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close" />
         </div>
@@ -13,7 +13,7 @@
               <div class="form-group">
                 <div class="row">
                   <div class="col">
-                    <label>请选择插件</label>
+                    <label>Please select plugin</label>
                   </div>
                 </div>
                 <div class="row" style="margin-top: 3px;">
@@ -31,35 +31,35 @@
               <div class="form-group">
                 <div class="row" style="margin-top: 3px;">
                   <div class="col">
-                    <label>url白名单正则（被正则命中的url不会被扫描, 正则会匹配request_uri部分,
-                      例如 http://test.com/path/eg?p=1&b=2 对应request_uri部分为 /path/eg?p=1&b=2,
-                      当不希望扫描path/eg开头的路径时时可以配置为 ^/path/eg）</label>
+                    <label>url whitelist regularity (urls hit by regularization will not be scanned, regular ones will match the request_uri part,
+                      For example, http://test.com/path/eg?p=1&b=2 corresponds to the request_uri part /path/eg?p=1&b=2,
+                      When you don’t want to scan the path starting with path/eg, you can configure it as ^/path/eg)</label>
                     <input type="text" class="form-control" v-model="data.white_url_reg">
-                    <label v-show="byurl_regex_error" style="color:#ff0000">*白名单正则非法</label>
+                    <label v-show="byurl_regex_error" style="color:#ff0000">*Whitelist is illegal</label>
                   </div>
                 </div>
               </div>
               <div class="form-group">
                 <div class="row" style="margin-top: 3px;">
                   <div class="col">
-                    <label for="concurrent" align="center">最大并发请求数</label>
+                    <label for="concurrent" align="center">Maximum number of concurrent requests</label>
                     <input type="number" class="form-control" id="concurrent"
                            v-model="data.scan_rate.max_concurrent_request" placeholder="20">
-                    <label v-show="data.scan_rate.max_concurrent_request <= 0" style="color:#F00">*最大并发数应大于0</label>
+                    <label v-show="data.scan_rate.max_concurrent_request <= 0" style="color:#F00">*The maximum concurrent number should be greater than 0</label>
                   </div>
                 </div>
               </div>
               <div class="form-group">
                 <div class="row" style="margin-top: 3px;">
                   <div class="col">
-                    <label for="minInterval" align="center">请求间隔(ms)</label>
+                    <label for="minInterval" align="center">Request interval (ms)</label>
                   </div>
                 </div>
                 <div class="row" style="margin-top: 3px;">
                   <div class="col">
                     <input type="number" class="form-control" id="minInterval"
                            v-model="data.scan_rate.min_request_interval" placeholder="0">
-                    <label v-show="data.scan_rate.min_request_interval < 0" style="color:#F00">*最小间隔应大于等于0</label>
+                    <label v-show="data.scan_rate.min_request_interval < 0" style="color:#F00">*The minimum interval should be greater than or equal to 0</label>
                   </div>
                   <div class="col" align="middle">
                     <h5>～</h5>
@@ -67,14 +67,14 @@
                   <div class="col">
                     <input type="number" class="form-control" id="maxInterval"
                            v-model="data.scan_rate.max_request_interval" placeholder="1000">
-                    <label v-show="data.scan_rate.max_request_interval <= 0" style="color:#F00">*最大间隔应大于0</label>
+                    <label v-show="data.scan_rate.max_request_interval <= 0" style="color:#F00">*Maximum interval should be greater than 0</label>
                   </div>
                 </div>
               </div>
               <div class="form-group">
                 <div class="row" style="margin-top: 3px;">
                   <div class="col">
-                      <label>扫描请求使用的http代理</label>
+                      <label>Http proxy used by scan request</label>
                     <input type="text" class="form-control"
                            id="scanProxy" v-model="data.scan_proxy">
                   </div>
@@ -86,10 +86,10 @@
         <div class="modal-footer">
           <button type="button" class="btn btn-primary pull-left"
                   @click="setConfigTask()" :disabled="byurl_regex_error"
-                  :data-dismiss=modalDisplay>确定
+                  :data-dismiss=modalDisplay>OK
           </button>
           <button class="btn btn-info" :click="reset()" data-dismiss="modal">
-            关闭
+            shut down
           </button>
         </div>
       </div>

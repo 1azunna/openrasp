@@ -5,25 +5,25 @@
     <div class="card">
       <div class="card-header">
         <h3 class="card-title">
-          修改登录密码
+          Modify login password
         </h3>
       </div>
       <div class="card-body">
         <div class="form-group">
           <label class="form-label">
-            原密码
+            old password
           </label>
           <input v-model="oldpass" type="password" class="form-control" autocomplete="off">
         </div>
         <div class="form-group">
           <label class="form-label">
-            新密码
+           new password
           </label>
           <input v-model="newpass1" type="password" class="form-control" autocomplete="off">
         </div>
         <div class="form-group">
           <label class="form-label">
-            再次输入新密码
+           Enter the new password again
           </label>
           <input v-model="newpass2" type="password" class="form-control" autocomplete="off">
         </div>
@@ -31,7 +31,7 @@
       <div class="card-footer text-right">
         <div class="d-flex">
           <button class="btn btn-primary" @click="changePass()">
-            保存
+            Save
           </button>
         </div>
       </div>
@@ -40,8 +40,8 @@
     <div class="card">
       <div class="card-header">
         <h3 class="card-title">
-          TOKEN 管理 
-          <a href="https://rasp.baidu.com/doc/hacking/cloud-api.html#panel-api-description" target="_blank" style="color: #467fcf">[帮助文档]</a>
+         TOKEN management
+          <a href="https://rasp.baidu.com/doc/hacking/cloud-api.html#panel-api-description" target="_blank" style="color: #467fcf">[Help Document]</a>
         </h3>
       </div>
       <div class="card-body">
@@ -54,10 +54,10 @@
                 Token
               </th>
               <th>
-                备注
+               Remarks
               </th>
               <th>
-                操作
+               operating
               </th>
             </tr>
           </thead>
@@ -71,10 +71,10 @@
               </td>
               <td nowrap>
                 <a href="javascript:" @click="editToken(row)">
-                  编辑
+                 edit
                 </a>
                 <a href="javascript:" @click="deleteToken(row)">
-                  删除
+                 delete
                 </a>
               </td>
             </tr>
@@ -87,7 +87,7 @@
       <div class="card-footer text-right">
         <div class="d-flex">
           <button class="btn btn-primary" @click="createToken()">
-            创建
+           create
           </button>
         </div>
       </div>
@@ -120,15 +120,15 @@ export default {
           old_password: this.oldpass,
           new_password: this.newpass1
         }).then(() => {
-          alert('密码修改成功，点击确认重新登录')
+          alert('Password modification is successful, click to confirm to log in again')
           location.href = '/#/login'
         })
       } else {
-        alert('两次密码输入不一致，请重新输入')
+        alert('The two password entries are inconsistent, please re-enter')
       }
     },
     createToken: function() {
-      var descr = prompt('请输入备注信息')
+      var descr = prompt('Please enter remarks information')
 
       if (descr && descr.length) {
         this.request.post('v1/api/token', {
@@ -139,7 +139,7 @@ export default {
       }
     },
     editToken: function(data) {
-      var descr = prompt('请输入新的备注信息')
+      var descr = prompt('Please enter new remarks information')
       if (!descr) { return }
 
       this.request.post('v1/api/token', {
@@ -150,7 +150,7 @@ export default {
       })
     },
     deleteToken: function(data) {
-      if (!confirm('删除 ' + data.token + ' 吗')) {
+      if (!confirm('Delete' + data.token +'?')) {
         return
       }
 

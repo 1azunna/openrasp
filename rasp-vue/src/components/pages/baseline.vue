@@ -3,7 +3,7 @@
     <div class="container">
       <div class="page-header">
         <h1 class="page-title">
-          基线检查
+          Baseline check
         </h1>
         <div class="page-options d-flex">         
 
@@ -14,7 +14,7 @@
             <DatePicker ref="datePicker" @selected="loadEvents(1)" />
           </div>
 
-          <b-dropdown text="基线类型" class="ml-2" left>
+          <b-dropdown text="Baseline type" class="ml-2" left>
             <b-container style="width: 500px;">
               <b-form-row>
                 <b-col>
@@ -22,7 +22,7 @@
                     <input type="checkbox" class="custom-switch-input" checked @change="selectAll">
                     <span class="custom-switch-indicator" />
                     <span class="custom-switch-description">
-                      全选
+                      select all
                     </span>
                   </label>
                 </b-col>
@@ -56,7 +56,7 @@
             <input v-model.trim="message" type="text" class="form-control w-10" placeholder="过滤消息" @keyup.enter="loadEvents(1)">
           </div>
           <button class="btn btn-primary ml-2" @click="loadEvents(1)">
-            搜索
+            search for
           </button>
         </div>
       </div>
@@ -68,7 +68,7 @@
             <ul class="pagination pull-left">
               <li class="active">
                 <span style="margin-top: 0.5em; display: block; ">
-                  <strong>{{ total }}</strong> 结果，显示 {{ currentPage }} / {{ ceil(total / 10) }} 页
+                  <strong>{{ total }}</strong>The results show that{{ currentPage }} / {{ ceil(total / 10) }} 页
                 </span>
               </li>
             </ul>
@@ -79,19 +79,19 @@
             <thead>
               <tr>
                 <th nowrap>
-                  报警时间
+                  Alarm time
                 </th>
                 <th nowrap>
-                  应用信息
+                 Application information
                 </th>
                 <th nowrap>
-                  主机信息
+                 Host information
                 </th>
                 <th>
-                  报警内容
+                 Alarm content
                 </th>
                 <th>
-                  操作
+                  operating
                 </th>
               </tr>
             </thead>
@@ -113,7 +113,7 @@
                 </td>
                 <td nowrap>
                   <a href="javascript:" @click="showBaselineDetailModal(row)">
-                    查看详情
+                    see details
                   </a>
                 </td>
               </tr>
@@ -124,14 +124,14 @@
             <ul class="pagination pull-left">
               <li class="active">
                 <span style="margin-top: 0.5em; display: block; ">
-                  <strong>{{ total }}</strong> 结果，显示 {{ currentPage }} / {{ ceil(total / 10) }} 页
+                  <strong>{{ total }}</strong> The results show that{{ currentPage }} / {{ ceil(total / 10) }} 页
                 </span>
               </li>
             </ul>
             <b-pagination v-model="currentPage" align="right" :total-rows="total" :per-page="10" @change="loadEvents($event)" />
           </nav>
 
-          <p v-if="! loading && total == 0" class="text-center">暂无数据</p>
+          <p v-if="! loading && total == 0" class="text-center">No data</p>
         </div>
       </div>
     </div>

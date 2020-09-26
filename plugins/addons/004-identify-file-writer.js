@@ -20,7 +20,7 @@ plugin.register('readFile', function (params, context) {
     return clean
 })
 
-// 检查谁写入了 abc.js，并打印报警
+// Check who wrote abc.js and print the alarm
 plugin.register('writeFile', function (params, context) {
     if (params.realpath.indexOf('abc.js') != -1) {
         return {
