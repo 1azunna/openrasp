@@ -29,7 +29,7 @@ import static com.baidu.openrasp.Module.START_MODE_NORMAL;
 
 /**
  * Created by tyy on 3/27/17.
- * 加载agent的入口类，先于主函数加载
+ * Load the entry class of the agent, which is loaded before the main function
  */
 public class Agent {
 
@@ -60,30 +60,30 @@ public class Agent {
         }
     }
 
-    /**
-     * 启动时加载的agent入口方法
+/**
+     * Agent entry method loaded at startup
      *
-     * @param agentArg 启动参数
-     * @param inst     {@link Instrumentation}
+     * @param agentArg startup parameters
+     * @param inst {@link Instrumentation}
      */
-    public static void premain(String agentArg, Instrumentation inst) {
+        public static void premain(String agentArg, Instrumentation inst) {
         init(START_MODE_NORMAL, START_ACTION_INSTALL, inst);
     }
 
     /**
-     * attach 机制加载 agent
+     * attach mechanism to load agent
      *
-     * @param agentArg 启动参数
-     * @param inst     {@link Instrumentation}
+     * @param agentArg startup parameters
+     * @param inst {@link Instrumentation}
      */
     public static void agentmain(String agentArg, Instrumentation inst) {
         init(Module.START_MODE_ATTACH, agentArg, inst);
     }
 
     /**
-     * attack 机制加载 agent
+     * Attack mechanism loading agent
      *
-     * @param mode 启动模式
+     * @param mode startup mode
      * @param inst {@link Instrumentation}
      */
     public static synchronized void init(String mode, String action, Instrumentation inst) {

@@ -43,10 +43,10 @@ public class ModuleLoader {
     public static ClassLoader moduleClassLoader;
 
 
-    // ModuleLoader 为 classloader加载的，不能通过getProtectionDomain()的方法获得JAR路径
+    // ModuleLoader is loaded by the classloader, and the JAR path cannot be obtained through the getProtectionDomain() method
     static {
         Class clazz = ModuleLoader.class;
-        // path值示例：　file:/opt/apache-tomcat-xxx/rasp/rasp.jar!/com/fuxi/javaagent/Agent.class
+        // Examples of path values：　file:/opt/apache-tomcat-xxx/rasp/rasp.jar!/com/fuxi/javaagent/Agent.class
         String path = clazz.getResource("/" + clazz.getName().replace(".", "/") + ".class").getPath();
         if (path.startsWith("file:")) {
             path = path.substring(5);
@@ -68,9 +68,9 @@ public class ModuleLoader {
     }
 
     /**
-     * 构造所有模块
+     * Construct all modules
      *
-     * @param mode 启动模式
+     * @param mode Start mode
      * @param inst {@link java.lang.instrument.Instrumentation}
      */
     private ModuleLoader(String mode, Instrumentation inst) throws Throwable {
@@ -99,9 +99,9 @@ public class ModuleLoader {
     }
 
     /**
-     * 加载所有 RASP 模块
+     * Load all RASP modules
      *
-     * @param mode 启动模式
+     * @param mode Start mode
      * @param inst {@link java.lang.instrument.Instrumentation}
      */
     public static synchronized void load(String mode, String action, Instrumentation inst) throws Throwable {
@@ -125,7 +125,7 @@ public class ModuleLoader {
 
 
     /**
-     * 判断是否是weblogic或者jdk9、10和11
+     * Determine whether it is weblogic or jdk9, 10 and 11
      */
     public static boolean isCustomClassloader() {
         try {
@@ -169,7 +169,7 @@ public class ModuleLoader {
     }
 
     /**
-     * 判断当前进程是否为jboss7 版本，并设置相关属性和预加载包
+     * Determine whether the current process is the jboss7 version, and set the relevant attributes and preload package
      */
     public static void setStartupOptionForJboss() {
         String jbossHome = "";
@@ -200,7 +200,7 @@ public class ModuleLoader {
     }
 
     /**
-     * 设置jboss的jboss.modules.system.pkgs，java.util.logging.manager，以及对logmanager的预加载项
+     * Set up the jboss.modules.system.pkgs, java.util.logging.manager of jboss, and the pre-loaded items for logmanager
      *
      * @param moduleBaseDir
      */
@@ -264,7 +264,7 @@ public class ModuleLoader {
     }
 
     /*
-    *从路径加载文件名称匹配项
+    * Load file name matches from path
      */
     public static String loadJarFromPath(String libPath, String jarName) {
         //boolean bLoaded = false;

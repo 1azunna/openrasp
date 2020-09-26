@@ -26,12 +26,12 @@ import java.util.jar.JarFile;
 
 /**
  * Created by tyy on 3/29/17.
- * 对jar文件操作的工具类
+ * Tools for operating jar files
  */
 public class JarFileHelper {
 
     /**
-     * 添加jar文件到jdk的跟路径下，优先加载
+     * Add the jar file to the jdk follow path, and load first
      *
      * @param inst {@link Instrumentation}
      */
@@ -41,7 +41,7 @@ public class JarFileHelper {
     }
 
     /**
-     * 获取当前所在jar包的路径
+     * Get the path of the current jar package
      *
      * @return jar包路径
      */
@@ -59,9 +59,9 @@ public class JarFileHelper {
     }
 
     /**
-     * 获取当前jar包所在的文件夹路径
+     * Get the folder path where the current jar package is located
      *
-     * @return jar包所在文件夹路径
+     * @return The folder path of the jar package
      */
     public static String getLocalJarParentPath() {
         String jarPath = getLocalJarPath();

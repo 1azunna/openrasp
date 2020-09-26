@@ -39,7 +39,7 @@ import java.util.Set;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
 /**
- * @description: 日志上传appender
+ * @description: Log upload appender
  * @author: anyang
  * @create: 2018/09/20 09:53
  */
@@ -158,7 +158,7 @@ public class HttpAppender extends AppenderSkeleton {
     }
 
     /**
-     * 处理log4j的ROOT logger上传日志的loggingEvent
+     * Processing loggingEvent of log4j's ROOT logger upload log
      */
     private String generateJson(LoggingEvent loggingEvent) {
         String level = loggingEvent.getLevel().toString();

@@ -22,7 +22,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
 /**
- * @description: 缓存需要重传的日志
+ * @description: Cache logs that need to be retransmitted
  * @author: anyang
  * @create: 2018/09/20 13:59
  */
