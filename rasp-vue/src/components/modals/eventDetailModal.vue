@@ -229,9 +229,16 @@ export default {
       this.data = data
 
       // After v1.2, delete the outer string stack and use the params.stack array instead
-      if (! data.stack_trace && data.attack_params.stack)
+      if (! data. stack_trace)
       {
-        data.stack_trace = data.attack_params.stack.join("\n")
+        if (data. attack_params. stack)
+        {
+          data. stack_trace = data. attack_params. stack. join("\n")
+        }
+        else
+        {
+          data. stack_trace = ''
+        }
       }
 
       this.$refs.attack_params.setData(data)

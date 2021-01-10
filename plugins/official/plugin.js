@@ -1,4 +1,4 @@
-const plugin_version = '2020-0901-1300'
+const plugin_version = '2020-1127-1930'
 const plugin_name    = 'official'
 const plugin_desc    = 'Official plugin'
 
@@ -878,7 +878,8 @@ function validate_stack_java(stacks) {
         'org.jboss.el.util.ReflectionUtil.invokeMethod':                                "Using JBoss EL method",
         'org.codehaus.groovy.runtime.ProcessGroovyMethods.execute':                     "Using Groovy library",
         'bsh.Reflect.invokeMethod':                                                     "Using BeanShell library",
-        'jdk.scripting.nashorn/jdk.nashorn.internal.runtime.ScriptFunction.invoke':     "Using Nashorn engine"
+        'jdk.scripting.nashorn/jdk.nashorn.internal.runtime.ScriptFunction.invoke':     "Using Nashorn engine",
+        'org.apache.shiro.io.DefaultSerializer.deserialize':                            "Using Shiro framework (DefaultSerializer)"    
     }
 
     var userCode = false, reachedInvoke = false, i = 0, message = undefined
@@ -972,6 +973,10 @@ function validate_stack_php(stacks) {
          // call_user_func/call_user_func_array two functions are called frequently
         // It must be intercepted by call_user_func directly calling system/exec and other functions, otherwise there will be many false positives
         if (stack.indexOf('@call_user_func') != -1) {
+            // Filter the internal security coding library
+            if (stack. indexOf('safesdk-php') != -1) {
+                continue
+            }
             if (i <= 1) {
                 verdict = true
                 break
@@ -1172,14 +1177,14 @@ function is_from_userinput(parameter, target)
     return verdict
 }
 
-//Is it included in user input-suitable for any type of parameter
+//Included in user input - suitable for any type of parameter
 function is_include_in_userinput(parameter, target)
 {
     var verdict = false
     Object.keys(parameter).some(function (key) {
         var values = parameter[key]
         Object.values(values).some(function(value){
-            // 只处理非数组、hash情况
+            // Only non-array, hash cases are processed
             if (value.indexOf(target) != -1) {
                 verdict = true
                 return true
@@ -1206,6 +1211,10 @@ function is_token_changed(raw_tokens, userinput_idx, userinput_length, distance,
             start = i
             break
         }
+    }
+    // Comments may end up preventing cross-bordering caused by removing comments
+    if (start == -1) {
+        return false
     }
 
     // Find the end point of the token
@@ -1992,6 +2001,14 @@ plugin.register('sql_exception', function(params, context) {
             }
         }
     }
+    else if (params. server = 'sqlite') {
+        if (error_code == 1) {
+            //Case matching is ignored
+            if ( ! /syntax/i. test(params. error_msg) && ! /malformed MATCH/i. test(params. error_msg)) {
+                return clean
+            }
+        }
+    }
     return {
         action:     algorithmConfig.sql_exception.action,
         message:    message,
@@ -2649,7 +2666,8 @@ plugin.register('command', function (params, context) {
                 }
             }
 
-            // Sensitive connection command detectionif (algorithmConfig.command_error.sensitive_cmd_enable) {
+            // Sensitive connection command detection
+            if (algorithmConfig.command_error.sensitive_cmd_enable) {
                 if (raw_tokens[i+1] !== undefined &&
                     concat_char.indexOf(raw_tokens[i].text) != -1 &&
                     sensitive_cmd.indexOf(raw_tokens[i+1].text) != -1) {
@@ -2701,9 +2719,8 @@ plugin.register('command', function (params, context) {
         }
     }
 
-   // Algorithm 5: Record all command execution
-    if (algorithmConfig.command_other.action != 'ignore') 
-    {
+    // Algorithm 5: Record all command execution
+    if (algorithmConfig.command_other.action != 'ignore') {
         return {
             action:     algorithmConfig.command_other.action,
             message:    _("Command execution - Logging all command execution by default, command is %1%", [params.command]),
