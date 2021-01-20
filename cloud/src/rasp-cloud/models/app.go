@@ -15,33 +15,34 @@
 package models
 
 import (
-	"rasp-cloud/kafka"
-	"rasp-cloud/mongo"
-	"fmt"
-	"strconv"
-	"time"
-	"math/rand"
-	"rasp-cloud/tools"
-	"gopkg.in/mgo.v2"
-	"crypto/sha1"
-	"gopkg.in/mgo.v2/bson"
-	"rasp-cloud/models/logs"
-	"github.com/astaxie/beego"
-	"net/smtp"
-	"os"
-	"net/mail"
-	"strings"
-	"html/template"
 	"bytes"
-	"github.com/astaxie/beego/httplib"
-	"errors"
+	"crypto/sha1"
 	"crypto/sha256"
-	"encoding/base64"
-	"io/ioutil"
 	"crypto/tls"
+	"encoding/base64"
+	"errors"
+	"fmt"
+	"html/template"
+	"io/ioutil"
+	"math/rand"
 	"net"
-	"rasp-cloud/conf"
+	"net/mail"
+	"net/smtp"
 	"net/url"
+	"os"
+	"rasp-cloud/conf"
+	"rasp-cloud/kafka"
+	"rasp-cloud/models/logs"
+	"rasp-cloud/mongo"
+	"rasp-cloud/tools"
+	"strconv"
+	"strings"
+	"time"
+
+	"github.com/astaxie/beego"
+	"github.com/astaxie/beego/httplib"
+	"gopkg.in/mgo.v2"
+	"gopkg.in/mgo.v2/bson"
 )
 
 type App struct {
@@ -66,21 +67,21 @@ type App struct {
 }
 
 type ExportAPP struct {
-	Id               string                 `json:"id" bson:"_id"`
-	Name             string                 `json:"name"  bson:"name"`
-	Language         string                 `json:"language"  bson:"language"`
-	Secret           string                 `json:"secret"  bson:"secret"`
-	Description      string                 `json:"description"  bson:"description"`
+	Id          string `json:"id" bson:"_id"`
+	Name        string `json:"name"  bson:"name"`
+	Language    string `json:"language"  bson:"language"`
+	Secret      string `json:"secret"  bson:"secret"`
+	Description string `json:"description"  bson:"description"`
 }
 
 type WhitelistConfigItem struct {
-	Url  string          `json:"url" bson:"url"`
-	Hook map[string]bool `json:"hook" bson:"hook"`
-	Description string   `json:"description" bson:"description"`
+	Url         string          `json:"url" bson:"url"`
+	Hook        map[string]bool `json:"hook" bson:"hook"`
+	Description string          `json:"description" bson:"description"`
 }
 
 type GeneralAlarmConf struct {
-	AlarmCheckInterval  int64                 `json:"alarm_check_interval" bson:"alarm_check_interval"`
+	AlarmCheckInterval int64 `json:"alarm_check_interval" bson:"alarm_check_interval"`
 }
 
 type EmailAlarmConf struct {
@@ -125,12 +126,12 @@ type dingResponse struct {
 var AlarmTypes = []string{"email", "ding", "http"}
 
 const (
-	appCollectionName = "app"
+	appCollectionName    = "app"
 	configCollectionName = "config"
-	defaultAppName    = "PHP 示例应用"
-	SecreteMask       = "************"
-	DefalutPluginName = "plugin.js"
-	IastPluginName    = "iast.js"
+	defaultAppName       = "PHP Sample Application"
+	SecreteMask          = "************"
+	DefalutPluginName    = "plugin.js"
+	IastPluginName       = "iast.js"
 )
 
 var (
@@ -162,27 +163,27 @@ var (
 		"syslog.facility":           1,
 		"syslog.enable":             false,
 		"decompile.enable":          false,
-		"security.weak_passwords":   []string{
-			"111111","123","123123","123456","123456a",
-			"a123456","admin","both","manager","mysql",
-			"root","rootweblogic","tomcat","user",
-			"weblogic1","weblogic123","welcome1",
+		"security.weak_passwords": []string{
+			"111111", "123", "123123", "123456", "123456a",
+			"a123456", "admin", "both", "manager", "mysql",
+			"root", "rootweblogic", "tomcat", "user",
+			"weblogic1", "weblogic123", "welcome1",
 		},
-		"request.param_encoding":    "",
-		"debug.level":               0,
-		"lru.max_size":              1000,
-		"lru.compare_limit":         10240,
-		"fileleak_scan.name":        `\.(git|svn|tar|gz|rar|zip|sql|log)$`,
-		"fileleak_scan.interval":    21600,
-		"fileleak_scan.limit":       100,
-		"cpu.usage.interval":        5,
-		"cpu.usage.percent":         90,
-		"response.sampler_interval": 60,
-		"response.sampler_burst":    5,
-		"dependency_check.interval": 12 * 3600,
+		"request.param_encoding":         "",
+		"debug.level":                    0,
+		"lru.max_size":                   1000,
+		"lru.compare_limit":              10240,
+		"fileleak_scan.name":             `\.(git|svn|tar|gz|rar|zip|sql|log)$`,
+		"fileleak_scan.interval":         21600,
+		"fileleak_scan.limit":            100,
+		"cpu.usage.interval":             5,
+		"cpu.usage.percent":              90,
+		"response.sampler_interval":      60,
+		"response.sampler_burst":         5,
+		"dependency_check.interval":      12 * 3600,
 		"offline_hosts.cleanup.interval": 0,
 	}
-	AlarmCheckInterval = conf.AppConfig.AlarmCheckInterval
+	AlarmCheckInterval    = conf.AppConfig.AlarmCheckInterval
 	MinAlarmCheckInterval = conf.AppConfig.AlarmCheckInterval
 )
 
@@ -444,14 +445,14 @@ func selectDefaultPlugin(app *App) {
 	}
 	_, err = SetSelectedPlugin(app.Id, plugin.Id, "")
 	if err != nil {
-		beego.Warn(tools.ErrCodeInitDefaultAppFailed, "failed to select default plugin for app: " + err.Error()+
-			", app_id: "+ app.Id+ ", plugin_id: "+ plugin.Id)
+		beego.Warn(tools.ErrCodeInitDefaultAppFailed, "failed to select default plugin for app: "+err.Error()+
+			", app_id: "+app.Id+", plugin_id: "+plugin.Id)
 		return
 	}
 	err = initPlugin(app, IastPluginName)
 	if err != nil {
-		beego.Warn(tools.ErrCodeInitDefaultAppFailed, "failed to init iast plugin: " + err.Error()+
-			", app_id: "+ app.Id+ ", plugin_id: "+ plugin.Id)
+		beego.Warn(tools.ErrCodeInitDefaultAppFailed, "failed to init iast plugin: "+err.Error()+
+			", app_id: "+app.Id+", plugin_id: "+plugin.Id)
 		return
 	}
 	beego.Info("Succeed to set up default plugin for app, version: " + plugin.Version)
@@ -502,7 +503,7 @@ func GetAppById(id string) (app *App, err error) {
 
 func GetAppByName(name string, page int, perpage int) (count int, result []*App, err error) {
 	// 支持模糊查询
-	selector :=  bson.M{"name": bson.M{
+	selector := bson.M{"name": bson.M{
 		"$regex":   name,
 		"$options": "$i",
 	}}
@@ -545,7 +546,7 @@ func GetEmailConfByAppId(appId string) (e EmailAlarmConf, err error) {
 
 func getGeneralConfig() (conf *GeneralAlarmConf, err error) {
 	var result struct {
-		GeneralAlarmConf    GeneralAlarmConf       `json:"general_alarm_conf" bson:"general_alarm_conf"`
+		GeneralAlarmConf GeneralAlarmConf `json:"general_alarm_conf" bson:"general_alarm_conf"`
 	}
 	err = mongo.FindId(configCollectionName, "0", &result)
 	if err != nil && &result != nil {
@@ -684,7 +685,7 @@ func UpdateAppConfig(version string) error {
 				}
 			}
 			if len(apps) < perPage {
-				break;
+				break
 			}
 			page++
 		}
@@ -1083,7 +1084,7 @@ func PushKafkaAttackAlarm(app *App, alarms []map[string]interface{}, isTest bool
 	return nil
 }
 
-func GetAllExportApp() (apps []*ExportAPP, err error){
+func GetAllExportApp() (apps []*ExportAPP, err error) {
 	_, err = mongo.FindAllWithoutLimit(appCollectionName, nil, &apps)
 	if err != nil {
 		return nil, err
