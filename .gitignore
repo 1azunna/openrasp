@@ -2,6 +2,9 @@
 .vscode
 .idea
 .po~
+cloud/src/golang.org
+cloud/src/gopkg.in
+
 rasp-cloud-mac.tar.gz
 rasp-cloud.tar.gz
 rasp-java.tar.gz
